@@ -1,5 +1,5 @@
 
-var isWin = process.platform === 'win32'
+const isWin = process.platform === 'win32'
 
 const fs = require('fs')
 const path = require('path')
@@ -19,7 +19,7 @@ function ext() {
 const spawn = require('child_process').spawn
 
 function npm(dest, cb) {
-	spawn('npm', ['i', '--production'], {
+	spawn('npm' + (isWin ? '.cmd' : ''), ['i', '--production'], {
 		cwd: dest,
 		env: JSON.parse(JSON.stringify(process.env))
 	}).on('exit', cb)
