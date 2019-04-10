@@ -1,6 +1,6 @@
 # PimpMyStremio
 
-Local add-on manager for Stremio
+Local add-on manager for Stremio.
 
 Download the version for your operating system from [the downloads page](https://github.com/sungshon/PimpMyStremio/releases).
 
