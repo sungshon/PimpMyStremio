@@ -1,0 +1,135 @@
+[
+	{
+		"name": "Jackett",
+		"logo": "https://static1.squarespace.com/static/55c17e7ae4b08ccd27be814e/t/599b81c32994ca8ff6c1cd37/1508813048508/Jackett-logo-2.jpg",
+		"description": "Stremio Add-on to get torrent results from Jackett",
+		"types": ["Movies", "Series"],
+		"repo": "BoredLama/stremio-jackett-local"
+	},
+	{
+		"name": "Open Directories - Videos",
+		"logo": "https://logopond.com/logos/3290f64e7448ab9cf04239a070a8cc47.png",
+		"description": "Stremio Add-on to get streaming results from Open Directories",
+		"types": ["Movies", "Series"],
+		"repo": "BoredLama/stremio-open-directories-local"
+	},
+	{
+		"name": "Open Directories - Music",
+		"logo": "https://secure.webtoolhub.com/static/resources/logos/set1/bc185e1e.jpg",
+		"description": "Stremio Add-on to get music streaming results from Open Directories",
+		"types": ["Music"],
+		"repo": "BoredLama/stremio-open-music-local"
+	},
+	{
+		"name": "123TV",
+		"logo": "http://123tvnow.com/wp-content/themes/123tv/img/logo.png",
+		"description": "Free IPTV from 123TV",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-123tv-local"
+	},
+	{
+		"name": "Vader Streams IPTV",
+		"logo": "https://res.cloudinary.com/teepublic/image/private/s--LVDsoQK4--/t_Preview/b_rgb:191919,c_limit,f_jpg,h_630,q_90,w_630/v1475223127/production/designs/707738_1.jpg",
+		"description": "IPTV Service - Requires Subscription",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-vaders-local"
+	},
+	{
+		"name": "Nitro IPTV",
+		"logo": "https://mydingtv.com/wp-content/uploads/2019/02/Nitrous-TV.jpg",
+		"description": "IPTV Service - Requires Subscription",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-nitro-local"
+	},
+	{
+		"name": "Beast IPTV",
+		"logo": "https://thebeastip.tv/wp-content/uploads/2018/05/cropped-beast.png",
+		"description": "IPTV Service - Requires Subscription",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-beast-local"
+	},
+	{
+		"name": "Twisted IPTV",
+		"logo": "https://s3-us-west-2.amazonaws.com/usedphotosna/81320118_614.jpg",
+		"description": "IPTV Service - Requires Subscription",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-twisted-local"
+	},
+	{
+		"name": "IPTV Web Player - Catalogs",
+		"logo": "http://www.mdcgate.com/apps/upload/images/tvos_iptv/IPTV-tvOS-icon.jpg",
+		"description": "Creates catalogs based on IPTV Web Portals. Connects to the Web Portal used by many IPTV Providers (Nitro, Beast, Twisted and many more)",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-iptv-webplayer-cats-local"
+	},
+	{
+		"name": "IPTV Web Player - Channels",
+		"logo": "http://www.mdcgate.com/apps/upload/images/tvos_iptv/IPTV-tvOS-icon.jpg",
+		"description": "Creates channels based on IPTV Web Portals. Connects to the Web Portal used by many IPTV Providers (Nitro, Beast, Twisted and many more)",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-iptv-webplayer-chans-local"
+	},
+	{
+		"name": "M3U Playlists - Catalogs",
+		"logo": "https://enjoy.zendesk.com/hc/article_attachments/360004422752/2149-m3u-image.jpg",
+		"description": "Creates catalogs based on M3U Playlists. Add M3U playlists to Stremio by URL, supports a maximum of 5 playlists and custom names",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-m3u-catalogs-local"
+	},
+	{
+		"name": "M3U Playlists - Channels",
+		"logo": "https://enjoy.zendesk.com/hc/article_attachments/360004422752/2149-m3u-image.jpg",
+		"description": "Creates channels based on M3U Playlists. Add M3U playlists to Stremio by URL, supports a maximum of 5 playlists and custom names",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-m3u-channels-local"
+	},
+	{
+		"name": "MP3 Clan",
+		"logo": "https://www.macupdate.com/images/icons256/52415.png",
+		"description": "Search and play music from MP3 Clan / MP3 Guild websites",
+		"types": ["Music"],
+		"repo": "JerryTheMole/stremio-mp3clan-local"
+	},
+	{
+		"name": "TuneIn",
+		"logo": "https://www.underconsideration.com/brandnew/archives/tunein_2017_logo_2.png",
+		"description": "Radios from TuneIn",
+		"types": ["Music"],
+		"repo": "JerryTheMole/stremio-tunein-local"
+	},
+	{
+		"name": "PornHub",
+		"logo": "https://1000logos.net/wp-content/uploads/2017/12/Pornhub-symbol.jpg",
+		"description": "Porn videos from PornHub",
+		"types": ["Porn"],
+		"repo": "JerryTheMole/stremio-pornhub-local"
+	},
+	{
+		"name": "RedTube",
+		"logo": "https://upload.wikimedia.org/wikipedia/commons/1/15/Redtube_banner.png",
+		"description": "Porn videos from RedTube",
+		"types": ["Porn"],
+		"repo": "JerryTheMole/stremio-redtube-local"
+	},
+	{
+		"name": "Tube8",
+		"logo": "https://images-na.ssl-images-amazon.com/images/I/41TjznvkuzL.jpg",
+		"description": "Porn videos from Tube8",
+		"types": ["Porn"],
+		"repo": "JerryTheMole/stremio-tube8-local"
+	},
+	{
+		"name": "YouPorn",
+		"logo": "https://blog.youporn.com/wp-content/uploads/2012/02/youporn-logo.png",
+		"description": "Porn videos from YouPorn",
+		"types": ["Porn"],
+		"repo": "JerryTheMole/stremio-youporn-local"
+	},
+	{
+		"name": "SpankWire",
+		"logo": "https://pbs.twimg.com/profile_images/665600820419952640/POpDwoka_400x400.png",
+		"description": "Porn videos from SpankWire",
+		"types": ["Porn"],
+		"repo": "JerryTheMole/stremio-spankwire-local"
+	}
+]
