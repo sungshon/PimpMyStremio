@@ -8,6 +8,8 @@ With that said, the whitelisted module list is a large one, that should get you 
 
 If you need a module that is not on the whitelist for your add-on, create an issue for it, and we'll see if we can add it for you.
 
+Key features: auto-updates itself, auto-updates add-ons (using the releases info of their github pages), wide range of whitelisted add-ons, persisted data, user add-on configuration
+
 ## Difference between SDK and PimpMyStremio add-ons
 
 PimpMyStremio add-ons all need to have an `index.js` file as the entry point, are written in Node.js and `index.js` must export the `stremio-addon-sdk` router.
@@ -111,6 +113,6 @@ console.log('persist.myVar')
 persist.myVar = 'hello world'
 ```
 
+## Publishing an add-on
 
-
-
+To publish your add-on, make a PR to this repository adding it to the [addonsList.json](https://github.com/sungshon/PimpMyStremio/blob/master/src/addonsList.json) file
