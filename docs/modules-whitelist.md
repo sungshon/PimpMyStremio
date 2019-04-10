@@ -1,0 +1,21 @@
+# PimpMyStremio External Module Whitelist
+
+This is not the complete list of allowed modules, make sure to also read [internal modules](./modules-internal.md)
+
+- [url](https://nodejs.org/api/url.html)
+- [path](https://nodejs.org/api/path.html)
+- [ent](https://www.npmjs.com/package/ent)
+- [m3u8-reader](https://www.npmjs.com/package/m3u8-reader)
+- [needle](https://www.npmjs.com/package/needle)
+- [named-queue](https://www.npmjs.com/package/named-queue)
+- [video-name-parser](https://www.npmjs.com/package/video-name-parser)
+- [youtube-dl](https://www.npmjs.com/package/youtube-dl)
+- [crypto-js](https://www.npmjs.com/package/crypto-js)
+- [parse-torrent](https://www.npmjs.com/package/parse-torrent)
+- [xml-js](https://www.npmjs.com/package/xml-js)
+- [name-to-imdb](https://www.npmjs.com/package/name-to-imdb)
+- [async](https://www.npmjs.com/package/async)
+- [google](https://www.npmjs.com/package/google)
+- [cheerio](https://www.npmjs.com/package/cheerio)
+- [jsdom](https://www.npmjs.com/package/jsdom)
+- [xml2js](https://www.npmjs.com/package/xml2js)
