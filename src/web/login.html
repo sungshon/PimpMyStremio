@@ -1,0 +1,34 @@
+<html>
+
+	<head>
+		<title>PimpMyStremio</title>
+		<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-indigo.min.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" type="text/css" href="dialog/polyfill.css" />
+		<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/styles.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+		<link rel="shortcut icon" type="image/png" href="/pimpmystremio-favicon.png"/>
+	</head>
+
+	<body>
+		<div id="pageContent">
+			<img src="/logo.jpg" width="300" id="loginLogo">
+			<form class="loginForm" action="#">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				    <input class="mdl-textfield__input" type="text" id="password" name="password">
+				    <label class="mdl-textfield__label" for="password">Password</label>
+				</div>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="loginButton" onClick="tryLoginForm()">
+					Log In
+				</button>
+			</form>
+		</div>
+		<dialog id="dialog" class="mdl-dialog"></dialog>
+		<script src="dialog/polyfill.js"></script>
+		<script src="login.js"></script>
+		<script>$(document).ready(loginInit)</script>
+	</body>
+
+</html>

@@ -1,0 +1,48 @@
+<html>
+
+	<head>
+		<title>PimpMyStremio</title>
+		<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-indigo.min.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" type="text/css" href="dialog/polyfill.css" />
+		<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/styles.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+		<link rel="shortcut icon" type="image/png" href="/pimpmystremio-favicon.png"/>
+	</head>
+
+	<body>
+		<div id="pageContent">
+			<div id="header">
+				<a class="backLink" href="/"><img src="/logo.jpg" width="200"></a>
+
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored startStremio" onClick="external()" style="margin-left: 405px">
+					<i class="material-icons">launch</i>
+				</button>
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored startStremio" onClick="settings('_pimpmystremio', 'PimpMyStremio v1.0.0')" style="margin-left: 9px">
+					<i class="material-icons">settings</i>
+				</button>
+			</div>
+
+			<div class="content"></div>
+
+			<div class="footer">
+				<a href="https://github.com/sungshon/PimpMyStremio/" target="_blank">Github</a>
+				&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+				<a href="https://github.com/sungshon/PimpMyStremio/issues" target="_blank">Issues</a>
+				&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+				<a href="https://github.com/sungshon/PimpMyStremio/blob/master/docs/README.md" target="_blank">Documentation</a>
+			</div>
+		</div>
+		<dialog id="dialog" class="mdl-dialog"></dialog>
+		<div id="toast" class="mdl-js-snackbar mdl-snackbar">
+			<div class="mdl-snackbar__text"></div>
+			<button class="mdl-snackbar__action" type="button"></button>
+		</div>
+		<script src="dialog/polyfill.js"></script>
+		<script src="login.js"></script>
+		<script src="script.js"></script>
+	</body>
+
+</html>

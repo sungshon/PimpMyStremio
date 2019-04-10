@@ -1,0 +1,201 @@
+body {
+	text-align: center;
+	font-family: 'Roboto', sans-serif;
+}
+#header {
+	margin-top: 40px;
+}
+.startStremio {
+	background-color: #1e8dd5;
+	margin-left: 457px;
+}
+.content {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	text-align: left;
+}
+.desc {
+	text-align: left !important;
+	width: 278px;
+	white-space: normal;
+	line-height: 22px;
+}
+.name {
+	text-align: left !important;
+	width: 146px !important;
+	white-space: normal;
+	line-height: 22px;
+}
+.actions {
+	width: 132px !important;
+	text-align: right;
+}
+.toggle {
+	margin-right: 10px;
+}
+.addon-load {
+	margin-right: 6px;
+}
+#pageContent {
+	display: inline-block
+}
+.backLink {
+	cursor: pointer;
+	text-decoration: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	color: black;
+}
+.backLink:visited {
+	color: black;
+}
+#dialog {
+  padding: 30px;
+}
+.mdl-switch {
+  margin-bottom: 20px;
+  text-align: left;
+  cursor: pointer;
+}
+.settingsSub {
+  margin-top: -15px;
+  margin-bottom: 25px;
+  display: inline-block;
+  opacity: 0.7;
+}
+.settingsTop {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.settingsFooter {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.settingsMainButton {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.settingsRun {
+  margin-right: 15px;
+}
+.footer {
+  margin-bottom: 60px;
+}
+.imgBox {
+  width: 100px;
+  height: 100px;
+  background-size: contain !important;
+}
+.nosettings {
+  margin-bottom: 20px;
+}
+button.ext {
+  width: 100%;
+}
+
+#loginLogo {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+#loginButton {
+  margin-left: 20px;
+}
+
+#manifest-url-parent {
+  cursor: pointer;
+}
+
+#manifest-url {
+  cursor: pointer !important;
+}
+
+.no-setting .mdl-button {
+  margin-top: 20px;
+}
+
+.mdl-snackbar__text {
+  width: 100%;
+}
+
+.mdl-snackbar__action {
+  display: none !important;
+}
+
+.mdl-expansion {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+.mdl-expansion__summary {
+  padding-left: 24px;
+  padding-right: 24px;
+  height: 48px;
+  display: flex;
+  outline: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.mdl-expansion__summary::-webkit-details-marker {
+  display: none;
+}
+.mdl-expansion__summary::after {
+  font-family: 'Material Icons';
+  content: '\e313';
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-flex;
+  flex-direction: column;
+  user-select: none;
+  justify-content: center;
+  transition: transform 200ms, color 200ms;
+  margin-left: auto;
+  color: rgba(0, 0, 0, 0.38);
+}
+.mdl-expansion__summary:focus {
+  background-color: #EEEEEE;
+}
+.mdl-expansion__summary:focus::after {
+  color: rgba(0, 0, 0, 0.54);
+}
+.mdl-expansion__header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  flex-basis: 30%;
+  margin-right: 16px;
+  font-size: 16px;
+}
+.mdl-expansion__subheader {
+  font-size: .75rem;
+  color: rgba(0, 0, 0, 0.54);
+}
+.mdl-expansion__secondary-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  flex-basis: 30%;
+  color: rgba(0, 0, 0, 0.87);
+  margin-right: 16px;
+}
+.mdl-expansion__content {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.mdl-expansion[open] .mdl-expansion__summary::after {
+  transform: rotate(180deg);
+}
