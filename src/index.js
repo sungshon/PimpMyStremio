@@ -17,6 +17,7 @@ const login = require('./lib/login')
 const querystring = require('querystring')
 const path = require('path')
 const confDir = require('./lib/dirs/configDir')
+const openLinux = require('./lib/openLinux')
 
 const isStartup = process.env['PMS_STARTUP']
 
@@ -121,7 +122,14 @@ async function runServer() {
         if (userConfig.remote)
             tunnel(serverPort, { subdomain: userConfig.subdomain }) 
         else if (!isStartup)
-        	opn('http://127.0.0.1:' + serverPort)
+        	opn('http://127.0.0.1:' + serverPort, { wait: true }).catch((e) => {
+        		if (process.platform == 'linux')
+        			openLinux('http://127.0.0.1:' + serverPort)
+        		else {
+        			console.log('Non-critical: Could not auto-open webpage, presuming Linux OS')
+        			console.error(e)
+        		}
+        	})
 
 	})
 }
