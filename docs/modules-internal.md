@@ -9,7 +9,7 @@ Gets movie / series metadata from Cinemeta based on IMDB ID and type (`movie` or
 ```javascript
 const cinemeta = require('cinemeta')
 
-cinemeta.get({ imdb: 'tt0944947', type: 'series }).then(resp => {
+cinemeta.get({ imdb: 'tt0944947', type: 'series' }).then(resp => {
   // resp is Game of Thrones metadata
 }).catch(err => {
   // error
@@ -34,7 +34,7 @@ evl('Math.random()').then(resp => {
 
 The proxy has a synchronous API that allows you to change headers of URLs on the fly, disabling CORS, referrer checks, etc.
 
-```
+```javascript
 const { proxy } = require('internal')
 
 const proxiedURL = proxy.addProxy('https://www.imdb.com/title/tt0944947/', { headers: { referer: 'https://www.imdb.com/' } })
@@ -44,7 +44,7 @@ const proxiedURL = proxy.addProxy('https://www.imdb.com/title/tt0944947/', { hea
 
 This is an internal function that uses [phantom](https://www.npmjs.com/package/phantom) under the hood.
 
-```
+```javascript
 const phantom = require('phantom')
 
 phantom.load(options, clientArguments, phantomOptions, (instance, page) => {
