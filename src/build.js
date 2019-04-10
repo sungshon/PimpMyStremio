@@ -1,5 +1,5 @@
 
-const isWin = process.platform === 'win32'
+var isWin = process.platform === 'win32'
 
 const fs = require('fs')
 const path = require('path')
@@ -19,7 +19,7 @@ function ext() {
 const spawn = require('child_process').spawn
 
 function npm(dest, cb) {
-	spawn('npm' + (isWin ? '.cmd' : ''), ['i', '--production'], {
+	spawn('npm', ['i', '--production'], {
 		cwd: dest,
 		env: JSON.parse(JSON.stringify(process.env))
 	}).on('exit', cb)
@@ -63,6 +63,18 @@ function copyPhantom(cb) {
 	})
 }
 
+function fixLinux(cb) {
+	if (process.platform == 'linux')
+		cb()
+	else {
+		console.log('Patching for Linux')
+		const xdgOpen = path.join(__dirname, 'node_modules', 'open', 'xdg-open')
+		if (fs.existsSync(xdgOpen))
+			fs.copyFileSync(xdgOpen, path.join(assetsDir, 'xdg-open')
+		cb()
+	}
+}
+
 function packageApp() {
 
 	console.log('Start - Packaging App to Executable')
@@ -79,7 +91,9 @@ function packageApp() {
 copyWeb(() => {
 	copyYoutube(() => {
 		copyPhantom(() => {
-			packageApp()
+			fixLinux(() => {
+				packageApp()
+			})
 		})
 	})
 })
