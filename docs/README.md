@@ -97,8 +97,19 @@ To get the config in code, just do:
 const { config } = require('internal')
 ```
 
+## Persisted data
 
+This internal module is much like `localStorage`, as it's an object that will persist your data through app close / add-on close.
 
+Example:
+
+```javascript
+const { persist } = require('internal')
+
+console.log('persist.myVar')
+
+persist.myVar = 'hello world'
+```
 
 
 
