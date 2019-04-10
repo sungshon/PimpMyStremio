@@ -8,7 +8,7 @@ With that said, the whitelisted module list is a large one, that should get you 
 
 If you need a module that is not on the whitelist for your add-on, create an issue for it, and we'll see if we can add it for you.
 
-## Difference between SDK and PimpMyStremio Add-ons
+## Difference between SDK and PimpMyStremio add-ons
 
 PimpMyStremio add-ons all need to have an `index.js` file as the entry point, are written in Node.js and `index.js` must export the `stremio-addon-sdk` router.
 
