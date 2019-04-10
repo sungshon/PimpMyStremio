@@ -48,9 +48,9 @@ Alternatively, you can also sideload add-ons into PimpMyStremio to test them wit
 
 To sideload add-ons, you will need to create a new directory at one of these paths:
 
-OSX: `~/Library/Preferences/PimpMyStremio/sideload/`
-Win: `C:\Users\[username]\AppData\PimpMyStremio\sideload\`
-Linux: `~/.local/share/PimpMyStremio/sideload/`
+- OSX: `~/Library/Preferences/PimpMyStremio/sideload/`
+- Win: `C:\Users\[username]\AppData\PimpMyStremio\sideload\`
+- Linux: `~/.local/share/PimpMyStremio/sideload/`
 
 After creating a new directory, add `index.js` (described above) and `config.json` (described below) to it.
 
