@@ -115,4 +115,4 @@ persist.myVar = 'hello world'
 
 ## Publishing an add-on
 
-To publish your add-on, make a PR to this repository adding it to the [addonsList.json](https://github.com/sungshon/PimpMyStremio/blob/master/src/addonsList.json) file
+To publish your add-on, make a PR to this repository adding it to the [addonsList.json](https://github.com/sungshon/PimpMyStremio/blob/master/src/addonsList.json) file.
