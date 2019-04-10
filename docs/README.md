@@ -108,7 +108,7 @@ Example:
 ```javascript
 const { persist } = require('internal')
 
-console.log('persist.myVar')
+console.log(persist.myVar)
 
 persist.myVar = 'hello world'
 ```
