@@ -15,4 +15,4 @@ function ext() {
 
 const { exec } = require('pkg')
 
-exec(['package.json', '--target', 'host', '--output', '../PimpMyStremio' + ext()])
+exec(['package.json', '--target', 'host', '--output', '../PimpMyStremio/PimpMyStremio' + ext()])
