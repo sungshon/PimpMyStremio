@@ -2,7 +2,7 @@ const Client = require('ssh2').Client // To communicate with Serveo
 const Socket = require('net').Socket // To accept forwarded connections (native module)
 const opn = require('open')
 const proxy = require('../proxy')
-const openLinux = require('./openLinux')
+const openLinux = require('../openLinux')
 
 const verbose = process.env['PMS_VERBOSE']
 const isStartup = process.env['PMS_STARTUP']
