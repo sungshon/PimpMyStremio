@@ -42,7 +42,7 @@ To better understand this code, please refer to the [stremio-addon-sdk](https://
 
 ## Testing add-ons
 
-You can ofcourse use the [stremio-addon-sdk Testing](https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/testing.md) documentation to test your add-on in Stremio before even using it in PimpMyStremio, as long as you only use the whitelisted it should have no issues working with PimpMyStremio too.
+You can ofcourse use the [stremio-addon-sdk Testing](https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/testing.md) documentation to test your add-on in Stremio before even using it in PimpMyStremio, as long as you only use the whitelisted modules it should have no issues working with PimpMyStremio too.
 
 Alternatively, you can also sideload add-ons into PimpMyStremio to test them with it directly.
 
@@ -56,7 +56,7 @@ After creating a new directory, add `index.js` (described above) and `config.jso
 
 Now when you start PimpMyStremio, your local add-on will be automatically loaded and available in the "Sideloaded" section.
 
-If the errors of your add-on are not visible (this usually only happens to type errors), then you can set the `PMS_UNSAFE` environment variable to any value to load your add-on directly in PimpMyStremio instead of sandboxing it.
+If the errors of your add-on are not visible (this usually only happens for type errors), then you can set the `PMS_UNSAFE` environment variable to any value to load your add-on directly in PimpMyStremio instead of sandboxing it.
 
 ## User settings
 
