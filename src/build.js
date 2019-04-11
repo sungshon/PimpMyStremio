@@ -64,7 +64,7 @@ function copyPhantom(cb) {
 }
 
 function fixLinux(cb) {
-	if (process.platform == 'linux')
+	if (process.platform != 'linux')
 		cb()
 	else {
 		console.log('Patching for Linux')
