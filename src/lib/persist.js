@@ -11,7 +11,25 @@ module.exports = {
 			fs.writeFileSync(file, JSON.stringify(persist), 'utf8')
 		} else
 			persist = JSON.parse(fs.readFileSync(file, 'utf8'))
-		return persist
+		return {
+			setItem: (par, val) => {
+				if (par && val && typeof par == 'string')
+					persist[par] = val
+			},
+			getItem: (par) => {
+				if (par && typeof par == 'string')
+					return persist[par]
+				return false
+			},
+			removeItem: (par) => {
+				if (par && typeof par == 'string')
+					delete persist[par]
+			},
+			clear: () => {
+				persist = {}
+			},
+			getObj: () => { return persist }
+		}
 	},
 	set: (tag, persist) => {
 		const file = path.join(persistDir, tag + '.json')
