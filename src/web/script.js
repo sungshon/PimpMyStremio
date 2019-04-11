@@ -89,7 +89,7 @@ function external() {
 		'<a target="_blank" href="' + getUrl(true) + '/catalog.json" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadApp()">' +
 			'Load in Stremio App' +
 		'</button></a>' +
-		'<a target="_blank" href="http://app.strem.io/shell-v4.4/#/addons/custom/all?collection=' + encodeURIComponent(getUrl() + '/catalog.json') + '" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadWeb()">' +
+		'<a target="_blank" href="http://app.strem.io/shell-v4.4/#/?addonOpen=' + encodeURIComponent(getUrl() + '/catalog.json') + '" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadWeb()">' +
 			'Load in Stremio Web' +
 		'</button></a>'
 	if (!isLocal())
