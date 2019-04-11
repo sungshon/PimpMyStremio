@@ -70,7 +70,7 @@ function fixLinux(cb) {
 		console.log('Patching for Linux')
 		const xdgOpen = path.join(__dirname, 'node_modules', 'open', 'xdg-open')
 		if (fs.existsSync(xdgOpen))
-			fs.copyFileSync(xdgOpen, path.join(assetsDir, 'xdg-open')
+			fs.copyFileSync(xdgOpen, path.join(assetsDir, 'xdg-open'))
 		cb()
 	}
 }
