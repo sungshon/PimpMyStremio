@@ -73,7 +73,7 @@ const vmApi = {
 		} else {
 
 			if (opts.data.sideloaded) {
-				const bundled = await bundle(opts.name, path.join(addonDir, opts.name, 'index.js'), path.join(addonDir, opts.name), vmApi.excluded)
+				const bundled = await bundle(opts.name, path.join(addonDir, opts.name, 'index.js'), path.join(addonDir, opts.name), vmApi.excluded.concat(vmApi.allowed))
 				if (!(bundled || {}).success) {
 					console.log(name + 'Error: Could not bundle sandboxed add-on with webpack')
 					return false
