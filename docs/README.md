@@ -8,7 +8,7 @@ With that said, the whitelisted module list is a large one, that should get you 
 
 If you need a module that is not on the whitelist for your add-on, create an issue for it, and we'll see if we can add it for you.
 
-Key features: auto-updates itself, auto-updates add-ons (using the releases info of their github pages), wide range of whitelisted add-ons, persisted data, user add-on configuration
+Key features: auto-updates itself, auto-updates add-ons, wide range of whitelisted add-ons, persisted data, user add-on configuration, running remotely
 
 ## Difference between SDK and PimpMyStremio add-ons
 
@@ -118,3 +118,8 @@ Also supports `.clear()` for clearing the entirety of the data.
 ## Publishing an add-on
 
 To publish your add-on, make a PR to this repository adding it to the [addonsList.json](https://github.com/sungshon/PimpMyStremio/blob/master/src/addonsList.json) file.
+
+## Updating an add-on
+
+The only thing you need to do is to publish a new release on GitHub, you don't need to add any files to it, as GitHub automatically archives the sources and that archive will be used to update your add-on to all it's users.
+
