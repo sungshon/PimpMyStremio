@@ -101,17 +101,19 @@ const { config } = require('internal')
 
 ## Persisted data
 
-This internal module is much like `localStorage`, as it's an object that will persist your data through app close / add-on close.
+This internal module is much like `localStorage`, as it's a utility that will persist your data through app close / add-on close.
 
 Example:
 
 ```javascript
 const { persist } = require('internal')
 
-console.log(persist.myVar)
+console.log(persist.getItem('myVar'))
 
-persist.myVar = 'hello world'
+persist.setItem('myVar', 'hello world')
 ```
+
+Also supports `.clear()` for clearing the entirety of the data.
 
 ## Publishing an add-on
 
