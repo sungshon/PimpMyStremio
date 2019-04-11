@@ -2,6 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const { VM, NodeVM } = require('vm2')
 
+const bundle = require('./bundle')
+
 const configDir = require('./dirs/configDir')()
 const addonsDir = require('./dirs/addonsDir')()
 const sideloadDir = require('./dirs/sideloadDir')()
