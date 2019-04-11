@@ -19,7 +19,7 @@ function ext() {
 const spawn = require('child_process').spawn
 
 function npm(dest, cb) {
-	spawn('npm', ['i', '--production'], {
+	spawn('npm' + (isWin ? '.cmd' : ''), ['i', '--production'], {
 		cwd: dest,
 		env: JSON.parse(JSON.stringify(process.env))
 	}).on('exit', cb)
@@ -84,6 +84,8 @@ function packageApp() {
 	exec(['package.json', '--target', 'host', '--output', '../assets/engine' + ext()]).then(() => {
 		console.log('Finished!')
 	}).catch(err => {
+		if (err)
+			console.error(err)
 		console.log('Finished!')
 	})
 }
