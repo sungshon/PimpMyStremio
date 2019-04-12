@@ -84,7 +84,7 @@ function loadQr(path) {
 }
 
 function external(title, path) {
-	path = path || '/catalog'
+	path = path || '/catalog.json'
 	let str = ''
 	if (title) {
 		dialog.close()
