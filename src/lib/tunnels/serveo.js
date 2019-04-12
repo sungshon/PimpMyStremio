@@ -100,7 +100,7 @@ function runTunnel(pmsPort, remoteOpts) {
         host: 'serveo.net',
         username: 'johndoe',
         keepaliveInterval: 60000,
-//        tryKeyboard: true
+        tryKeyboard: true
       })
 
 }
