@@ -14,7 +14,8 @@ const spawn = require('child_process').spawn
 
 function msg(str) {
 	console.log('PimpMyStremio - ' + str)
-	api.msg(str)
+	if (api)
+		api.msg(str)
 }
 
 function getBinDir() {
@@ -167,18 +168,13 @@ function startEngine(binDir) {
 		})
 
 	addonProc.stdout.on('data', data => {
-		if (data) {
+		if (data)
 			console.log(data.toString().trim())
-//			var sData = String(data).replace(/(\r\n\t|\n|\r\t)/gm,'')
-		}
-
 	})
 
 	addonProc.stderr.on('data', data => {
-		if (data) {
+		if (data)
 			console.log(data.toString().trim())
-//			var sData = String(data).replace(/(\r\n\t|\n|\r\t)/gm,'')
-		}
 	})
 
 	addonProc.on('exit', code => {
@@ -209,6 +205,7 @@ zipBall().then(githubData => {
 	const version = getVersion(binDir)
 
 	if (!version || version != githubData.tag) {
+		api.start()
 		msg('New version found')
 		installEngine(binDir, githubData).then(afterInstall).catch(afterInstall)
 	} else {
