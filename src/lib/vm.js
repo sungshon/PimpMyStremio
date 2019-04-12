@@ -26,6 +26,9 @@ function vmEval(str) {
 const vmApi = {
 	allowed: ['url', 'path', 'ent', 'm3u8-reader', 'needle', 'named-queue', 'video-name-parser', 'bin/youtube-dl', 'crypto-js', 'parse-torrent', 'xml-js', 'name-to-imdb', 'async', 'google', 'cheerio', 'jsdom', 'xml2js'],
 	excluded: ['stremio-addon-sdk', 'internal', 'phantom', 'eval'],
+	allModules: () => {
+		return vmApi.excluded.concat(vmApi.allowed.map(el => { return el.replace('bin/', '') }))
+	},
 	run: async opts => {
 
 		const addonDir = opts.data.sideloaded ? sideloadDir : addonsDir
@@ -73,7 +76,7 @@ const vmApi = {
 		} else {
 
 			if (opts.data.sideloaded) {
-				const bundled = await bundle(opts.name, path.join(addonDir, opts.name, 'index.js'), path.join(addonDir, opts.name), vmApi.excluded.concat(vmApi.allowed))
+				const bundled = await bundle(opts.name, path.join(addonDir, opts.name, 'index.js'), path.join(addonDir, opts.name), vmApi.allModules())
 				if (!(bundled || {}).success) {
 					console.log(name + 'Error: Could not bundle sandboxed add-on with webpack')
 					return false
