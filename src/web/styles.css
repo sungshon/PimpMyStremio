@@ -113,6 +113,29 @@ button.ext {
   cursor: pointer !important;
 }
 
+.copy-box {
+  color: rgba(0,0,0,0.5);
+  padding: 7px 10px;
+  border: 1px solid rgba(0,0,0,0.3);
+  display: inline-block;
+  margin-bottom: 20px;
+  cursor: pointer;
+  float: left;
+}
+
+.load-button {
+  margin-top: -1px;
+  float: right;
+}
+
+.load-title {
+  margin-bottom: 15px;
+}
+
+.copy-box:hover {
+  border: 1px solid rgba(83,109,254,0.6);
+}
+
 .no-setting .mdl-button {
   margin-top: 20px;
 }

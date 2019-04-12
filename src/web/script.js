@@ -67,10 +67,10 @@ function onImgLoad(selector, callback) {
     })
 }
 
-function loadQr() {
+function loadQr(path) {
 	dialog.close()
 	let str = '' +
-		'<img class="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=' + getUrl(true) + '/catalog.json">' +
+		'<img class="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=' + getUrl(true) + path + '">' +
 		'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised ext" onClick="closeDialog()">' +
 			'Close' +
 		'</button></div>'
@@ -83,18 +83,23 @@ function loadQr() {
 	})
 }
 
-function external() {
-	const url = getUrl()
-	let str = '' +
-		'<a target="_blank" href="' + getUrl(true) + '/catalog.json" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadApp()">' +
+function external(title, path) {
+	path = path || '/catalog'
+	let str = ''
+	if (title) {
+		dialog.close()
+		str += '<div class="load-title">' + title + '</div>'
+	}
+	str += '' +
+		'<a target="_blank" href="' + getUrl(true) + path + '" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadApp()">' +
 			'Load in Stremio App' +
 		'</button></a>' +
-		'<a target="_blank" href="http://app.strem.io/shell-v4.4/#/?addonOpen=' + encodeURIComponent(getUrl() + '/catalog.json') + '" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadWeb()">' +
+		'<a target="_blank" href="http://app.strem.io/shell-v4.4/#/?addonOpen=' + encodeURIComponent(getUrl() + path) + '" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadWeb()">' +
 			'Load in Stremio Web' +
 		'</button></a>'
 	if (!isLocal())
 		str += '' +
-			'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadQr()">' +
+			'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadQr(\'' + path + '\')">' +
 				'Load with QR Code' +
 			'</button></div>'
 	str += '' +
@@ -137,9 +142,9 @@ function objectifyForm(formArray) {
 	return returnArray
 }
 
-function copyManifestUrl() {
+function copyManifestUrl(url) {
   var aux = document.createElement('input')
-  aux.setAttribute('value', $('#manifest-url').val())
+  aux.setAttribute('value', url)
   document.getElementsByClassName('mdl-dialog')[0].prepend(aux)
   aux.select()
   document.execCommand('copy')
@@ -147,27 +152,31 @@ function copyManifestUrl() {
   $('#toast')[0].MaterialSnackbar.showSnackbar({ message: 'Copied Add-on URL to Clipboard' })
 }
 
-function basicSettings(repo, repoTitle) {
+function basicSettings(repo, repoTitle, isRunning) {
 	let str = '<center><h4 class="settingsTop">Settings</h4><br/><span class="settingsSub">' + repoTitle + '</span></center>'
-	str += '' +
-		'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" onClick="copyManifestUrl()" id="manifest-url-parent">' +
-		    '<input class="mdl-textfield__input" type="text" id="manifest-url" name="manifest-url" value="' + window.location.href + repoName(repo) + '/manifest.json" disabled>' +
-		    '<label class="mdl-textfield__label" for="manifest-url">Add-on URL (click to copy)</label>' +
-		'</div>'
+	if (repo != '_pimpmystremio') {
+		const path = '/' + repoName(repo) + '/manifest.json'
+		str += '<div>' +
+			'<div class="copy-box" onClick="copyManifestUrl(\'' + window.location.href.slice(0, -1) + path + '\')">Add-on URL (click to copy)</div>' +
+			'<button class="mdl-button mdl-js-button mdl-button--raised load-button" onClick="external(\'' + repoTitle + '\', \'' + path + '\')"' + (!isRunning ? ' disabled' : '')  + '>' +
+				'Load' +
+			'</button>' +
+			'</div>'
+	}
 	return str
 }
 
-function settings(repo, repoTitle) {
+function settings(repo, repoTitle, isRunning) {
 	request('addonConfig', repoName(repo), '', addonConfig => {
 		if (!Object.keys(addonConfig).length) {
-			let str = '<div class="no-setting">' + basicSettings(repo, repoTitle)
+			let str = '<div class="no-setting">' + basicSettings(repo, repoTitle, isRunning)
 			str += '<button class="mdl-button mdl-js-button mdl-button--raised" onClick="closeDialog()">Close</button></div>'
 			$('.mdl-dialog').html(str)
 			componentHandler.upgradeAllRegistered()
 	    	dialog.showModal()
 		} else {
 			request('defaultConfig', repoName(repo), '', defaultConfig => {
-				let str = basicSettings(repo, repoTitle)
+				let str = basicSettings(repo, repoTitle, isRunning)
 				str += '<form class="settingsForm" action="#">'
 				for (let key in defaultConfig) {
 					if (['string', 'number'].indexOf(defaultConfig[key].type) > -1) {
@@ -247,7 +256,7 @@ function addonToRow(data, addon, loading) {
 				'<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab toggle" onClick="' + (isRunning ? 'stop' : 'start') + '(\''+addon.repo+'\', \''+addon.name+'\')">' +
 					'<i class="material-icons">' + (isRunning ? 'pause' : 'play_arrow') + '</i>' +
 				'</button>' +
-				'<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" onClick="settings(\''+addon.repo+'\', \''+addon.name+'\')">' +
+				'<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" onClick="settings(\''+addon.repo+'\', \''+addon.name+'\', ' + isRunning.toString() + ')">' +
 					'<i class="material-icons">settings</i>' +
 				'</button>'
 		} else
