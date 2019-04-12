@@ -9,8 +9,14 @@ module.exports = {
 		if (!fs.existsSync(file)) {
 			persist = {}
 			fs.writeFileSync(file, JSON.stringify(persist), 'utf8')
-		} else
-			persist = JSON.parse(fs.readFileSync(file, 'utf8'))
+		} else {
+			try {
+				persist = JSON.parse(fs.readFileSync(file, 'utf8'))
+			} catch(e) {
+				persist = {}
+				fs.writeFileSync(file, JSON.stringify(persist), 'utf8')
+			}
+		}
 		return {
 			setItem: (par, val) => {
 				if (par && val && typeof par == 'string')
