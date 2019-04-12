@@ -12,6 +12,11 @@ const fs = require('fs')
 const rimraf = require('rimraf')
 const spawn = require('child_process').spawn
 
+function msg(str) {
+	console.log('PimpMyStremio - ' + str)
+	api.msg(str)
+}
+
 function getBinDir() {
 	const rootDir = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + '/.local/share')
 
@@ -44,7 +49,7 @@ function installed(binDir) {
 
 	requiredBins.some(file => {
 		if (!fs.existsSync(path.join(binDir, file))) {
-			console.log('Cannot start PimpMyStremio')
+			msg('Could not start engine')
 			console.error('Missing required library: ' + file)
 			isOk = false
 			return true
@@ -89,7 +94,7 @@ function installEngine(binDir, githubData) {
 		const dest = binDir
 
 		function installAddon() {
-			console.log('PimpMyStremio - Downloading new version')
+			msg('Downloading new version')
 			needle('get', githubData.zipBall, { follow_max: 5 })
 			.then(zipFile => {
 				const tmpFile = path.join(os.tmpdir(), 'PimpMyStremio.zip')
@@ -99,28 +104,28 @@ function installEngine(binDir, githubData) {
 
 				fs.writeFileSync(tmpFile, zipFile.body)
 
-				console.log('PimpMyStremio - Finished downloading new version')
+				msg('Finished downloading new version')
 
 				var extract = require('extract-zip')
 
-				console.log('PimpMyStremio - Unpacking new version')
+				msg('Unpacking new version')
 				extract(tmpFile, { dir: path.join(binDir, '..') }, function (err) {
 					fs.unlinkSync(tmpFile)
 					if (err) {
-						console.log('Unzip error:')
+						msg('Unzip error 2')
 						console.error(err)
 						reject()
 						return
 					} else {
-						console.log('PimpMyStremio - Finished unpacking new version')
+						msg('Finished unpacking new version')
 						saveVersion(binDir, githubData.tag)
 					}
-					console.log('Updated PimpMyStremio to ' + githubData.tag)
+					msg('Updated to ' + githubData.tag)
 					resolve()
 				})
 			})
 			.catch(err => {
-				console.log('Unzip error:')
+				msg('Unzip error 1')
 				console.error(err)
 				reject()
 			})
@@ -129,7 +134,7 @@ function installEngine(binDir, githubData) {
 		function cleanDir(dest, cb) {
 			fs.stat(dest, err => {
 				if (!err) {
-					console.log('PimpMyStremio - Removing old version')
+					msg('Removing old version')
 					rimraf(dest, () => {
 						cb()
 					})
@@ -192,17 +197,19 @@ function afterInstall() {
 	}
 }
 
-console.log('PimpMyStremio - Checking for updates')
+const api = require('./api')
+
+msg('Checking for updates')
 
 zipBall().then(githubData => {
 
 	const version = getVersion(binDir)
 
 	if (!version || version != githubData.tag) {
-		console.log('PimpMyStremio - New version found')
+		msg('New version found')
 		installEngine(binDir, githubData).then(afterInstall).catch(afterInstall)
 	} else {
-		console.log('PimpMyStremio - Already running latest version')
+		msg('Already running latest version')
 		startEngine(binDir)
 	}
 

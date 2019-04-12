@@ -12,10 +12,12 @@
     "needle": "^2.2.3",
     "node-zip": "^1.1.1",
     "rimraf": "^2.6.3",
-    "extract-zip": "^1.6.7"
+    "extract-zip": "^1.6.7",
+    "get-port": "^5.0.0",
+    "open": "^6.1.0"
   },
+  "bin": "index.js",
   "devDependencies": {
     "pkg": "^4.3.7"
-  },
-  "bin": "index.js
+  }
 }
