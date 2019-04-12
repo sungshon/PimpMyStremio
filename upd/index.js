@@ -148,6 +148,9 @@ function installEngine(binDir, githubData) {
 }
 
 function startEngine(binDir) {
+
+	api.close()
+
 	const newEnv = JSON.parse(JSON.stringify(process.env))
 
 	newEnv['PMS_UPDATE'] = process.execPath

@@ -4,6 +4,8 @@ const getPort = require('get-port')
 const opn = require('open')
 const openLinux = require('./openLinux')
 
+const atStartup = (process.argv || []).some(el => !!(el == '--startup'))
+
 let server
 
 getPort().then(port => {
@@ -16,8 +18,8 @@ getPort().then(port => {
 	server.listen(port, 'localhost', err => {
 	  let url = 'https://sungshon.github.io/PimpMyStremio/index.html'
 	  url += '?port=' + port
-	  console.log('starting: ' + url)
-	  opn(url, { wait: true }).catch((e) => {
+	  if (!atStartup)
+		opn(url, { wait: true }).catch((e) => {
 			if (process.platform == 'linux')
 				openLinux(url)
 			else {
