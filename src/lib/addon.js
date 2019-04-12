@@ -233,7 +233,7 @@ const addonApi = {
 						unzip.extract(zipped, dest)
 						data.tag = githubData.tag
 						userConfig.addons.installed.add(data)
-						const bundled = await bundle(repoData.repo, path.join(dest, 'index.js'), dest, vm.excluded.concat(vm.allowed))
+						const bundled = await bundle(repoData.repo, path.join(dest, 'index.js'), dest, vm.allModules())
 						if ((bundled || {}).success) {
 							console.log('Add-on installed: ' + data.repo)
 							resolve({ success: true })
