@@ -68,12 +68,13 @@ const configDb = {
 			let config
 
 			try {
-				config = fs.readFileSync(configFilePath)
+				config = JSON.parse(fs.readFileSync(configFilePath).toString())
 			} catch(e) {
 				// ignore read file issues
 				return defaultConfig
 			}
-			return JSON.parse(config.toString())
+
+			return config
 		} else
 			return defaultConfig
 	},
