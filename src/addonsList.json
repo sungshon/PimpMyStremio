@@ -98,6 +98,20 @@
 		"repo": "JerryTheMole/stremio-tunein-local"
 	},
 	{
+		"name": "Soundcloud",
+		"logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Antu_soundcloud.svg/150px-Antu_soundcloud.svg.png",
+		"description": "Tracks from Soundcloud",
+		"types": ["Music"],
+		"repo": "JerryTheMole/stremio-soundcloud-local"
+	},
+	{
+		"name": "Mixcloud",
+		"logo": "https://www.mixcloud.com/media/images/www/global/mixcloud-og.png",
+		"description": "Tracks from Mixcloud",
+		"types": ["Music"],
+		"repo": "JerryTheMole/stremio-mixcloud-local"
+	},
+	{
 		"name": "PornHub",
 		"logo": "https://1000logos.net/wp-content/uploads/2017/12/Pornhub-symbol.jpg",
 		"description": "Porn videos from PornHub",
