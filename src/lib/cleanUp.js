@@ -16,21 +16,43 @@ module.exports = {
 			process.exit()
 		}
 
-		process.on('cleanup',exitHandler)
+		process.on('cleanup', exitHandler)
 
 		process.on('exit', () => {
 			process.emit('cleanup')
 		})
 
 		process.on('SIGINT', () => {
-			process.exit(2)
+			process.exit(0)
 		})
 
 		process.on('uncaughtException', e => {
-			console.log('Uncaught Exception...')
-			console.log(e.stack)
-			process.exit(99)
+			const matches = e.stack.match(/\/[a-z0-9-_]+\/pms\.bundle\.js/gmi)
+			if ((matches || []).length) {
+				const repoName = matches[0].split('/')[1]
+				console.log(repoName + ' - Uncaught Exception')
+				console.log(e.stack)
+				addons.stop(addons.getManifest(repoName)).catch(e => {})
+			} else {
+				console.log('Uncaught Exception...')
+				console.log(e.stack)
+				process.exit(0)
+			}
 		})
+
+ 		process.on('unhandledRejection', (e, p) => {
+ 			if (e instanceof Error && e.stack) {
+ 				const matches = e.stack.match(/\/[a-z0-9-_]+\/pms\.bundle\.js/gmi)
+				const repoName = matches[0].split('/')[1]
+				console.log(repoName + ' - Unhandler Promise Rejection')
+				console.log(e.stack)
+				addons.stop(addons.getManifest(repoName)).catch(e => {})
+ 			} else {
+				console.log('Unhandler Promise Rejection...')
+				console.log(e.stack)
+ 				process.exit(0)
+ 			}
+ 		})
 	},
 	restart: () => {
 		if (server)
