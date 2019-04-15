@@ -1,5 +1,4 @@
 const webpack = require('webpack')
-const nodeExternals = require('webpack-node-externals')
 
 module.exports = (name, entry, dest, excluded) => {
 	return new Promise((resolve, reject) => {
@@ -7,7 +6,6 @@ module.exports = (name, entry, dest, excluded) => {
 		  entry,
 		  target: 'node',
 		  externals: [
-		  	nodeExternals(),
 		  	function(context, request, callback) {
 		        if (excluded.includes(request))
 		            return callback(null, "commonjs " + request)
