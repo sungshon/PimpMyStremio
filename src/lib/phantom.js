@@ -41,12 +41,12 @@ module.exports = {
 		})
 		.then(function(page) {
 
-	// this breaks phantomjs responses for some reason:
+// this breaks phantomjs responses for some reason:
 
-	//			if (!opts.timeout)
-	//				opts.timeout = 15000 // default timeout of 15 secs
+//			if (!opts.timeout)
+//				opts.timeout = 15000 // default timeout of 15 secs
 
-	//			page.property('settings', { resourceTimeout: opts.timeout })
+//			page.property('settings', { resourceTimeout: opts.timeout })
 
 			if (opts.clearMemory)
 				page.invokeMethod('clearMemoryCache')
@@ -60,15 +60,16 @@ module.exports = {
 			if (opts.noRedirect)
 				page.property('navigationLocked', true)
 
-	//			page.on('onResourceTimeout', function() {
-	//				console.log('Page Timed Out')
-	//			})
+//			page.on('onResourceTimeout', function() {
+//				console.log('Page Timed Out')
+//			})
 
 			cb(phInstance, page)
 
 		}).catch(err => {
 	      console.log('Caught PhantomJS Error')
 	      console.error(err)
+	      cb()
 	    })
 	},
 	close: (instance, page, cb) => {
