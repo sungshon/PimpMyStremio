@@ -209,15 +209,20 @@ const addonApi = {
 			if (!data.sideloaded)
 				userConfig.addons.running.remove(data)
 			const name = parseRepo(data.repo).repo
-			persist.set(name, addons[name]['_persist'].getObj())
-			addons[name] = null
-			console.log('Add-on stopped: ' + data.repo)
-			resolve({ success: true })
+			if (addons[name]) {
+				if ((addons[name]['_persist'] || {}).getObj)
+					persist.set(name, addons[name]['_persist'].getObj())
+				addons[name] = null
+				console.log('Add-on stopped: ' + data.repo)
+				resolve({ success: true })
+			} else
+				reject('Could not stop add-on, it is not running: ' + name)
 		})
 	},
 	persistAll: () => {
 		for (let key in addons)
-			persist.set(key, addons[key]['_persist'].getObj())
+			if ((((addons || {})[key] || {})['_persist'] || {}).getObj)
+				persist.set(key, addons[key]['_persist'].getObj())
 		return true
 	},
 	install: data => {
