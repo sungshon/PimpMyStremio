@@ -1,5 +1,5 @@
 {
-  "name": "stremio-blackbox",
+  "name": "pimpmystremio",
   "version": "1.0.0",
   "description": "Stremio local add-ons package manager",
   "main": "index.js",
