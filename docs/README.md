@@ -82,14 +82,21 @@ Your add-on can specify that it supports (or requires) user settings, to do so, 
     "type": "string",
     "default": "",
     "required": true
+  },
+  "style": {
+    "title": "Display Style",
+    "type": "select",
+    "options": ["Catalog", "Filters", "Channel"]
+    "default": "Channel"
   }
 }
 ```
 
 - `required` is optional and defaults to `false`
-- `type` can be "string", "number" or "boolean"
+- `type` can be "string", "number", "boolean" or "select"
 - `default` represents the default value
 - `title` is a string that will serve as the human-readable title for the users
+- `options` is an array of strings, only used for "select" type
 
 And the property name is what you will get back in the `config` option with the user set (or default) value
 
