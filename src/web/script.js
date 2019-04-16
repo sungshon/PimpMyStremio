@@ -258,10 +258,14 @@ function addonToRow(data, addon, loading) {
 		})
 
 		if (isInstalled) {
-			const isRunning = (data.runningAddons || []).some(runningAddon => {
-				if (addon.repo == runningAddon.repo)
-					return true
-			})
+			let isRunning = true
+			if (addon.sideloaded)
+				isRunning = addon.running
+			else
+				isRunning = addon.sideloaded && addon.running || (data.runningAddons || []).some(runningAddon => {
+					if (addon.repo == runningAddon.repo)
+						return true
+				})
 			str += '' +
 				'<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab toggle" onClick="' + (isRunning ? 'stop' : 'start') + '(\''+addon.repo+'\', \''+addon.name+'\')">' +
 					'<i class="material-icons">' + (isRunning ? 'pause' : 'play_arrow') + '</i>' +
