@@ -222,3 +222,7 @@ button.ext {
 .mdl-expansion[open] .mdl-expansion__summary::after {
   transform: rotate(180deg);
 }
+
+.mdl-select .mdl-textfield__label {
+  top: 2px !important;
+}

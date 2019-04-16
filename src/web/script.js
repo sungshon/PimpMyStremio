@@ -196,6 +196,16 @@ function settings(repo, repoTitle, isRunning) {
 								'<input type="checkbox" id="' + key + '" class="mdl-switch__input" name="'+key+'"' + isChecked + '>' +
 								'<span class="mdl-switch__label">' + defaultConfig[key].title + '</span>' +
 							'</label>'
+					} else if (defaultConfig[key].type == 'select') {
+						const selDefault = addonConfig[key] || defaultConfig[key].default || (defaultConfig[key].options || [])[0]
+						str += '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-select">' +
+							'<select class="mdl-textfield__input" id="' + key + '" name="' + key + '">';
+						(defaultConfig[key].options || []).forEach(el => {
+							str += '<option value="' + el + '"' + (el == selDefault ? ' selected': '') + '>' + el + '</option>'
+						})
+						str += '</select>' +
+							'<label class="mdl-textfield__label" for="' + key + '">' + defaultConfig[key].title + '</label>' +
+							'</div>'
 					}
 				}
 				str += '<input type="hidden" name="repo" value="'+repo+'">'
