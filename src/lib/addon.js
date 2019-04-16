@@ -20,7 +20,7 @@ const defaultConfig = require('./config/defaultConfig')
 
 const addons = {}
 
-const sideloadedAddons = []
+let sideloadedAddons = []
 
 function parseRepo(github) {
 	const parts = github.split('/')
@@ -86,7 +86,7 @@ const addonApi = {
 		if (name == '_pimpmystremio')
 			return name
 		let manifest
-		allAddons.concat(sideloadedAddons).some(addon => {
+		sideloadedAddons.concat(allAddons).some(addon => {
 			if (addon.repo.endsWith('/' + name)) {
 				manifest = addon
 				return true
@@ -185,8 +185,18 @@ const addonApi = {
 				addons[name]['_persist'] = persistData
 				if (!data.sideloaded)
 					userConfig.addons.running.add(data)
-				else
-					sideloadedAddons.push(data)
+				else {
+					const found = sideloadedAddons.some((addon, ij) => {
+						if (addon.repo == data.repo) {
+							sideloadedAddons[ij].running = true
+							return true
+						}
+					})
+					if (!found) {
+						data.running = true
+						sideloadedAddons.push(data)
+					}
+				}
 				console.log('Add-on running: ' + data.repo)
 				resolve({ success: true })
 			} else
@@ -195,8 +205,16 @@ const addonApi = {
 	},
 	stop: data => {
 		return new Promise((resolve, reject) => {
-			if (!data.sideloaded)
+			if (data.sideloaded) {
+				sideloadedAddons.some((addon, ij) => {
+					if (addon.repo == data.repo) {
+						sideloadedAddons[ij].running = false
+						return true
+					}
+				})
+			} else {
 				userConfig.addons.running.remove(data)
+			}
 			const name = parseRepo(data.repo).repo
 			if (addons[name]) {
 				if ((addons[name]['_persist'] || {}).getObj)
