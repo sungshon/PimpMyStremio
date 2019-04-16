@@ -39,7 +39,8 @@
     "ssh2": "^0.8.2",
     "cors": "^2.8.4",
     "router": "^1.3.3",
-    "webpack": "^4.29.6"
+    "webpack": "^4.29.6",
+    "stremio-addon-sdk": "^1.2.0"
   },
   "devDependencies": {
     "ncp": "^2.0.0",
