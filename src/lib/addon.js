@@ -5,7 +5,6 @@ const async = require('async')
 const path = require('path')
 const os = require('os')
 const addonsDir = require('./dirs/addonsDir')()
-const sideloadDir = require('./dirs/sideloadDir')()
 const persist = require('./persist')
 const unzip = require('./unzip')
 const proxy = require('./proxy')
@@ -17,6 +16,7 @@ const allAddons = require('../addonsList')
 
 const userConfig = require('./config/userConfig')
 const addonConfig = require('./config/addonConfig')
+const defaultConfig = require('./config/defaultConfig')
 
 const addons = {}
 
@@ -106,19 +106,7 @@ const addonApi = {
 		}
 		return new Promise((resolve, reject) => {
 			const name = parseRepo(data.repo).repo
-			const addonDir = data.sideloaded ? sideloadDir : addonsDir
-			const file = path.join(addonDir, name, 'config.json')
-			if (fs.existsSync(file)) {
-				let data
-				try {
-					data = JSON.parse(fs.readFileSync(file, 'utf8'))
-				} catch(e) {
-					console.error('Could not parse config for: ' + name)
-					console.error(e)
-				}
-				resolve(data || {})
-			} else
-				resolve({})
+			resolve(defaultConfig.get(name, data))
 		})
 	},
 	addonConfig: async data => {
@@ -146,16 +134,17 @@ const addonApi = {
 		if (data == '_pimpmystremio')
 			return addonApi.saveSettings(payload)
 		return new Promise((resolve, reject) => {
+
+			const name = parseRepo(data.repo).repo
+
 			let obj
 
 			try {
 				obj = JSON.parse(payload)
 			} catch(e) {
-				console.error('Could not parse settings json')
+				console.error(name + ' - Could not parse settings json')
 				reject(e)
 			}
-
-			const name = parseRepo(data.repo).repo
 
 			const cloneObj = JSON.parse(JSON.stringify(obj))
 			delete cloneObj.repo
