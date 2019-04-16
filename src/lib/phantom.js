@@ -9,34 +9,31 @@ const defaultClArgs = ["--ignore-ssl-errors=true", "--web-security=false", "--ss
 
 module.exports = {
 	load: (opts, clArgs, opts2, cb) => {
-		var phInstance
+		let instance
 
 		opts = opts || {}
 		clArgs = clArgs || defaultClArgs
 		opts2 = opts2 || { logLevel: 'warn' }
 
+		function warn(msg) { console.log('PhantomJS warning: ' + msg + ', using defaults') }
+
 		if (!Array.isArray(clArgs)) {
-			console.log('PhantomJS error: Client arguments is not an array, using defaults')
-			clArgs = defaultClArgs
+			clArgs = defaultClArgs; warn('Client arguments is not an array')
 		}
 
-		if (typeof opts === 'object' && opts !== null) {
-			// it's an object
+		if (typeof opts === 'object' && opts !== null) { // it's an object
 		} else {
-			console.log('PhantomJS error: First options are not an object, using defaults')
-			opts = {}
+			opts = {}; warn('First options are not an object')
 		}
 
-		if (typeof opts2 === 'object' && opts2 !== null) {
-			// it's an object
+		if (typeof opts2 === 'object' && opts2 !== null) { // it's an object
 		} else {
-			console.log('PhantomJS error: Second options are not an object, using defaults')
-			opts2 = { logLevel: 'warn' }
+			opts2 = { logLevel: 'warn' }; warn('Second options are not an object')
 		}
 
 		phantom.create(clArgs, opts2)
-		.then(function(instance) {
-			phInstance = instance
+		.then(function(phInstance) {
+			instance = phInstance
 			return instance.createPage()
 		})
 		.then(function(page) {
@@ -64,25 +61,33 @@ module.exports = {
 //				console.log('Page Timed Out')
 //			})
 
-			cb(phInstance, page)
+			cb(instance, page)
 
 		}).catch(err => {
-	      console.log('Caught PhantomJS Error')
+	      console.log('PhantomJS - Caught Error')
 	      console.error(err)
 	      cb()
 	    })
 	},
-	close: (instance, page, cb) => {
+	close: (instance = {}, page = {}, cb = (() => {})) => {
 
-		setTimeout(function() {
+		let err
 
-			var end = function() {
-				var next = cb = function() {}
-				instance.exit().then(cb || next, cb || next)
-			}
+		if (!instance.exit)
+			err = Error('PhantomJS - Cannot close, missing instance')
 
-			page.close().then(end, end)
+		if (!page.close)
+			err = Error('PhantomJS - Cannot close, missing page')
 
+		if (err) {
+			console.error(err)
+			cb(err)
+			return
+		}
+
+		setTimeout(() => {
+			const exit = () => { instance.exit().then(cb, cb) }
+			page.close().then(exit, exit)
 		})
 
 	}
