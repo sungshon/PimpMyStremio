@@ -90,7 +90,7 @@ Your add-on can specify that it supports (or requires) user settings, to do so, 
   "style": {
     "title": "Display Style",
     "type": "select",
-    "options": ["Catalog", "Filters", "Channel"]
+    "options": ["Catalog", "Filters", "Channel"],
     "default": "Channel"
   }
 }
