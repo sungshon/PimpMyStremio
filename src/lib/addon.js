@@ -136,7 +136,7 @@ const addonApi = {
 			const defaultConf = await addonApi.defaultConfig(data)
 			const addonConf = addonConfig.get(name)
 			for (key in defaultConf)
-				if (!addonConf.hasOwnProperty(key) || typeof addonConf[key] !== defaultConf[key].type)
+				if (!addonConf.hasOwnProperty(key) || (typeof addonConf[key] !== defaultConf[key].type && defaultConf[key].type != 'select'))
 					addonConf[key] = defaultConf[key].default
 			addonConfig.set(name, addonConf)
 			resolve(addonConf)
@@ -169,7 +169,7 @@ const addonApi = {
 		const catalog = []
 		for (let key in addons) {
 			const addon = addons[key]
-			if (addon.manifest)
+			if ((addon || {}).manifest)
 				catalog.push({
 					manifest: addon.manifest,
 					transportName: 'http',
