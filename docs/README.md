@@ -56,7 +56,11 @@ After creating a new directory, add `index.js` (described above) and `config.jso
 
 Now when you start PimpMyStremio, your local add-on will be automatically loaded and available in the "Sideloaded" section.
 
-If the errors of your add-on are not visible (this usually only happens for type errors), then you can set the `PMS_UNSAFE` environment variable to any value to load your add-on directly in PimpMyStremio instead of sandboxing it.
+## Unsafe Sideloading
+
+If the errors of your add-on are not clear enough (this can happen as add-ons are webpacked before running in the sandbox), then you can set the `PMS_UNSAFE` environment variable to any value to load your add-on directly in PimpMyStremio instead of sandboxing it.
+
+It is **important** to note that running sideloaded add-ons with `PMS_UNSAFE` disables all internal modules. (like: cinemeta, proxy, config, data persist, phantomjs, etc.)
 
 ## User settings
 
