@@ -57,6 +57,12 @@ In this example code:
 - `clientArguments` is an array of strings that includes the client arguments to pass to the phantomjs binary (as used in [phantom](https://www.npmjs.com/package/phantom)), default is: `["--ignore-ssl-errors=true", "--web-security=false", "--ssl-protocol=tlsv1", "--load-images=false", "--disk-cache=true"]`
 - `phantomOptions` is an object of options as used in [phantom](https://www.npmjs.com/package/phantom), default is: `{ logLevel: 'warn' }`
 
+**Warning: always close your phantomjs page when you're done, like so:**
+
+```javascript
+phantom.close(instance, page, callback)
+```
+
 ## Stremio Add-on SDK
 
 The add-on sdk, although exactly like [stremio-addon-sdk](https://github.com/Stremio/stremio-addon-sdk#readme), is considered an internal module because it's actually a shim of the actual SDK.
