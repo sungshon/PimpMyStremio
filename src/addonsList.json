@@ -28,13 +28,6 @@
 		"repo": "danamag/stremio-123tv-local"
 	},
 	{
-		"name": "Vader Streams IPTV",
-		"logo": "https://res.cloudinary.com/teepublic/image/private/s--LVDsoQK4--/t_Preview/b_rgb:191919,c_limit,f_jpg,h_630,q_90,w_630/v1475223127/production/designs/707738_1.jpg",
-		"description": "IPTV Service - Requires Subscription",
-		"types": ["IPTV"],
-		"repo": "danamag/stremio-vaders-local"
-	},
-	{
 		"name": "Nitro IPTV",
 		"logo": "https://mydingtv.com/wp-content/uploads/2019/02/Nitrous-TV.jpg",
 		"description": "IPTV Service - Requires Subscription",
