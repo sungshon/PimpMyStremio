@@ -17,7 +17,7 @@ PimpMyStremio add-ons all need to have an `index.js` file as the entry point, ar
 `index.js` example:
 
 ```javascript
-const { addonBuilder, getInterface, getRouter } = require('stremio-addon-sdk')
+const { addonBuilder, getRouter } = require('stremio-addon-sdk')
 
 const builder = new addonBuilder(manifest)
 
@@ -33,9 +33,7 @@ builder.defineStreamHandler(args => {
   // ...
 })
 
-const addonInterface = getInterface(builder)
-
-module.exports = getRouter(addonInterface)
+module.exports = getRouter(builder.getInterface())
 ```
 
 To better understand this code, please refer to the [stremio-addon-sdk](https://github.com/Stremio/stremio-addon-sdk/) documentation.
