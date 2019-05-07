@@ -19,14 +19,18 @@ module.exports = {
 			else
 				return Promise.reject('Resource unsupported')
 		}
+		this.getInterface = () => {
+			return {
+				handler: this.handler,
+				manifest: this.manifest
+			}
+		}
 		this.manifest = manifest
 		return this
 	},
 	getInterface: builder => {
-		return {
-			handler: builder.handler,
-			manifest: builder.manifest
-		}
+		// keeping for reverse compatibility
+		return builder.getInterface()
 	},
 	getRouter: ({ handler, manifest }) => {
 		const router = new Router()
