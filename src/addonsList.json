@@ -28,6 +28,13 @@
 		"repo": "danamag/stremio-123tv-local"
 	},
 	{
+		"name": "Unlim.tv IPTV",
+		"logo": "https://www.unlim.tv/assets/img/logo_grey.svg",
+		"description": "Unlim.tv IPTV Service - Requires Subscription",
+		"types": ["IPTV"],
+		"repo": "danamag/stremio-unlim-tv-local"
+	},
+	{
 		"name": "Nitro IPTV",
 		"logo": "https://mydingtv.com/wp-content/uploads/2019/02/Nitrous-TV.jpg",
 		"description": "IPTV Service - Requires Subscription",
