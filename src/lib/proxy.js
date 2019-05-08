@@ -2,6 +2,7 @@
 const httpProxy = require('http-proxy')
 const httpsAgent = require('https').globalAgent
 const pUrl = require('url')
+const events = require('./events')
 
 const defaultAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/610.0.3239.132 Safari/537.36'
 
@@ -22,6 +23,7 @@ const proxify = {
 
 	setEndpoint: url => {
 		endpoint = url
+		events.emit('set-endpoint-children', endpoint)
 	},
 
 	getEndpoint: () => {
@@ -29,11 +31,18 @@ const proxify = {
 	},
 
 	addProxy: (url, opts) => {
+
 		const urlParser = pUrl.parse(url)
 
 		const host = urlParser.host
 
 		const result = endpoint + '/video-proxy/' + urlParser.host + (urlParser.path || '')
+
+		if (process.send) {
+			// is child
+			process.send({ proxy: true, url, opts })
+			return result
+		}
 
 		const path = urlParser.path
 
@@ -73,7 +82,6 @@ const proxify = {
 		})
 
 		router.all('/video-proxy/*', (req, res) => {
-
 			var parts = req.url.split('/')
 
 			var host = parts[2]
@@ -109,8 +117,11 @@ const proxify = {
 				res.setHeader('Access-Control-Allow-Origin', '*')
 
 			}
-
-			proxy.web(req, res, configProxy)
+			if (!configProxy.target) {
+				res.writeHead(500)
+				res.end(JSON.stringify({ err: 'handler error' }))
+			} else
+				proxy.web(req, res, configProxy)
 
 		})
 

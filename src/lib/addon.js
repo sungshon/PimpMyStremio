@@ -11,6 +11,7 @@ const proxy = require('./proxy')
 const login = require('./login')
 const bundle = require('./bundle')
 const vm = require('./vm')
+const children = require('./children')
 
 const allAddons = require('../addonsList')
 
@@ -167,22 +168,18 @@ const addonApi = {
 		}
 		return Promise.resolve(catalog)
 	},
-	run: async data => {
+	run: async (data, isChild) => {
 		return new Promise(async (resolve, reject) => {
+
+			if (process.env['NO_CHILDREN'])
+				isChild = true
 
 			const name = parseRepo(data.repo).repo
 
 			if (addons[name])
-				await addonApi.stop(data)
+				await addonApi.stop(data, isChild)
 
-			const cfg = await addonApi.addonConfig(data)
-
-			const persistData = persist.get(name)
-
-			addons[name] = await vm.run({ data, name, config: cfg, persist: persistData })
-
-			if (addons[name]) {
-				addons[name]['_persist'] = persistData
+			function setRunning() {
 				if (!data.sideloaded)
 					userConfig.addons.running.add(data)
 				else {
@@ -197,14 +194,40 @@ const addonApi = {
 						sideloadedAddons.push(data)
 					}
 				}
-				console.log('Add-on running: ' + data.repo)
-				resolve({ success: true })
-			} else
-				reject(new Error('Could not run add-on: ' + data.repo))
+				return true
+			}
+
+			if (!isChild) {
+				children.create(name).then(data => {
+					addons[name] = data
+					setRunning()
+					resolve({ success: true })
+				}).catch(reject)
+
+			} else {
+
+				const cfg = await addonApi.addonConfig(data)
+
+				const persistData = persist.get(name)
+
+				addons[name] = await vm.run({ data, name, config: cfg, persist: persistData })
+
+				if (addons[name]) {
+					addons[name]['_persist'] = persistData
+					setRunning()
+					console.log('Add-on running: ' + data.repo)
+					resolve({ success: true })
+				} else
+					reject(new Error('Could not run add-on: ' + data.repo))
+			}
 		})
 	},
-	stop: data => {
+	stop: (data, isChild) => {
 		return new Promise((resolve, reject) => {
+
+			if (process.env['NO_CHILDREN'])
+				isChild = true
+
 			if (data.sideloaded) {
 				sideloadedAddons.some((addon, ij) => {
 					if (addon.repo == data.repo) {
@@ -216,14 +239,20 @@ const addonApi = {
 				userConfig.addons.running.remove(data)
 			}
 			const name = parseRepo(data.repo).repo
-			if (addons[name]) {
-				if ((addons[name]['_persist'] || {}).getObj)
-					persist.set(name, addons[name]['_persist'].getObj())
-				addons[name] = null
-				console.log('Add-on stopped: ' + data.repo)
-				resolve({ success: true })
-			} else
-				reject('Could not stop add-on, it is not running: ' + name)
+			if (!isChild) {
+				children.kill(name).then(resolve).catch(reject)
+				if (addons[name])
+					addons[name] = null
+			} else {
+	 			if (addons[name]) {
+					if ((addons[name]['_persist'] || {}).getObj)
+						persist.set(name, addons[name]['_persist'].getObj())
+					addons[name] = null
+					console.log('Add-on stopped: ' + data.repo)
+					resolve({ success: true })
+				} else
+					reject('Could not stop add-on, it is not running: ' + name)
+			}
 		})
 	},
 	persistAll: () => {
