@@ -70,7 +70,6 @@ if (childName) {
 	startAddon(childName)
 } else {
 	events.on('set-endpoint-children', endpoint => {
-		console.log('endpoint event')
 		for (let key in children)
 			children[key].send({ endpoint })
 	})
@@ -130,7 +129,7 @@ module.exports = {
 	kill: addonName => {
 		return new Promise((resolve, reject) => {
 			if (children[addonName]) {
-				const child = children[addonName]
+				let child = children[addonName]
 				function killProcess(hasError) {
 					child.kill('SIGINT')
 					children[addonName] = null
@@ -146,7 +145,7 @@ module.exports = {
 						killProcess(obj.error)
 					}
 				}
-				child.on('message', awaitClose())
+				child.on('message', awaitClose)
 				child.send('die')
 			} else {
 				reject('Could not stop add-on, it is not running: ' + addonName)
