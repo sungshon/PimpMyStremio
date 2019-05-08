@@ -161,6 +161,11 @@ function startEngine(binDir) {
 	if (atStartup)
 		newEnv['PMS_STARTUP'] = '1'
 
+	const noChildren = (process.argv || []).some(el => !!(el == '--no-children'))
+
+	if (noChildren)
+		newEnv['NO_CHILDREN'] = '1'
+
 	const addonProc = spawn(path.join(binDir, 'engine' + ext()), [],
 		{
 			cwd: binDir,
