@@ -119,6 +119,13 @@
 		"repo": "BoredLama/stremio-crunchyroll-local"
 	},
 	{
+		"name": "Funimation",
+		"logo": "https://www.underconsideration.com/brandnew/archives/funimation_logo.png",
+		"description": "Anime from Funimation - Subcription needed",
+		"types": ["Anime"],
+		"repo": "BoredLama/stremio-funimation-local"
+	},
+	{
 		"name": "Hentai from hanime",
 		"logo": "https://img.android-apk.org/imgs/3/9/6/3963a4a6ae1e14f9824fc89f57bc5a17.png",
 		"description": "Hentai (anime porn) streams from hanime. This add-on works better in Stremio desktop app then the web version.",
