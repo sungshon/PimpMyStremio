@@ -8,7 +8,7 @@ function capitalizeFirstLetter(string) {
 
 module.exports = {
 	addonBuilder: function addonBuilder(manifest) {
-		const resources = ['stream', 'meta', 'catalog']
+		const resources = ['stream', 'meta', 'catalog', 'subtitles']
 		const handlers = {}
 		resources.forEach(res => {
 			this['define' + capitalizeFirstLetter(res) + 'Handler'] = cb => { handlers[res] = cb }
@@ -44,7 +44,7 @@ module.exports = {
 		}
 		router.get('/:addonName/manifest.json', manifestHandler)
 
-		router.get('/:addonName/:resource/:type/:id/:extra?.json', function(req, res, next) {
+		router.get('/:addonName/:resource/:type/:id/:extra?.json', (req, res, next) => {
 			const { resource, type, id } = req.params
 			const extra = req.params.extra ? qs.parse(req.params.extra) : {}
 			const args = { resource, type, id, extra }
