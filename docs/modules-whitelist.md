@@ -15,6 +15,7 @@ This is not the complete list of allowed modules, make sure to also read [intern
 - [xml-js](https://www.npmjs.com/package/xml-js)
 - [name-to-imdb](https://www.npmjs.com/package/name-to-imdb)
 - [async](https://www.npmjs.com/package/async)
+- [lodash](https://www.npmjs.com/package/lodash)
 - [google](https://www.npmjs.com/package/google)
 - [cheerio](https://www.npmjs.com/package/cheerio)
 - [jsdom](https://www.npmjs.com/package/jsdom)
