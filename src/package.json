@@ -19,6 +19,7 @@
     "cheerio": "^0.22.0",
     "http-proxy": "^1.14.0",
     "async": "^2.6.2",
+    "lodash": "^4.17.11",
     "google": "^2.1.0",
     "jsdom": "^14.0.0",
     "name-to-imdb": "^2.3.0",
