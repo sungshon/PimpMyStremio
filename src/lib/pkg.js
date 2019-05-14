@@ -4,6 +4,7 @@ function dummies() {
 	require('ssh2-streams/lib/jsbn')
 	require('vm2/lib/sandbox')
 	require('vm2/lib/contextify')
+	require('vm2/lib/wildcard')
 }
 
 module.exports = () => {}
