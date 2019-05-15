@@ -256,10 +256,33 @@ const addonApi = {
 		})
 	},
 	persistAll: () => {
-		for (let key in addons)
-			if ((((addons || {})[key] || {})['_persist'] || {}).getObj)
-				persist.set(key, addons[key]['_persist'].getObj())
-		return true
+		return new Promise((resolve, reject) => {
+			if (process.env['NO_CHILDREN']) {
+				for (let key in addons)
+					if ((((addons || {})[key] || {})['_persist'] || {}).getObj)
+						persist.set(key, addons[key]['_persist'].getObj())
+				resolve()
+				return
+			}
+
+			const q = async.queue((task, callback) => {
+				addonApi.stop(addonApi.getManifest(task.key)).then(() => {
+					callback()
+				}).catch(err => {
+					callback()
+				})
+			})
+
+			q.drain = () => {
+				resolve()
+			}
+
+			if (Object.keys(addons).length) {
+				for (let key in addons)
+					q.push({ key })
+			} else
+				resolve()
+		})
 	},
 	install: data => {
 		return new Promise((resolve, reject) => {
