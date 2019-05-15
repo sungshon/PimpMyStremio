@@ -13,6 +13,7 @@ process.argv.some(arg => {
 })
 
 if (childName) {
+
 	const startAddon = async addonName => {
 		const addon = require('./addon')
 		const sideload = require('./sideload')
@@ -83,7 +84,8 @@ module.exports = {
 
 			const parameters = [ '--child=' + addonName ]
 			const options = {
-			  stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ]
+				detached: true,
+				stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ]
 			}
 
 			const child = children[addonName] = fork(__filename, parameters, options)
