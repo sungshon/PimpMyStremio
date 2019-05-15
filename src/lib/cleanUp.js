@@ -1,6 +1,7 @@
 
 const {spawn} = require('child_process')
 const addons = require('./addon')
+const _ = require('lodash')
 
 let server
 
@@ -9,21 +10,17 @@ module.exports = {
 
 		server = serv
 
-		const exitHandler = (options, exitCode) => {
+		const exitHandler = _.once(async exitCode => {
 			if ((server || {}).close)
 				server.close()
-			addons.persistAll()
+			await addons.persistAll()
 			process.exit()
-		}
-
-		process.on('cleanup', exitHandler)
-
-		process.on('exit', () => {
-			process.emit('cleanup')
 		})
 
-		process.on('SIGINT', () => {
-			process.exit(0)
+		const signals = ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT', 'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM']
+
+		signals.forEach(sig => {
+			process.on(sig, () => { exitHandler(sig) })
 		})
 
 		process.on('uncaughtException', e => {
