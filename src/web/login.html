@@ -14,21 +14,53 @@
 
 	<body>
 		<div id="pageContent">
-			<img src="/logo.jpg" width="300" id="loginLogo">
-			<form class="loginForm" action="#">
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				    <input class="mdl-textfield__input" type="text" id="password" name="password">
-				    <label class="mdl-textfield__label" for="password">Password</label>
-				</div>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="loginButton" onClick="tryLoginForm()">
-					Log In
+			<div id="header">
+				<a class="backLink" href="/"><img src="/logo.jpg" width="200"></a>
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored headerButton searchButton" onClick="searchToggle()" style="margin-left: 351px">
+					<i class="material-icons">search</i>
 				</button>
-			</form>
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored headerButton" onClick="external()" style="margin-left: 9px">
+					<i class="material-icons">launch</i>
+				</button>
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored headerButton" onClick="settings('_pimpmystremio', 'PimpMyStremio v1.0.0')" style="margin-left: 9px">
+					<i class="material-icons">settings</i>
+				</button>
+			</div>
+
+			<div class="spacer"></div>
+
+			<div class="searchContent">
+				<div>
+					<form class="searchForm" action="#">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="query" name="query" onkeydown="search()">
+							<label class="mdl-textfield__label" for="query">Search</label>
+						</div>
+					</form>
+				</div>
+				<div id="searchResults"></div>
+			</div>
+
+			<div class="content"></div>
+
+			<div class="spacer"></div>
+
+			<div class="footer">
+				<a href="https://github.com/sungshon/PimpMyStremio/" target="_blank">Github</a>
+				&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+				<a href="https://github.com/sungshon/PimpMyStremio/issues" target="_blank">Issues</a>
+				&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+				<a href="https://github.com/sungshon/PimpMyStremio/blob/master/docs/README.md" target="_blank">Documentation</a>
+			</div>
 		</div>
 		<dialog id="dialog" class="mdl-dialog"></dialog>
+		<div id="toast" class="mdl-js-snackbar mdl-snackbar">
+			<div class="mdl-snackbar__text"></div>
+			<button class="mdl-snackbar__action" type="button"></button>
+		</div>
 		<script src="dialog/polyfill.js"></script>
 		<script src="login.js"></script>
-		<script>$(document).ready(loginInit)</script>
+		<script src="script.js"></script>
 	</body>
 
 </html>
