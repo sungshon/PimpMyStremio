@@ -5,14 +5,20 @@ body {
 #header {
 	margin-top: 40px;
 }
-.startStremio {
-	background-color: #1e8dd5;
+.spacer {
+  height: 50px;
+}
+.headerButton {
 	margin-left: 457px;
 }
 .content {
-	margin-top: 50px;
-	margin-bottom: 50px;
 	text-align: left;
+}
+.searchContent {
+  display: none;
+}
+#searchResults {
+  margin-top: 40px;
 }
 .desc {
 	text-align: left !important;
