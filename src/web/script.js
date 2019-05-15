@@ -21,29 +21,32 @@ function forceStart(repo) {
 }
 
 function start(repo, repoTitle) {
-	request('defaultConfig', repoName(repo), '', defaultConfig => {
-		let hasRequired = false
-		for (let key in defaultConfig)
-			if (defaultConfig[key].required)
-				hasRequired = true
+	updateView(() => {
+		componentHandler.upgradeAllRegistered()
+		request('defaultConfig', repoName(repo), '', defaultConfig => {
+			let hasRequired = false
+			for (let key in defaultConfig)
+				if (defaultConfig[key].required)
+					hasRequired = true
 
-		if (!hasRequired)
-			forceStart(repo)
-		else {
-			request('addonConfig', repoName(repo), '', addonConfig => {
-				let missingConfig = false
-				for (let key in defaultConfig)
-					if (defaultConfig[key].required && !addonConfig[key])
-						missingConfig = true
+			if (!hasRequired)
+				forceStart(repo)
+			else {
+				request('addonConfig', repoName(repo), '', addonConfig => {
+					let missingConfig = false
+					for (let key in defaultConfig)
+						if (defaultConfig[key].required && !addonConfig[key])
+							missingConfig = true
 
-				if (!missingConfig)
-					forceStart(repo)
-				else
-					settings(repo, '!!! Missing required settings !!!')
+					if (!missingConfig)
+						forceStart(repo)
+					else
+						settings(repo, '!!! Missing required settings !!!')
 
-			})
-		}
-	})
+				})
+			}
+		})
+	}, repo)
 }
 
 function stop(repo) {
@@ -79,7 +82,7 @@ function loadQr(path) {
 	onImgLoad('.qrCode', () => {
 		setTimeout(() => {
 			dialog.showModal()
-		}, 500)
+		}, 1000)
 	})
 }
 
