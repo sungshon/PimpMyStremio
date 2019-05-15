@@ -8,20 +8,25 @@ function request(method, name, payload, cb) {
 	$.get('api?pass=' + (localStorage.password || '') + '&method=' + method + '&name=' + name + '&payload=' + payload, cb)
 }
 
+function isSearch() { return !$('#searchResults').is(':empty') }
+
+function getFunction() { return isSearch() ? search : updateView }
+
 function install(repo) {
 	const name = repoName(repo)
-	updateView(() => {
+	const fn = getFunction()
+	fn(() => {
 		componentHandler.upgradeAllRegistered()
-		request('install', name, '', updateView)
+		request('install', name, '', () => { updateView(search) })
 	}, repo)
 }
 
 function forceStart(repo) {
-	request('run', repoName(repo), '', updateView)
+	request('run', repoName(repo), '', () => { updateView(search) })
 }
 
 function start(repo, repoTitle) {
-	updateView(() => {
+	getFunction()(() => {
 		componentHandler.upgradeAllRegistered()
 		request('defaultConfig', repoName(repo), '', defaultConfig => {
 			let hasRequired = false
@@ -50,7 +55,7 @@ function start(repo, repoTitle) {
 }
 
 function stop(repo) {
-	request('stop', repoName(repo), '', updateView)
+	request('stop', repoName(repo), '', () => { updateView(search) })
 }
 
 function getUrl(stremioLink) {
@@ -167,6 +172,52 @@ function basicSettings(repo, repoTitle, isRunning) {
 			'</div>'
 	}
 	return str
+}
+
+function searchToggle() {
+	if ($('.searchButton').hasClass('mdl-button--colored')) {
+		$('.content').hide()
+		$('.footer').hide()
+		$('.searchContent').show(() => {
+			$('#searchResults').show()
+			$('#query').focus()
+		})
+		$('.searchButton').removeClass('mdl-button--colored')
+	} else {
+		$('#searchResults').hide().empty()
+		$('.searchContent').hide(() => {
+			$('#query').val('')
+		})
+		$('.content').fadeIn()
+		$('.footer').show()
+		$('.searchButton').addClass('mdl-button--colored')		
+	}
+}
+
+function search(cb, loading) {
+	setTimeout(() => {
+		const query = $('#query').val()
+		if (query.length <= 2)
+			$('#searchResults').empty()
+		else {
+			const results = []
+			const allAddons = ((addons || {})['All'] || [])
+			allAddons.forEach(el => {
+				console.log(el.name.toLowerCase() + ' --- ' + query.toLowerCase())
+				if (el.name.toLowerCase().includes(query.toLowerCase()))
+					results.push(el)
+			})
+			if (results.length) {
+				let str = ''
+				results.forEach(addon => {
+					str += addonToRow(lastJsonData, addon, loading)
+				})
+				$('#searchResults').html('<table class="mdl-data-table mdl-js-data-table">' + str + '</table>')
+			} else
+				$('#searchResults').empty()
+		}
+		if (cb) cb()
+	})
 }
 
 function settings(repo, repoTitle, isRunning) {
@@ -290,12 +341,15 @@ function addonToRow(data, addon, loading) {
 	return str
 }
 
+let addons = {}
+let lastJsonData = {}
+
 function updateView(cb, loading) {
 	request('getAll', '', '', jsonData => {
 
 		if (jsonData && jsonData.allAddons) {
-			const addons = { 'All': [] }
-			const allAddons = {}
+			lastJsonData = jsonData
+			addons = { 'All': [] }
 			const types = ['All']
 			jsonData.allAddons.forEach(addon => {
 				if ((addon.types || []).length)
