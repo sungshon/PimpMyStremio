@@ -14,6 +14,13 @@
 		"repo": "BoredLama/stremio-open-directories-local"
 	},
 	{
+		"name": "CDN Videos",
+		"logo": "https://i.imgur.com/83CPdiS.png",
+		"description": "Search for movies, series and anime from various CDN providers",
+		"types": ["Movies", "Series", "Anime"],
+		"repo": "TheBeastLT/stremio-cdn-videos"
+	},
+	{
 		"name": "Open Directories - Music",
 		"logo": "https://secure.webtoolhub.com/static/resources/logos/set1/bc185e1e.jpg",
 		"description": "Stremio Add-on to get music streaming results from Open Directories",
