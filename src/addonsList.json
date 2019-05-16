@@ -147,6 +147,13 @@
 		"repo": "henryhomes/stremio-hanime-local"
 	},
 	{
+		"name": "Drama Very",
+		"logo": "https://www.viewasian.tv/themes/ViewAsian/images/logo.png",
+		"description": "Free Korean, Chinese, HK, Thailand movies and series.",
+		"types": ["Asian Drama"],
+		"repo": "booblyboo/stremio-dramavery-local"
+	},
+	{
 		"name": "PornHub",
 		"logo": "https://1000logos.net/wp-content/uploads/2017/12/Pornhub-symbol.jpg",
 		"description": "Porn videos from PornHub",
