@@ -133,6 +133,13 @@
 		"repo": "BoredLama/stremio-funimation-local"
 	},
 	{
+		"name": "HIDIVE",
+		"logo": "https://cdn.myanimelist.net/s/common/uploaded_files/1497990382-d769797f8b53cf7e0a828d46c1e5b4aa.jpeg",
+		"description": "Anime from HIDIVE - Subcription needed",
+		"types": ["Anime"],
+		"repo": "BoredLama/stremio-hidive-local"
+	},
+	{
 		"name": "Hentai from hanime",
 		"logo": "https://img.android-apk.org/imgs/3/9/6/3963a4a6ae1e14f9824fc89f57bc5a17.png",
 		"description": "Hentai (anime porn) streams from hanime. This add-on works better in Stremio desktop app then the web version.",
