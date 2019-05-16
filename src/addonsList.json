@@ -140,18 +140,18 @@
 		"repo": "BoredLama/stremio-hidive-local"
 	},
 	{
-		"name": "Hentai from hanime",
-		"logo": "https://img.android-apk.org/imgs/3/9/6/3963a4a6ae1e14f9824fc89f57bc5a17.png",
-		"description": "Hentai (anime porn) streams from hanime. This add-on works better in Stremio desktop app then the web version.",
-		"types": ["Anime", "Porn"],
-		"repo": "henryhomes/stremio-hanime-local"
-	},
-	{
 		"name": "Drama Very",
 		"logo": "https://www.viewasian.tv/themes/ViewAsian/images/logo.png",
 		"description": "Free Korean, Chinese, HK, Thailand movies and series.",
 		"types": ["Asian Drama"],
 		"repo": "booblyboo/stremio-dramavery-local"
+	},
+	{
+		"name": "Hentai from hanime",
+		"logo": "https://img.android-apk.org/imgs/3/9/6/3963a4a6ae1e14f9824fc89f57bc5a17.png",
+		"description": "Hentai (anime porn) streams from hanime. This add-on works better in Stremio desktop app then the web version.",
+		"types": ["Anime", "Porn"],
+		"repo": "henryhomes/stremio-hanime-local"
 	},
 	{
 		"name": "PornHub",
