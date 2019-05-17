@@ -37,11 +37,14 @@ The proxy has a synchronous API that allows you to change headers of URLs on the
 ```javascript
 const { proxy } = require('internal')
 
-const proxiedURL = proxy.addProxy('https://www.imdb.com/title/tt0944947/', { headers: { referer: 'https://www.imdb.com/' } })
+const opts = { headers: { referer: 'https://www.imdb.com/' } }
+
+const proxiedURL = proxy.addProxy('https://www.imdb.com/title/tt0944947/', opts)
 ```
 
 Supported proxy options:
-```json
+
+```
 {
   "headers": { // custom request headers
     "referer": "https://www.imdb.com/"
