@@ -40,6 +40,28 @@ const { proxy } = require('internal')
 const proxiedURL = proxy.addProxy('https://www.imdb.com/title/tt0944947/', { headers: { referer: 'https://www.imdb.com/' } })
 ```
 
+Supported proxy options:
+```json
+{
+  "headers": { // custom request headers
+    "referer": "https://www.imdb.com/"
+  },
+  "subtitle": {
+    "convert": true, // default: false, converts subtitles: sub, ass, ssa, sbv, vtt, smi, lrc to srt
+    "encodeUtf8": true, // default: false, encodes the subtitle to UTF8
+    "encoding": "ISO-8859-7" // default: false, set currect encoding manually, if this is not set it will be guessed
+  },
+  "playlist": true // default: false, if segments of hls are from a separate domain then the playlist, this proxifies the segment URLs too
+}
+```
+
+To note:
+
+- This proxy can be used for video streams, m3u8 playlists, subtitles, images
+- Stremio only supports srt and vtt subtitles, it is the reason there is a converter for subtitles in the proxy
+- Stremio also only supports UTF-8 subtitles, this is why u can use the proxy to guess the encoding (or set it manually) and convert subtitle text to UTF-8
+
+
 ## PhantomJS
 
 This is an internal function that uses [phantom](https://www.npmjs.com/package/phantom) under the hood.
@@ -85,6 +107,10 @@ builder.defineMetaHandler(args => {
 })
 
 builder.defineStreamHandler(args => {
+  // ...
+})
+
+builder.defineSubtitlesHandler(args => {
   // ...
 })
 
