@@ -21,8 +21,13 @@ function validate(tag, config) {
 				else if (typeof cfg.title != 'string')
 					errs.push(tag + ' - Config error, the "' + key + '" setting\'s "title" is not a string')
 
-				if (cfg.default && typeof cfg.default != 'string')
-					errs.push(tag + ' - Config error, the "' + key + '" setting\'s "default" is not a string')
+				if (cfg.type == 'select') {
+					if (cfg.default && typeof cfg.default != 'string')
+						errs.push(tag + ' - Config error, the "' + key + '" select setting\'s "default" is not a string')
+				} else {
+					if (cfg.default && typeof cfg.default != cfg.type)
+						errs.push(tag + ' - Config error, the "' + key + '" setting\'s "default" is not a ' + cfg.type)
+				}
 
 				if (cfg.required && typeof cfg.required != 'boolean')
 					errs.push(tag + ' - Config error, the "' + key + '" setting\'s "required" is not boolean')
