@@ -1,8 +1,7 @@
 const Client = require('ssh2').Client // To communicate with Serveo
 const Socket = require('net').Socket // To accept forwarded connections (native module)
-const opn = require('open')
+const open = require('../open')
 const proxy = require('../proxy')
-const openLinux = require('../openLinux')
 
 const verbose = process.env['PMS_VERBOSE']
 const isStartup = process.env['PMS_STARTUP']
@@ -45,14 +44,7 @@ function runTunnel(pmsPort, remoteOpts) {
                 proxy.setEndpoint(remoteUrl)
                 console.log('Remote PimpMyStremio URL: ' + remoteUrl)
                 if (!isStartup)
-                  opn(remoteUrl, { wait: true }).catch((e) => {
-                    if (process.platform == 'linux')
-                      openLinux(remoteUrl)
-                    else {
-                      console.log('Non-critical: Could not auto-open webpage, presuming Linux OS')
-                      console.error(e)
-                    }
-                  })
+                  open(remoteUrl)
             }
             if (verbose)
                 console.log('Serveo - SHELL OUTPUT: ' + data)
