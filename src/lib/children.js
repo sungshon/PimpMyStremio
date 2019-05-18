@@ -3,14 +3,7 @@ const fork = require('child_process').fork
 const proxy = require('./proxy')
 const events = require('./events')
 
-let childName
-
-process.argv.some(arg => {
-	if (arg.startsWith('--child=')) {
-		childName = arg.replace('--child=', '')
-		return true
-	}
-})
+let childName = process.env['CHILD']
 
 if (childName) {
 
@@ -42,7 +35,7 @@ if (childName) {
 		process.on('message', msg => {
 			if (msg) {
 				if (msg == 'die') {
-					addon.stop(addon.getManifest(addonName), true).then(() => {
+					addon.stop(addon.getManifest(addonName)).then(() => {
 						process.send({ status: 'ended' })
 					}).catch(err => {
 						process.send({ status: 'ended', error: (err || {}).message || ('Could not stop add-on, it is not running: ' + addonName) })
@@ -82,10 +75,16 @@ module.exports = {
 	create: addonName => {
 		return new Promise((resolve, reject) => {
 
-			const parameters = [ '--child=' + addonName ]
+			const parameters = []
+
+			const env = Object.create(process.env)
+
+			env.CHILD = addonName
+
 			const options = {
 				detached: true,
-				stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ]
+				stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ],
+				env
 			}
 
 			const child = children[addonName] = fork(__filename, parameters, options)
