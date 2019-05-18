@@ -11,11 +11,16 @@ const proxy = require('./proxy')
 const login = require('./login')
 const bundle = require('./bundle')
 const vm = require('./vm')
+
 const children = require('./children')
+const noChildren = process.env['NO_CHILDREN']
+
+const isChild = !!process.env['CHILD']
+const isParent = noChildren || !isChild
 
 const allAddons = require('../addonsList')
 
-const userConfig = require('./config/userConfig')
+const userConfig = isParent ? require('./config/userConfig') : {}
 const addonConfig = require('./config/addonConfig')
 const defaultConfig = require('./config/defaultConfig')
 
@@ -154,7 +159,6 @@ const addonApi = {
 		})
 	},
 	getCatalog: async (host, port) => {
-//		const hostname = host || ('http://127.0.0.1' + (port ? ':' + port : ''))
 		const hostname = host || proxy.getEndpoint()
 		const catalog = []
 		for (let key in addons) {
@@ -168,20 +172,21 @@ const addonApi = {
 		}
 		return Promise.resolve(catalog)
 	},
-	run: async (data, isChild) => {
+	run: async (data) => {
 		return new Promise(async (resolve, reject) => {
 
-			if (process.env['NO_CHILDREN'])
-				isChild = true
+			let amChild = noChildren || isChild
 
 			const name = parseRepo(data.repo).repo
 
 			if (addons[name])
-				await addonApi.stop(data, isChild)
+				await addonApi.stop(data)
 
 			function setRunning() {
-				if (!data.sideloaded)
-					userConfig.addons.running.add(data)
+				if (!data.sideloaded) {
+					if (isParent)
+						userConfig.addons.running.add(data)
+				}
 				else {
 					const found = sideloadedAddons.some((addon, ij) => {
 						if (addon.repo == data.repo) {
@@ -197,15 +202,13 @@ const addonApi = {
 				return true
 			}
 
-			if (!isChild) {
+			if (!amChild) {
 				children.create(name).then(data => {
 					addons[name] = data
 					setRunning()
 					resolve({ success: true })
 				}).catch(reject)
-
 			} else {
-
 				const cfg = await addonApi.addonConfig(data)
 
 				const persistData = persist.get(name)
@@ -222,11 +225,10 @@ const addonApi = {
 			}
 		})
 	},
-	stop: (data, isChild) => {
+	stop: (data, keep) => {
 		return new Promise((resolve, reject) => {
 
-			if (process.env['NO_CHILDREN'])
-				isChild = true
+			let amChild = noChildren || isChild
 
 			if (data.sideloaded) {
 				sideloadedAddons.some((addon, ij) => {
@@ -236,10 +238,12 @@ const addonApi = {
 					}
 				})
 			} else {
-				userConfig.addons.running.remove(data)
+				if (!keep && isParent) {
+					userConfig.addons.running.remove(data)
+				}
 			}
 			const name = parseRepo(data.repo).repo
-			if (!isChild) {
+			if (!amChild) {
 				children.kill(name).then(resolve).catch(reject)
 				if (addons[name])
 					addons[name] = null
@@ -257,7 +261,7 @@ const addonApi = {
 	},
 	persistAll: () => {
 		return new Promise((resolve, reject) => {
-			if (process.env['NO_CHILDREN']) {
+			if (noChildren) {
 				for (let key in addons)
 					if ((((addons || {})[key] || {})['_persist'] || {}).getObj)
 						persist.set(key, addons[key]['_persist'].getObj())
@@ -266,7 +270,7 @@ const addonApi = {
 			}
 
 			const q = async.queue((task, callback) => {
-				addonApi.stop(addonApi.getManifest(task.key)).then(() => {
+				addonApi.stop(addonApi.getManifest(task.key), true).then(() => {
 					callback()
 				}).catch(err => {
 					callback()
@@ -397,6 +401,12 @@ const addonApi = {
 		} else
 			callback()
 
+	},
+	shutdown: () => {
+		return new Promise((resolve, reject) => {
+			resolve({ success: true })
+			setTimeout(() => { process.emit('SIGINT') })
+		})
 	}
 }
 
