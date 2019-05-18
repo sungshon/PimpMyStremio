@@ -17,7 +17,6 @@ const querystring = require('querystring')
 const path = require('path')
 const confDir = require('./lib/dirs/configDir')
 const open = require('./lib/open')
-const systray = require('./lib/systray')
 
 const isStartup = process.env['PMS_STARTUP']
 
