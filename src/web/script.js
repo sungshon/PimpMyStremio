@@ -160,13 +160,13 @@ function copyManifestUrl(url) {
   $('#toast')[0].MaterialSnackbar.showSnackbar({ message: 'Copied Add-on URL to Clipboard' })
 }
 
-function basicSettings(repo, repoTitle, isRunning) {
+function basicSettings(repo, repoTitle, isRunning, noSettings) {
 	let str = '<center><h4 class="settingsTop">Settings</h4><br/><span class="settingsSub">' + repoTitle + '</span></center>'
 	if (repo != '_pimpmystremio') {
 		const path = '/' + repoName(repo) + '/manifest.json'
 		str += '<div>' +
 			'<div class="copy-box" onClick="copyManifestUrl(\'' + window.location.href.slice(0, -1) + path + '\')">Add-on URL (click to copy)</div>' +
-			'<button class="mdl-button mdl-js-button mdl-button--raised load-button" onClick="external(\'' + repoTitle + '\', \'' + path + '\')"' + (!isRunning ? ' disabled' : '')  + '>' +
+			'<button class="mdl-button mdl-js-button mdl-button--raised load-button" style="' + (noSettings ? 'margin-top:0' : '') + '" onClick="external(\'' + repoTitle + '\', \'' + path + '\')"' + (!isRunning ? ' disabled' : '')  + '>' +
 				'Load' +
 			'</button>' +
 			'</div>'
@@ -220,11 +220,15 @@ function search(cb, loading) {
 	})
 }
 
+function shutdown() {
+	request('shutdown', '', '', () => {})
+}
+
 function settings(repo, repoTitle, isRunning) {
 	request('addonConfig', repoName(repo), '', addonConfig => {
 		if (!Object.keys(addonConfig).length) {
-			let str = '<div class="no-setting">' + basicSettings(repo, repoTitle, isRunning)
-			str += '<button class="mdl-button mdl-js-button mdl-button--raised" onClick="closeDialog()">Close</button></div>'
+			let str = '<div class="no-setting">' + basicSettings(repo, repoTitle, isRunning, true)
+			str += '<br/><br/><br/><button class="mdl-button mdl-js-button mdl-button--raised" onClick="closeDialog()">Close</button></div>'
 			$('.mdl-dialog').html(str)
 			componentHandler.upgradeAllRegistered()
 	    	dialog.showModal()
@@ -271,12 +275,17 @@ function settings(repo, repoTitle, isRunning) {
 							'</button>' +
 							'<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onClick="saveSettings()">' +
 								'Save' +
-							'</button></div>'
+							'</button>' +
+							'</div>'
 				else
 					buttons += '' +
 							'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent settingsRun" onClick="saveSettings(true, true)">' +
 								'Save and Restart' +
-							'</button>'
+							'</button>' +
+							'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised" onClick="shutdown()">' +
+								'Shutdown' +
+							'</button>' +
+							'</div>'
 				let closeButton = '' +
 							'<button class="mdl-button mdl-js-button mdl-button--raised" onClick="closeDialog()">' +
 								'Close' +
