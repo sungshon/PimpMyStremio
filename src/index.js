@@ -2,7 +2,6 @@
 const pkg = require('./lib/pkg')
 const express = require('express')
 const getPort = require('get-port')
-const opn = require('open')
 const tunnel = require('./lib/tunnels/serveo')
 const autoLaunch = require('./lib/autoLaunch')
 const addon = require('./lib/addon')
@@ -17,7 +16,8 @@ const login = require('./lib/login')
 const querystring = require('querystring')
 const path = require('path')
 const confDir = require('./lib/dirs/configDir')
-const openLinux = require('./lib/openLinux')
+const open = require('./lib/open')
+const systray = require('./lib/systray')
 
 const isStartup = process.env['PMS_STARTUP']
 
@@ -122,14 +122,7 @@ async function runServer() {
         if (userConfig.remote)
             tunnel(serverPort, { subdomain: userConfig.subdomain }) 
         else if (!isStartup)
-        	opn('http://127.0.0.1:' + serverPort, { wait: true }).catch((e) => {
-        		if (process.platform == 'linux')
-        			openLinux('http://127.0.0.1:' + serverPort)
-        		else {
-        			console.log('Non-critical: Could not auto-open webpage, presuming Linux OS')
-        			console.error(e)
-        		}
-        	})
+        	open('http://127.0.0.1:' + serverPort)
 
 	})
 }
