@@ -29,7 +29,7 @@ module.exports = {
 				const repoName = matches[0].split('/')[1]
 				console.log(repoName + ' - Uncaught Exception')
 				console.log(e.stack)
-				addons.stop(addons.getManifest(repoName)).catch(e => {})
+				addons.stop(addons.getManifest(repoName), true).catch(e => {})
 			} else {
 				console.log('Uncaught Exception...')
 				console.log(e.stack)
@@ -43,7 +43,7 @@ module.exports = {
 				const repoName = matches[0].split('/')[1]
 				console.log(repoName + ' - Unhandler Promise Rejection')
 				console.log(e.stack)
-				addons.stop(addons.getManifest(repoName)).catch(e => {})
+				addons.stop(addons.getManifest(repoName), true).catch(e => {})
  			} else {
 				console.log('Unhandler Promise Rejection...')
 				console.log(e.stack)
