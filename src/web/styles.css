@@ -78,6 +78,7 @@ body {
 .settingsFooter {
   margin-top: 10px;
   margin-bottom: 15px;
+  display: inline-block;
 }
 .settingsMainButton {
   display: block;
@@ -142,6 +143,11 @@ button.ext {
   border: 1px solid rgba(83,109,254,0.6);
 }
 
+.qr-hold {
+  height: 280px;
+  width: 280px;
+}
+
 .no-setting .mdl-button {
   margin-top: 20px;
 }
@@ -152,6 +158,10 @@ button.ext {
 
 .mdl-snackbar__action {
   display: none !important;
+}
+
+.mdl-dialog {
+  width: 290px;
 }
 
 .mdl-expansion {
