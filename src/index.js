@@ -119,13 +119,13 @@ async function runServer() {
 
 		console.log('PimpMyStremio server running at: ' + url)
 
-        if (userConfig.remote)
-            tunnel(serverPort, { subdomain: userConfig.subdomain }) 
-        else {
+		if (userConfig.remote)
+			tunnel(serverPort, { subdomain: userConfig.subdomain }) 
+		else {
 			if (!isStartup)
-	        	open('http://127.0.0.1:' + serverPort)
-        	systray.init()
-        }
+				open('http://127.0.0.1:' + serverPort)
+			systray.init()
+		}
 
 	})
 }
