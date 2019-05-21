@@ -121,8 +121,9 @@ async function runServer() {
 
         if (userConfig.remote)
             tunnel(serverPort, { subdomain: userConfig.subdomain }) 
-        else if (!isStartup) {
-        	open('http://127.0.0.1:' + serverPort)
+        else {
+			if (!isStartup)
+	        	open('http://127.0.0.1:' + serverPort)
         	systray.init()
         }
 
