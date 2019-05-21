@@ -2,6 +2,7 @@ const Client = require('ssh2').Client // To communicate with Serveo
 const Socket = require('net').Socket // To accept forwarded connections (native module)
 const open = require('../open')
 const proxy = require('../proxy')
+const systray = require('../systray')
 
 const verbose = process.env['PMS_VERBOSE']
 const isStartup = process.env['PMS_STARTUP']
@@ -43,8 +44,10 @@ function runTunnel(pmsPort, remoteOpts) {
                 const remoteUrl = 'https://' + config.remoteHost + '.serveo.net'
                 proxy.setEndpoint(remoteUrl)
                 console.log('Remote PimpMyStremio URL: ' + remoteUrl)
-                if (!isStartup)
+                if (!isStartup) {
                   open(remoteUrl)
+                  systray.init()
+                }
             }
             if (verbose)
                 console.log('Serveo - SHELL OUTPUT: ' + data)
