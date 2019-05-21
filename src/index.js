@@ -17,6 +17,7 @@ const querystring = require('querystring')
 const path = require('path')
 const confDir = require('./lib/dirs/configDir')
 const open = require('./lib/open')
+const systray = require('./lib/systray')
 
 const isStartup = process.env['PMS_STARTUP']
 
@@ -120,8 +121,10 @@ async function runServer() {
 
         if (userConfig.remote)
             tunnel(serverPort, { subdomain: userConfig.subdomain }) 
-        else if (!isStartup)
+        else if (!isStartup) {
         	open('http://127.0.0.1:' + serverPort)
+        	systray.init()
+        }
 
 	})
 }
