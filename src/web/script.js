@@ -410,17 +410,17 @@ function updateView(cb, loading) {
 
 let dialog
 
-function init() {
-	dialog = document.querySelector('dialog')
-	dialogPolyfill.registerDialog(dialog)
-	updateView()
-}
-
 $(document).ready(() => {
 	tryLoginLocal(localStorage.password, (err, success) => {
 		dialog = document.querySelector('dialog')
 		dialogPolyfill.registerDialog(dialog)
 		if (!err && success) {
+			dialog.addEventListener('click', function (event) {
+				const rect = dialog.getBoundingClientRect();
+				const isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width)
+				if (!isInDialog)
+					dialog.close()
+			})
 			updateView()
 			return
 		} else if (err) {
