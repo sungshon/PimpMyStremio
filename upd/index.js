@@ -1,7 +1,8 @@
 
 const github = 'sungshon/PimpMyStremio-updates'
 
-var isWin = process.platform === 'win32'
+const isWin = process.platform === 'win32'
+const isLinux = process.platform === 'linux'
 
 function ext() { return (isWin ? '.exe' : '') }
 
@@ -44,7 +45,7 @@ function saveVersion(binDir, version) {
 
 function installed(binDir) {
 
-	const requiredBins = ['engine' + ext(), 'phantom', 'web', 'youtube-dl']
+	const requiredBins = ['engine' + ext(), 'phantom', 'web', 'youtube-dl', 'forked-systray']
 
 	let isOk = true
 
@@ -148,44 +149,73 @@ function installEngine(binDir, githubData) {
 	})
 }
 
+const opts = {
+	atStartup: (process.argv || []).some(el => !!(el == '--startup')),
+	noChildren: (process.argv || []).some(el => !!(el == '--no-children')),
+	isVerbose: (process.argv || []).some(el => !!(el == '--verbose')),
+	linuxTray: (process.argv || []).some(el => !!(el == '--linux-tray')),
+}
+
+if (opts.linuxTray) // users can choose to force system tray, if they installed the deps manually
+	opts.isVerbose = false
+else if (isLinux) // on linux we default to verbose, as system tray it requires dependencies
+	opts.isVerbose = true
+
 function startEngine(binDir) {
 
 	api.close()
 
-	const newEnv = JSON.parse(JSON.stringify(process.env))
+	const env = Object.create(process.env)
 
-	newEnv['PMS_UPDATE'] = process.execPath
+	env['PMS_UPDATE'] = process.execPath
 
-	const atStartup = (process.argv || []).some(el => !!(el == '--startup'))
+	if (opts.atStartup)
+		env['PMS_STARTUP'] = '1'
 
-	if (atStartup)
-		newEnv['PMS_STARTUP'] = '1'
+	if (opts.noChildren)
+		env['NO_CHILDREN'] = '1'
 
-	const noChildren = (process.argv || []).some(el => !!(el == '--no-children'))
+	if (opts.linuxTray)
+		env['LINUX_TRAY'] = '1'
 
-	if (noChildren)
-		newEnv['NO_CHILDREN'] = '1'
+	if (!opts.isVerbose)
+		env['PMS_TOKEN'] = Date.now() + ''
 
-	const addonProc = spawn(path.join(binDir, 'engine' + ext()), [],
-		{
-			cwd: binDir,
-			env: newEnv
+	const procOpts = { cwd: binDir, env }
+
+	if (!opts.isVerbose)
+		procOpts.detached = true
+
+	if (isWin)
+		procOpts.windowsHide = true
+
+	const addonProc = spawn(path.join(binDir, 'engine' + ext()), [], procOpts)
+
+	if (opts.isVerbose) {
+		addonProc.stdout.on('data', data => {
+			if (data)
+				console.log(data.toString().trim())
 		})
 
-	addonProc.stdout.on('data', data => {
-		if (data)
-			console.log(data.toString().trim())
-	})
+		addonProc.stderr.on('data', data => {
+			if (data)
+				console.log(data.toString().trim())
+		})
 
-	addonProc.stderr.on('data', data => {
-		if (data)
-			console.log(data.toString().trim())
-	})
-
-	addonProc.on('exit', code => {
-		console.log('Process exit, code: ' + code)
-		process.exit()
-	})
+		addonProc.on('exit', code => {
+			console.log('Process exit, code: ' + code)
+			process.exit()
+		})
+	} else {
+		msg('Starting engine')
+		addonProc.unref()
+		addonProc.stdout.on('data', data => {
+			if (data && data.toString().trim() == env['PMS_TOKEN']) {
+				msg('Engine started, closing updater')
+				process.exit()
+			}
+		})
+	}
 
 }
 
@@ -214,7 +244,7 @@ zipBall().then(githubData => {
 		msg('New version found')
 		installEngine(binDir, githubData).then(afterInstall).catch(afterInstall)
 	} else {
-		msg('Already running latest version')
+		msg('Already have latest version')
 		startEngine(binDir)
 	}
 
