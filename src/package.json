@@ -18,6 +18,7 @@
     "encoding": "^0.1.12",
     "ent": "^2.2.0",
     "express": "^4.16.4",
+    "forked-systray": "sungshon/forked-systray",
     "get-port": "^4.0.0",
     "google": "^2.1.0",
     "http-proxy": "^1.14.0",
