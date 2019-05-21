@@ -1,6 +1,7 @@
 
 const {spawn} = require('child_process')
 const addons = require('./addon')
+const systray = require('./systray')
 const _ = require('lodash')
 
 let server
@@ -13,6 +14,7 @@ module.exports = {
 		const exitHandler = _.once(async exitCode => {
 			if ((server || {}).close)
 				server.close()
+			await systray.kill()
 			await addons.persistAll()
 			process.exit()
 		})
