@@ -376,7 +376,8 @@ function updateView(cb, loading) {
 			let str = ''
 
 			for (key in addons) {
-				if (!$('#' + key).length) {
+				const tag = key.split(' ').join('-')
+				if (!$('#' + tag).length) {
 					str += '' +
 						'<details class="mdl-expansion">' +
 							'<summary class="mdl-expansion__summary">' +
@@ -385,7 +386,7 @@ function updateView(cb, loading) {
 								'</span>' +
 							'</summary>' +
 							'<div class="mdl-expansion__content">' +
-								'<table class="mdl-data-table mdl-js-data-table" id="' + key + '">'
+								'<table class="mdl-data-table mdl-js-data-table" id="' + tag + '">'
 
 					addons[key].forEach(addon => { str += addonToRow(jsonData, addon) })
 					str += '' +
