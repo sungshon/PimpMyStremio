@@ -24,6 +24,8 @@ const userConfig = isParent ? require('./config/userConfig') : {}
 const addonConfig = require('./config/addonConfig')
 const defaultConfig = require('./config/defaultConfig')
 
+const package = require('../package.json')
+
 const addons = {}
 
 let sideloadedAddons = []
@@ -83,6 +85,11 @@ const addonApi = {
 				obj.password = uConfig.password
 
 			return userConfig.writeSettings(obj)
+		})
+	},
+	getVersion: () => {
+		return new Promise((resolve, reject) => {
+			resolve({ version: package.version })
 		})
 	},
 	get: name => {
