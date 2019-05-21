@@ -35,29 +35,15 @@ function copyWeb(cb) {
 	})
 }
 
-function copyYoutube(cb) {
-	console.log('Start - Copy Youtube-dl')
-	ncp('./node_modules/youtube-dl', '../assets/youtube-dl', function (err) {
+function copyModule(mod, modName, cb) {
+	console.log('Start - Copy ' + modName)
+	ncp('./node_modules/' + mod, '../assets/' + mod, function (err) {
 		if (err)
 			return console.error(err)
-		console.log('End - Copy Youtube-dl')
-		console.log('Start - Build Youtube-dl')
-		npm(path.join(__dirname, '..', 'assets', 'youtube-dl'), () => {
-			console.log('End - Build Youtube-dl')
-			cb()
-		})
-	})
-}
-
-function copyPhantom(cb) {
-	console.log('Start - Copy PhantomJS')
-	ncp('./node_modules/phantom', '../assets/phantom', function (err) {
-		if (err)
-			return console.error(err)
-		console.log('End - Copy PhantomJS')
-		console.log('Start - Build PhantomJS')
-		npm(path.join(__dirname, '..', 'assets', 'phantom'), () => {
-			console.log('End - Build PhantomJS')
+		console.log('End - Copy ' + modName)
+		console.log('Start - Build ' + modName)
+		npm(path.join(__dirname, '..', 'assets', mod), () => {
+			console.log('End - Build ' + modName)
 			cb()
 		})
 	})
@@ -91,10 +77,12 @@ function packageApp() {
 }
 
 copyWeb(() => {
-	copyYoutube(() => {
-		copyPhantom(() => {
-			fixLinux(() => {
-				packageApp()
+	copyModule('youtube-dl', 'Youtube-dl', () => {
+		copyModule('phantom', 'PhantomJS', () => {
+			copyModule('forked-systray', 'Systray', () => {
+				fixLinux(() => {
+					packageApp()
+				})
 			})
 		})
 	})
