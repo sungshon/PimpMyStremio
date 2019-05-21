@@ -78,16 +78,15 @@ function onImgLoad(selector, callback) {
 function loadQr(path) {
 	dialog.close()
 	let str = '' +
-		'<img class="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=' + getUrl(true) + path + '">' +
+		'<div class="qr-hold"><img class="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=' + getUrl(true) + path + '"></div>' +
+		'<div style="height: 35px"></div>' +
 		'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised ext" onClick="closeDialog()">' +
 			'Close' +
 		'</button></div>'
 	$('.mdl-dialog').html(str)
 	componentHandler.upgradeAllRegistered()
 	onImgLoad('.qrCode', () => {
-		setTimeout(() => {
-			dialog.showModal()
-		}, 1000)
+		dialog.showModal()
 	})
 }
 
@@ -107,9 +106,9 @@ function external(title, path) {
 		'</button></a>'
 	if (!isLocal())
 		str += '' +
-			'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadQr(\'' + path + '\')">' +
+			'<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext settingsMainButton" onClick="loadQr(\'' + path + '\')">' +
 				'Load with QR Code' +
-			'</button></div>'
+			'</button>'
 	str += '' +
 		'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised ext" onClick="closeDialog()">' +
 			'Close' +
