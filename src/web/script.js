@@ -416,12 +416,20 @@ $(document).ready(() => {
 		dialog = document.querySelector('dialog')
 		dialogPolyfill.registerDialog(dialog)
 		if (!err && success) {
+			// update version in settings menu
+			request('getVersion', '', '', data => {
+				if ((data || {}).version)
+					$('.mainSettings')[0].onclick = function() { settings('_pimpmystremio', 'PimpMyStremio v' + data.version) }
+			})
+
+			// allow to close modal by clicking outside it
 			dialog.addEventListener('click', function (event) {
 				const rect = dialog.getBoundingClientRect();
 				const isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width)
 				if (!isInDialog)
 					dialog.close()
 			})
+
 			updateView()
 			return
 		} else if (err) {
