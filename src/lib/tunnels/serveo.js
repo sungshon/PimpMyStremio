@@ -44,10 +44,9 @@ function runTunnel(pmsPort, remoteOpts) {
                 const remoteUrl = 'https://' + config.remoteHost + '.serveo.net'
                 proxy.setEndpoint(remoteUrl)
                 console.log('Remote PimpMyStremio URL: ' + remoteUrl)
-                if (!isStartup) {
+                if (!isStartup)
                   open(remoteUrl)
-                  systray.init()
-                }
+                systray.init()
             }
             if (verbose)
                 console.log('Serveo - SHELL OUTPUT: ' + data)
