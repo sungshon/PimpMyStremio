@@ -211,11 +211,24 @@ const addonApi = {
 			}
 
 			if (!amChild) {
-				children.create(name).then(data => {
+				let timeOut = setTimeout(() => {
+					timeOut = false
+					function timeoutCb() {
+						// overwrite error here, it kills the process anyway
+						reject(Error(name + ' - add-on timed out while trying to start'))
+					}
+					const killCb = _.once(timeoutCb)
+					children.kill(name).then(killCb).catch(killCb)
+				}, 50000)
+				function promiseCb(isError, data) {
+					if (!timeOut) return
+					else { clearTimeout(timeOut); timeOut = false }
+					if (isError) { reject(data); return }
 					addons[name] = data
 					setRunning()
 					resolve({ success: true })
-				}).catch(reject)
+				}
+				children.create(name).then(promiseCb.bind(this, null)).catch(promiseCb.bind(this, true))
 			} else {
 				const cfg = await addonApi.addonConfig(data)
 
@@ -391,24 +404,9 @@ const addonApi = {
 
 		if (installed && installed.length) {
 			const runAddon = (task, cb) => {
-				let endCb = _.once(cb)
-				let hasTimedOut = false
-				let timeOut = setTimeout(() => {
-					timeOut = false
-					if (isParent) {
-						hasTimedOut = true
-						const name = parseRepo(task.repo).repo
-						console.error(name + ' - add-on timed out while trying to start')
-						function killCb() { endCb() }
-						// ignore error here, it kills the process anyway
-						children.kill(name).then(killCb).catch(killCb)
-					}
-				}, 50000)
 				function promiseCb(isError, err) {
-					if (hasTimedOut) return
-					else if (timeOut) { clearTimeout(timeOut); timeOut = false }
 					if (isError) console.error(err)
-					endCb()
+					cb()
 				}
 				addonApi.run(task).then(promiseCb.bind(this, null)).catch(promiseCb.bind(this, true))
 			}
@@ -417,10 +415,7 @@ const addonApi = {
 					if (isError) console.error(err)
 					runAddon(task, cb)
 				}
-				if (task.sideloaded) {
-					queueCb()
-					return
-				}
+				if (task.sideloaded) { queueCb(); return }
 				addonApi.update(task).then(queueCb.bind(this, null)).catch(queueCb.bind(this, true))
 			})
 
