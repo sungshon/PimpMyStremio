@@ -309,13 +309,21 @@ const addonApi = {
 						data.tag = githubData.tag
 						userConfig.addons.installed.add(data)
 						const bundled = await bundle(repoData.repo, path.join(dest, 'index.js'), dest, vm.allModules())
-						if ((bundled || {}).success) {
-							console.log('Add-on installed: ' + data.repo)
-							resolve({ success: true })
-						} else {
+						if (!(bundled || {}).success) {
 							console.log('Could not bundle installed add-on: ' + data.repo)
 							console.log('Add-on failed installation: ' + data.repo)
 							reject('Could not bundle installed add-on: ' + data.repo)
+							return
+						}
+						// create verbose bundle too
+						const verboseBundled = await bundle(repoData.repo, path.join(dest, 'index.js'), dest, vm.allModules(), true)
+						if ((verboseBundled || {}).success) {
+							console.log('Add-on installed: ' + data.repo)
+							resolve({ success: true })
+						} else {
+							console.log('Could not bundle verbose version of installed add-on: ' + data.repo)
+							console.log('Add-on failed installation: ' + data.repo)
+							reject('Could not bundle verbose version of installed add-on: ' + data.repo)
 						}
 					})
 					.catch(err => {
