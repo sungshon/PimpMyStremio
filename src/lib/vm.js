@@ -33,7 +33,9 @@ const vmApi = {
 
 		const addonDir = opts.data.sideloaded ? sideloadDir : addonsDir
 
-		const bundleJs = path.join(addonDir, opts.name, 'pms.bundle.js')
+		const isVerbose = !process.env['PMS_UPDATE'] ? true : !!(process.env['PMS_UPDATE'] && process.env['PMS_VERBOSE'])
+
+		let bundleJs = path.join(addonDir, opts.name, 'pms.bundle' + (isVerbose ? '.verbose' : '') + '.js')
 
 		if (!opts.data.sideloaded && !fs.existsSync(bundleJs)) {
 			console.log(opts.name + 'Error: Could not run add-on, missing bundled dependency')
@@ -76,7 +78,8 @@ const vmApi = {
 		} else {
 
 			if (opts.data.sideloaded) {
-				const bundled = await bundle(opts.name, path.join(addonDir, opts.name, 'index.js'), path.join(addonDir, opts.name), vmApi.allModules())
+				bundleJs = path.join(addonDir, opts.name, 'pms.bundle.verbose.js')
+				const bundled = await bundle(opts.name, path.join(addonDir, opts.name, 'index.js'), path.join(addonDir, opts.name), vmApi.allModules(), true)
 				if (!(bundled || {}).success) {
 					console.log(name + 'Error: Could not bundle sandboxed add-on with webpack')
 					return false
@@ -86,7 +89,7 @@ const vmApi = {
 			const content = fs.readFileSync(bundleJs)
 
 			try {
-				addon = ndVM.run(content, bundleJs)
+				addon = await ndVM.run(content, bundleJs)
 			} catch(e) {
 				console.log(opts.name + ' error:')
 				console.log(e)
