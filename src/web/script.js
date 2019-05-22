@@ -173,6 +173,16 @@ function basicSettings(repo, repoTitle, isRunning, noSettings) {
 	return str
 }
 
+function closeSearch() {
+	$('#searchResults').hide().empty()
+	$('.searchContent').hide(() => {
+		$('#query').val('')
+	})
+	$('.content').fadeIn()
+	$('.footer').show()
+	$('.searchButton').addClass('mdl-button--colored')	
+}
+
 function searchToggle() {
 	if ($('.searchButton').hasClass('mdl-button--colored')) {
 		$('.content').hide()
@@ -183,13 +193,7 @@ function searchToggle() {
 		})
 		$('.searchButton').removeClass('mdl-button--colored')
 	} else {
-		$('#searchResults').hide().empty()
-		$('.searchContent').hide(() => {
-			$('#query').val('')
-		})
-		$('.content').fadeIn()
-		$('.footer').show()
-		$('.searchButton').addClass('mdl-button--colored')		
+		closeSearch()	
 	}
 }
 
@@ -428,6 +432,18 @@ $(document).ready(() => {
 				const isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width)
 				if (!isInDialog)
 					dialog.close()
+			})
+
+			$('#query').keydown(evt => {
+				console.log('pew')
+				evt = evt || window.event
+				if (evt.keyCode === 27 || !!(evt.key === "Escape" || evt.key === "Esc")) {
+				console.log('pew2')
+					$('#query').blur()
+					closeSearch()
+				} else
+					search()
+				console.log('pew 3')
 			})
 
 			updateView()
