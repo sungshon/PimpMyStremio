@@ -180,6 +180,8 @@ function startEngine(binDir) {
 
 	if (!opts.isVerbose)
 		env['PMS_TOKEN'] = Date.now() + ''
+	else
+		env['PMS_VERBOSE'] = '1'
 
 	const procOpts = { cwd: binDir, env }
 
