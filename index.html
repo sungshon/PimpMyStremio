@@ -47,7 +47,7 @@
 					    },
 					    error: data => {
 					    	$('.loader').hide()
-					        $('#msg').text('Finished!')
+					        $('#msg').html('Finished!<br/><br/>You may now close this window.')
 					    	clearInterval(timer)
 					    	console.log(data)
 					    }
