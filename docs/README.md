@@ -38,6 +38,9 @@ module.exports = getRouter(builder.getInterface())
 
 To better understand this code, please refer to the [stremio-addon-sdk](https://github.com/Stremio/stremio-addon-sdk/) documentation.
 
+Note: You can also export a promise to `module.exports` (for example, if you need to wait for additional data in order to reply with the add-on manifest), but for safety reasons if the exported promise fails to respond in 50 seconds, the add-on will be forcefully stopped.
+
+
 ## Testing add-ons
 
 You can ofcourse use the [stremio-addon-sdk Testing](https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/testing.md) documentation to test your add-on in Stremio before even using it in PimpMyStremio, as long as you only use the whitelisted modules it should have no issues working with PimpMyStremio too.
