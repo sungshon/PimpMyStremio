@@ -15,7 +15,7 @@
 	},
 	{
 		"name": "CDN Videos",
-		"logo": "https://i.imgur.com/83CPdiS.png",
+		"logo": "https://cdn-videos.ga/static/images/logo.png",
 		"description": "Search for movies, series and anime from various CDN providers",
 		"types": ["Movies", "Series", "Anime"],
 		"repo": "TheBeastLT/stremio-cdn-videos"
