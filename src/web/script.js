@@ -435,15 +435,12 @@ $(document).ready(() => {
 			})
 
 			$('#query').keydown(evt => {
-				console.log('pew')
 				evt = evt || window.event
 				if (evt.keyCode === 27 || !!(evt.key === "Escape" || evt.key === "Esc")) {
-				console.log('pew2')
 					$('#query').blur()
 					closeSearch()
 				} else
 					search()
-				console.log('pew 3')
 			})
 
 			updateView()
