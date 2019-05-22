@@ -4,6 +4,7 @@ const rimraf = require('rimraf')
 const async = require('async')
 const path = require('path')
 const os = require('os')
+const _ = require('lodash')
 const addonsDir = require('./dirs/addonsDir')()
 const persist = require('./persist')
 const unzip = require('./unzip')
@@ -390,24 +391,37 @@ const addonApi = {
 
 		if (installed && installed.length) {
 			const runAddon = (task, cb) => {
-				addonApi.run(task).then(resp => {
-					cb()
-				}).catch(err => {
-					console.error(err)
-					cb()
-				})
+				let endCb = _.once(cb)
+				let hasTimedOut = false
+				let timeOut = setTimeout(() => {
+					timeOut = false
+					if (isParent) {
+						hasTimedOut = true
+						const name = parseRepo(task.repo).repo
+						console.error(name + ' - add-on timed out while trying to start')
+						function killCb() { endCb() }
+						// ignore error here, it kills the process anyway
+						children.kill(name).then(killCb).catch(killCb)
+					}
+				}, 50000)
+				function promiseCb(isError, err) {
+					if (hasTimedOut) return
+					else if (timeOut) { clearTimeout(timeOut); timeOut = false }
+					if (isError) console.error(err)
+					endCb()
+				}
+				addonApi.run(task).then(promiseCb.bind(this, null)).catch(promiseCb.bind(this, true))
 			}
 			const runQueue = async.queue((task, cb) => {
-				if (task.sideloaded) {
+				function queueCb(isError, err) {
+					if (isError) console.error(err)
 					runAddon(task, cb)
+				}
+				if (task.sideloaded) {
+					queueCb()
 					return
 				}
-				addonApi.update(task).then(() => {
-					runAddon(task, cb)
-				}).catch(err => {
-					console.error(err)
-					runAddon(task, cb)
-				})
+				addonApi.update(task).then(queueCb.bind(this, null)).catch(queueCb.bind(this, true))
 			})
 
 			runQueue.drain = callback
