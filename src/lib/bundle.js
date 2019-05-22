@@ -1,8 +1,10 @@
 const webpack = require('webpack')
 
-module.exports = (name, entry, dest, excluded) => {
+require('source-map-support').install({ environment: 'node', hookRequire: true, handleUncaughtExceptions: true })
+
+module.exports = (name, entry, dest, excluded, isVerbose) => {
 	return new Promise((resolve, reject) => {
-		webpack({
+		const opts = {
 		  entry,
 		  target: 'node',
 		  externals: [
@@ -17,8 +19,15 @@ module.exports = (name, entry, dest, excluded) => {
 		    libraryTarget: 'umd',
 		    filename: 'pms.bundle.js',
 		    path: dest
-		  }
-		}).run((err, stats) => {
+		  },
+		}
+
+		if (isVerbose) {
+			opts.output.filename = 'pms.bundle.verbose.js'
+			opts.devtool = 'inline-source-map'
+		}
+
+		webpack(opts).run((err, stats) => {
 		  if (err || stats.hasErrors()) {
 		  	if (err)
 			  	console.log(err)
