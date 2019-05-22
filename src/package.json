@@ -45,7 +45,8 @@
     "webpack": "^4.29.6",
     "xml-js": "^1.6.7",
     "xml2js": "^0.4.19",
-    "youtube-dl": "^1.12.2"
+    "youtube-dl": "^1.12.2",
+    "source-map-support": "sungshon/node-source-map-support"
   },
   "devDependencies": {
     "ncp": "^2.0.0",
