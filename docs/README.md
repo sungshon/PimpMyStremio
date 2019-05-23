@@ -42,8 +42,9 @@ module.exports = getRouter(builder.getInterface())
 
 To better understand this code, please refer to the [stremio-addon-sdk](https://github.com/Stremio/stremio-addon-sdk/) documentation.
 
-Note: You can also export a promise to `module.exports` (for example, if you need to wait for additional data in order to reply with the add-on manifest), but for safety reasons if the exported promise fails to respond in 50 seconds, the add-on will be forcefully stopped.
-
+Notes:
+- You can also export a promise to `module.exports` (for example, if you need to wait for additional data in order to reply with the add-on manifest), but for safety reasons if the exported promise fails to respond in 50 seconds, the add-on will be forcefully stopped
+- If an add-on fails to respond to a request (catalog, meta, streams, subtitles) within 120 seconds since the request was started, the add-on will be forcefully closed
 
 ## Testing add-ons
 
