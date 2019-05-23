@@ -227,14 +227,29 @@ function shutdown() {
 	request('shutdown', '', '', () => {})
 }
 
+function uninstall(repoName) {
+	closeDialog()
+	request('remove', repoName, '', () => {
+		updateView()
+	})
+}
+
 function settings(repo, repoTitle, isRunning) {
 	request('addonConfig', repoName(repo), '', addonConfig => {
 		if (!Object.keys(addonConfig).length) {
 			let str = '<div class="no-setting">' + basicSettings(repo, repoTitle, isRunning, true)
-			str += '<br/><br/><br/><button class="mdl-button mdl-js-button mdl-button--raised" onClick="closeDialog()">Close</button></div>'
+			str += '<br/><br/><br/>' +
+					'<button class="mdl-button mdl-js-button mdl-button--raised uninst" onClick="uninstall(\''+repoName(repo)+'\')">' +
+						'Uninstall' +
+					'</button>' +
+					'<button class="mdl-button mdl-js-button mdl-button--raised" onClick="closeDialog()">Close</button>'+
+				'</div>'
 			$('.mdl-dialog').html(str)
 			componentHandler.upgradeAllRegistered()
 	    	dialog.showModal()
+			setTimeout(() => {
+				document.activeElement.blur()
+			})
 		} else {
 			request('defaultConfig', repoName(repo), '', defaultConfig => {
 				let str = basicSettings(repo, repoTitle, isRunning)
@@ -271,7 +286,8 @@ function settings(repo, repoTitle, isRunning) {
 				}
 				str += '<input type="hidden" name="repo" value="'+repo+'">'
 				let buttons = ''
-				if (repo != '_pimpmystremio')
+				let uninstButton = ''
+				if (repo != '_pimpmystremio') {
 					buttons += '' +
 							'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent settingsRun" onClick="saveSettings(true)">' +
 								'Save and Run' +
@@ -280,7 +296,10 @@ function settings(repo, repoTitle, isRunning) {
 								'Save' +
 							'</button>' +
 							'</div>'
-				else
+					uninstButton = '<button class="mdl-button mdl-js-button mdl-button--raised uninst" onClick="uninstall(\''+repoName(repo)+'\')">' +
+								'Uninstall' +
+							'</button>'
+				} else
 					buttons += '' +
 							'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent settingsRun" onClick="saveSettings(true, true)">' +
 								'Save and Restart' +
@@ -293,7 +312,7 @@ function settings(repo, repoTitle, isRunning) {
 							'<button class="mdl-button mdl-js-button mdl-button--raised" onClick="closeDialog()">' +
 								'Close' +
 							'</button>'
-				$('.mdl-dialog').html(str + buttons +'</form>' + closeButton)
+				$('.mdl-dialog').html(str + buttons +'</form>' + uninstButton + closeButton)
 				$('.settingsForm').on('submit', e => { e.preventDefault() })
 				componentHandler.upgradeAllRegistered()
 		    	dialog.showModal()
