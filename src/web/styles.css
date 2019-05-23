@@ -42,6 +42,9 @@ body {
 .addon-load {
 	margin-right: 6px;
 }
+.uninst {
+  margin-right: 18px;
+}
 #pageContent {
 	display: inline-block
 }
