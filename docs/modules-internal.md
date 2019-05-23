@@ -30,6 +30,8 @@ evl('Math.random()').then(resp => {
 })
 ```
 
+Note: There is a 60 second timeout on eval, if the script doesn't end until then, it will be forcefully stopped.
+
 ## Proxy
 
 The proxy has a synchronous API that allows you to change headers of URLs on the fly, disabling CORS, referrer checks, etc.
