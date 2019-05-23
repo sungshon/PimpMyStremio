@@ -33,6 +33,10 @@ builder.defineStreamHandler(args => {
   // ...
 })
 
+builder.defineSubtitlesHandler(args => {
+  // ...
+})
+
 module.exports = getRouter(builder.getInterface())
 ```
 
