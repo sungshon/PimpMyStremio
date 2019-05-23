@@ -94,6 +94,7 @@ async function runServer() {
 		const vmAddon = addon.get(req.params.addonName)
 		if ((vmAddon || {}).router)
 			vmAddon.router(req, res, () => {
+				res.setHeader('Access-Control-Allow-Origin', '*')
 				res.statusCode = 404
 				res.end()
 			})
