@@ -443,6 +443,13 @@ $(document).ready(() => {
 					search()
 			})
 
+			setInterval(() => {
+				request('shouldUpdateWeb', '', '', resp => {
+					if ((resp || {}).shouldUpdateWeb)
+						updateView()
+				})
+			}, 20000)
+
 			updateView()
 			return
 		} else if (err) {
