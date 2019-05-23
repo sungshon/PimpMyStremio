@@ -124,6 +124,8 @@ const addonInterface = getInterface(builder)
 module.exports = getRouter(addonInterface)
 ```
 
+Note: You can also export a promise to module.exports (for example, if you need to wait for additional data in order to reply with the add-on manifest), but for safety reasons if the exported promise fails to respond in 50 seconds, the add-on will be forcefully stopped.
+
 ## Config
 
 This internal module is [described here](https://github.com/sungshon/PimpMyStremio/tree/master/docs#user-settings)
