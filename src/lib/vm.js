@@ -15,7 +15,7 @@ const internal = {
 
 function vmEval(str) {
 	return new Promise((resolve, reject) => {
-		const val = new VM().run(str)
+		const val = new VM({ timeout: 60000 }).run(str)
 		if (val)
 			resolve(val)
 		else
