@@ -11,6 +11,7 @@ const unzip = require('./unzip')
 const proxy = require('./proxy')
 const login = require('./login')
 const bundle = require('./bundle')
+const events = require('./events')
 const vm = require('./vm')
 
 const children = require('./children')
@@ -381,13 +382,14 @@ const addonApi = {
 	},
 	remove: data => {
 		return new Promise((resolve, reject) => {
-			addonApi.stop(data).then(() => {
+			function onStopped() {
 				userConfig.addons.installed.remove(data)
 				const name = parseRepo(data.repo).repo
 				rimraf(path.join(addonsDir, name))
 				console.log('Add-on removed: ' + data.repo)
 				resolve({ success: true })
-			})
+			}
+			addonApi.stop(data).then(onStopped).catch(onStopped)
 		})
 	},
 	getAll: () => {
@@ -431,7 +433,27 @@ const addonApi = {
 			resolve({ success: true })
 			setTimeout(() => { process.emit('SIGINT') })
 		})
+	},
+	shouldUpdateWeb: () => {
+		return new Promise((resolve, reject) => {
+			resolve({ shouldUpdateWeb })
+			if (shouldUpdateWeb)
+				shouldUpdateWeb = false
+		})
 	}
 }
+
+let shouldUpdateWeb = false
+
+events.on('kill-addon', obj => {
+	if (obj.name && obj.reason) {
+		function onKilled() {
+			// ignore error, it kills the process anyway
+			console.error(obj.reason)
+			shouldUpdateWeb = true
+		}
+		addonApi.stop(addonApi.getManifest(obj.name)).then(onKilled).catch(onKilled)
+	}
+})
 
 module.exports = addonApi
