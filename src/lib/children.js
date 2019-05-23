@@ -65,7 +65,8 @@ if (childName) {
 } else {
 	events.on('set-endpoint-children', endpoint => {
 		for (let key in children)
-			children[key].send({ endpoint })
+			if ((children[key] || {}).send)
+				children[key].send({ endpoint })
 	})
 }
 
@@ -100,13 +101,27 @@ module.exports = {
 			function router(req, res) {
 				function awaitResponse(obj) {
 					if (obj.url == req.url) {
+
+						if (!timeOut) return
+						else { clearTimeout(timeOut); timeOut = false }
+
 						for (let key in obj.headers)
 							res.setHeader(key, obj.headers[key])
+
 						res.writeHead(obj.statusCode)
 						res.end(obj.data)
 						child.removeListener('message', awaitResponse)
 					}
 				}
+				const name = ((req.url || '').split('/') || [])[1]
+				let timeOut = setTimeout(() => {
+					timeOut = false
+					child.removeListener('message', awaitResponse)
+					res.setHeader('Access-Control-Allow-Origin', '*')
+					res.statusCode = 404
+					res.end()
+					events.emit('kill-addon', { name, reason: name + ' - add-on was stopped for taking longer then 2 mins to answer a request' })
+				}, 120000)
 				child.on('message', awaitResponse)
 				child.send({ url: req.url, headers: req.headers })
 			}
