@@ -14,44 +14,43 @@ function getFunction() { return isSearch() ? search : updateView }
 
 function install(repo) {
 	const name = repoName(repo)
-	const fn = getFunction()
-	fn(() => {
+	getFunction()(() => {
 		componentHandler.upgradeAllRegistered()
 		request('install', name, '', () => { updateView(search) })
 	}, repo)
 }
 
 function forceStart(repo) {
-	request('run', repoName(repo), '', () => { updateView(search) })
+	getFunction()(() => {
+		componentHandler.upgradeAllRegistered()
+		request('run', repoName(repo), '', () => { updateView(search) })
+	}, repo)
 }
 
 function start(repo, repoTitle) {
-	getFunction()(() => {
-		componentHandler.upgradeAllRegistered()
-		request('defaultConfig', repoName(repo), '', defaultConfig => {
-			let hasRequired = false
-			for (let key in defaultConfig)
-				if (defaultConfig[key].required)
-					hasRequired = true
+	request('defaultConfig', repoName(repo), '', defaultConfig => {
+		let hasRequired = false
+		for (let key in defaultConfig)
+			if (defaultConfig[key].required)
+				hasRequired = true
 
-			if (!hasRequired)
-				forceStart(repo)
-			else {
-				request('addonConfig', repoName(repo), '', addonConfig => {
-					let missingConfig = false
-					for (let key in defaultConfig)
-						if (defaultConfig[key].required && !addonConfig[key])
-							missingConfig = true
+		if (!hasRequired)
+			forceStart(repo)
+		else {
+			request('addonConfig', repoName(repo), '', addonConfig => {
+				let missingConfig = false
+				for (let key in defaultConfig)
+					if (defaultConfig[key].required && !addonConfig[key])
+						missingConfig = true
 
-					if (!missingConfig)
-						forceStart(repo)
-					else
-						settings(repo, '!!! Missing required settings !!!')
+				if (!missingConfig)
+					forceStart(repo)
+				else
+					settings(repo, '!!! Missing required settings !!!')
 
-				})
-			}
-		})
-	}, repo)
+			})
+		}
+	})
 }
 
 function stop(repo) {
@@ -230,7 +229,7 @@ function shutdown() {
 function uninstall(repoName) {
 	closeDialog()
 	request('remove', repoName, '', () => {
-		updateView()
+		updateView(search)
 	})
 }
 
