@@ -25,6 +25,13 @@ function npm(dest, cb) {
 	}).on('exit', cb)
 }
 
+function npmBuild(dest, cb) {
+	spawn('npm' + (isWin ? '.cmd' : ''), ['run', 'build'], {
+		cwd: dest,
+		env: JSON.parse(JSON.stringify(process.env))
+	}).on('exit', cb)
+}
+
 function copyWeb(cb) {
 	console.log('Start - Copy Web Content')
 	ncp('./web', '../assets/web', function (err) {
@@ -41,12 +48,28 @@ function copyModule(mod, modName, cb) {
 		if (err)
 			return console.error(err)
 		console.log('End - Copy ' + modName)
-		console.log('Start - Build ' + modName)
+		console.log('Start - Install ' + modName)
 		npm(path.join(__dirname, '..', 'assets', mod), () => {
-			console.log('End - Build ' + modName)
+			console.log('End - Install ' + modName)
 			cb()
 		})
 	})
+}
+
+function buildModule(mod, modName, cb) {
+	console.log('Start - Build ' + modName)
+	npmBuild(path.join(__dirname, '..', 'assets', mod), () => {
+		console.log('End - Build ' + modName)
+		cb()
+	})
+}
+
+function copyFile(mod, modName, filename, cb) {
+	console.log('Start - Copying binary for ' + modName)
+	if (fs.existsSync('./node_modules/' + mod + '/' + filename + (isWin ? '.exe' : '')))
+		fs.copyFileSync('./node_modules/' + mod + '/' + filename + (isWin ? '.exe' : ''), '../assets/' + mod + '/' + filename + (isWin ? '.exe' : ''))
+	console.log('End - Copying binary for ' + modName)
+	cb()
 }
 
 function fixLinux(cb) {
@@ -80,8 +103,12 @@ copyWeb(() => {
 	copyModule('youtube-dl', 'Youtube-dl', () => {
 		copyModule('phantom', 'PhantomJS', () => {
 			copyModule('forked-systray', 'Systray', () => {
-				fixLinux(() => {
-					packageApp()
+				buildModule('forked-systray', 'Systray', () => {
+					copyFile('forked-systray', 'Systray', 'systrayhelper', () => {
+						fixLinux(() => {
+							packageApp()
+						})
+					})
 				})
 			})
 		})
