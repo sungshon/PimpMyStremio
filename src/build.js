@@ -66,10 +66,16 @@ function buildModule(mod, modName, cb) {
 
 function copyFile(mod, modName, filename, cb) {
 	console.log('Start - Copying binary for ' + modName)
-	if (fs.existsSync('./node_modules/' + mod + '/' + filename + (isWin ? '.exe' : '')))
-		fs.copyFileSync('./node_modules/' + mod + '/' + filename + (isWin ? '.exe' : ''), '../assets/' + mod + '/' + filename + (isWin ? '.exe' : ''))
-	console.log('End - Copying binary for ' + modName)
-	cb()
+	const fromLoc = path.join(__dirname, 'node_modules', mod , filename + ext())
+	const toLoc = path.join(__dirname, '..', 'assets', mod , filename + ext())
+	function end() {
+		console.log('End - Copying binary for ' + modName)
+		cb()
+	}
+	if (fs.existsSync(fromLoc))
+		fs.copyFile(fromLoc, toLoc, end)
+	else
+		end()
 }
 
 function fixLinux(cb) {
