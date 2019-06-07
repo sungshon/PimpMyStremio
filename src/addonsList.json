@@ -187,5 +187,33 @@
 		"description": "Porn videos from SpankWire",
 		"types": ["Porn"],
 		"repo": "JerryTheMole/stremio-spankwire-local"
+	},
+	{
+		"name": "Zooqle+",
+		"logo": "https://www.bittorrentvpn.com/wp-content/uploads/2017/11/zooqle-torrents.png",
+		"description": "Watch movies and series indexed by Zooqle from RARBG, KAT, YTS, MegaTorrents and other torrent trackers",
+		"types": ["Movies", "Series"],
+		"repo": "booblyboo/stremio-zooqle-local"
+	},
+	{
+		"name": "IMDB Tag",
+		"logo": "https://m.media-amazon.com/images/G/01/IMDb/BG_icon_iOS._SY230_SX307_AL_.png",
+		"description": "Add-on to create a catalog from a IMDB tag url.",
+		"types": ["Catalog"],
+		"repo": "booblyboo/stremio-imdb-tag-local"
+	},
+	{
+		"name": "IMDB List",
+		"logo": "https://m.media-amazon.com/images/G/01/IMDb/BG_icon_iOS._SY230_SX307_AL_.png",
+		"description": "Add-on to create a catalog from a IMDB list url.",
+		"types": ["Catalog"],
+		"repo": "booblyboo/stremio-imdb-list-local"
+	},
+	{
+		"name": "IMDB Watchlist",
+		"logo": "https://m.media-amazon.com/images/G/01/IMDb/BG_icon_iOS._SY230_SX307_AL_.png",
+		"description": "Add-on to create a catalog from a IMDB watchlist url.",
+		"types": ["Catalog"],
+		"repo": "booblyboo/stremio-imdb-watchlist-local"
 	}
 ]
