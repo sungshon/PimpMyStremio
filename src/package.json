@@ -50,7 +50,8 @@
     "cache-manager": "^2.9.1",
     "bottleneck": "^2.19.0",
     "magnet-uri": "^5.2.1",
-    "torrent-name-parser": "^0.6.5"
+    "torrent-name-parser": "^0.6.5",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "ncp": "^2.0.0",
