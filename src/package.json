@@ -46,7 +46,11 @@
     "xml-js": "^1.6.7",
     "xml2js": "^0.4.19",
     "youtube-dl": "^1.12.2",
-    "source-map-support": "sungshon/node-source-map-support"
+    "source-map-support": "sungshon/node-source-map-support",
+    "cache-manager": "^2.9.1",
+    "bottleneck": "^2.19.0",
+    "magnet-uri": "^5.2.1",
+    "torrent-name-parser": "^0.6.5"
   },
   "devDependencies": {
     "ncp": "^2.0.0",
