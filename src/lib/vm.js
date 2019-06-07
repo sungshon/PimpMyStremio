@@ -24,7 +24,7 @@ function vmEval(str) {
 }
 
 const vmApi = {
-	allowed: ['url', 'path', 'ent', 'm3u8-reader', 'needle', 'named-queue', 'video-name-parser', 'bin/youtube-dl', 'crypto-js', 'parse-torrent', 'xml-js', 'name-to-imdb', 'async', 'lodash', 'google', 'cheerio', 'jsdom', 'xml2js'],
+	allowed: ['url', 'path', 'ent', 'm3u8-reader', 'needle', 'named-queue', 'video-name-parser', 'bin/youtube-dl', 'crypto-js', 'parse-torrent', 'xml-js', 'name-to-imdb', 'async', 'lodash', 'google', 'cheerio', 'jsdom', 'xml2js', 'cache-manager', 'bottleneck', 'magnet-uri', 'torrent-name-parser'],
 	excluded: ['stremio-addon-sdk', 'internal', 'phantom', 'eval'],
 	allModules: () => {
 		return vmApi.excluded.concat(vmApi.allowed.map(el => { return el.replace('bin/', '') }))
