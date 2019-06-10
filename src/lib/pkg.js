@@ -14,6 +14,7 @@ function dummies() {
 	require('subsrt/lib/format/ssa')
 	require('subsrt/lib/format/sub')
 	require('subsrt/lib/format/vtt')
+	require('cache-manager/lib/stores/memory')
 }
 
 module.exports = () => {}
