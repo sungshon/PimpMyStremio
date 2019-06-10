@@ -178,15 +178,15 @@ function startEngine(binDir) {
 	if (opts.linuxTray)
 		env['LINUX_TRAY'] = '1'
 
-	if (!opts.isVerbose)
-		env['PMS_TOKEN'] = Date.now() + ''
-	else
+	if (opts.isVerbose)
 		env['PMS_VERBOSE'] = '1'
 
 	const procOpts = { cwd: binDir, env }
 
-	if (!opts.isVerbose)
+	if (!opts.isVerbose) {
 		procOpts.detached = true
+		procOpts.stdio = 'ignore'
+	}
 
 	if (isWin)
 		procOpts.windowsHide = true
@@ -209,14 +209,9 @@ function startEngine(binDir) {
 			process.exit()
 		})
 	} else {
-		msg('Starting engine')
+		msg('Starting engine, closing updater')
 		addonProc.unref()
-		addonProc.stdout.on('data', data => {
-			if (data && data.toString().trim() == env['PMS_TOKEN']) {
-				msg('Engine started, closing updater')
-				process.exit()
-			}
-		})
+		process.exit()
 	}
 
 }
