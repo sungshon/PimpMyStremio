@@ -1,3 +1,86 @@
+const needle = require('needle')
+const unzip = require('./lib/unzip')
+const async = require('async')
+const rimraf = require('rimraf')
+const { exec } = require('pkg')
+
+function zipBall(github) {
+	return new Promise((resolve, reject) => {
+		needle.get('https://api.github.com/repos/' + github + '/releases', (err, resp, body) => {
+			if (body && Array.isArray(body) && body.length) {
+				const tag = body[0].tag_name
+				const zipBall = body[0].zipball_url
+				resolve({
+					tag: body[0].tag_name,
+					zipBall: body[0].zipball_url
+				})
+			} else {
+				if (err)
+					console.error(err)
+				reject(Error('Could not get releases for: ' + github))
+			}
+		})
+	})
+}
+
+function getRepo(github, cb) {
+	if (github == 'sungshon/forked-systray') {
+		// use this installation only for 'forked-systray'
+		const folderName = github.split('/')[1].replace('-node', '').replace('node-', '')
+		const dest = path.join(assetsDir, folderName)
+		console.log('Start - Download ' + folderName)
+		zipBall(github).then(githubData => {
+			if ((githubData || {}).zipBall)
+				needle('get', githubData.zipBall, { follow_max: 5 })
+				.then(async zipFile => {
+					console.log('End - Download ' + folderName)
+					const zipped = zipFile.body.toString('base64')
+					console.log('Start - Unpack ' + folderName)
+					fs.mkdirSync(dest)
+					unzip.extract(zipped, dest)
+					console.log('End - Unpack ' + folderName)
+					console.log('Start - Install ' + folderName)
+					npm(dest, () => {
+						console.log('End - Install ' + folderName)
+						console.log('Start - Build ' + folderName)
+						npmBuild(dest, () => {
+							console.log('End - Build ' + folderName)
+							cb()
+						})
+					})
+				})
+				.catch(err => {
+					console.log(github + ' unzip error')
+					console.error(err)
+					console.error(Error((err || {}).message || 'Unknown Error Occurred'))
+				})
+			else
+				console.error('Invalid response while getting release for: ' + github)
+		}).catch(e => {
+			console.error(e)
+		})
+	} else {
+		// use old installation method
+		let folderName = github.split('/')[1].replace('-node', '').replace('node-', '')
+
+		if (folderName == 'phantomjs')
+			folderName = 'phantom'
+
+		copyModule(folderName, folderName, cb)
+	}
+}
+
+const repos = ['amir20/phantomjs-node', 'przemyslawpluta/node-youtube-dl', 'sungshon/forked-systray']
+
+function getAllRepos(callback) {
+	const q = async.queue((task, cb) => {
+		getRepo(task.id, cb)
+	})
+	q.drain = () => {
+		callback()
+	}
+	repos.forEach(el => { q.push({ id: el }) })
+}
 
 var isWin = process.platform === 'win32'
 
@@ -6,9 +89,6 @@ const path = require('path')
 const ncp = require('ncp').ncp
 
 const assetsDir = path.join(__dirname, '..', 'assets')
-
-if (!fs.existsSync(assetsDir))
-	fs.mkdirSync(assetsDir)
 
 const modulesDir = path.join(__dirname, 'node_modules')
 
@@ -19,16 +99,23 @@ function ext() {
 const spawn = require('child_process').spawn
 
 function npm(dest, cb) {
+	spawn('npm' + (isWin ? '.cmd' : ''), ['i'], {
+		cwd: dest,
+		env: Object.create(process.env)
+	}).on('exit', cb)
+}
+
+function npmProduction(dest, cb) {
 	spawn('npm' + (isWin ? '.cmd' : ''), ['i', '--production'], {
 		cwd: dest,
-		env: JSON.parse(JSON.stringify(process.env))
+		env: Object.create(process.env)
 	}).on('exit', cb)
 }
 
 function npmBuild(dest, cb) {
 	spawn('npm' + (isWin ? '.cmd' : ''), ['run', 'build'], {
 		cwd: dest,
-		env: JSON.parse(JSON.stringify(process.env))
+		env: Object.create(process.env)
 	}).on('exit', cb)
 }
 
@@ -49,7 +136,7 @@ function copyModule(mod, modName, cb) {
 			return console.error(err)
 		console.log('End - Copy ' + modName)
 		console.log('Start - Install ' + modName)
-		npm(path.join(__dirname, '..', 'assets', mod), () => {
+		npmProduction(path.join(__dirname, '..', 'assets', mod), () => {
 			console.log('End - Install ' + modName)
 			cb()
 		})
@@ -94,28 +181,25 @@ function packageApp() {
 
 	console.log('Start - Packaging App to Executable')
 
-	const { exec } = require('pkg')
-
 	exec(['package.json', '--target', 'host', '--output', '../assets/engine' + ext()]).then(() => {
+
 		console.log('Finished!')
+
 	}).catch(err => {
 		if (err)
 			console.error(err)
 		console.log('Finished!')
 	})
+
 }
 
-copyWeb(() => {
-	copyModule('youtube-dl', 'Youtube-dl', () => {
-		copyModule('phantom', 'PhantomJS', () => {
-			copyModule('forked-systray', 'Systray', () => {
-				buildModule('forked-systray', 'Systray', () => {
-					copyFile('forked-systray', 'Systray', 'systrayhelper', () => {
-						fixLinux(() => {
-							packageApp()
-						})
-					})
-				})
+rimraf(assetsDir, () => {
+	if (!fs.existsSync(assetsDir))
+		fs.mkdirSync(assetsDir)
+	copyWeb(() => {
+		getAllRepos(() => {
+			fixLinux(() => {
+				packageApp()
 			})
 		})
 	})
