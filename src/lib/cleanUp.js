@@ -49,7 +49,7 @@ module.exports = {
 				console.log(e.stack)
 				addons.stop(addons.getManifest(repoName), true).catch(e => {})
  			} else {
-				console.log('Unhandler Promise Rejection...')
+				console.log('Unhandled Promise Rejection...')
 				console.log(e.stack)
  				process.exit(0)
  			}
