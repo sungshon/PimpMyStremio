@@ -7,6 +7,8 @@ const open = require('./open')
 const proxy = require('./proxy')
 const addon = require('./addon')
 
+const verbose = process.env['PMS_VERBOSE']
+
 function openBrowser() {
     const endpoint = proxy.getEndpoint()
     open(endpoint + '/')
@@ -40,12 +42,31 @@ function die() {
 function haveSystrayBinary() {
     const isWin = process.platform === 'win32'
     const binaryName = 'systrayhelper' + (isWin ? '.exe' : '')
+    let binaryFolder
+    if (fs.existsSync(systrayPath))
+        binaryFolder = systrayPath
+    else {
+        let tempPath = path.join(__dirname, '..', 'node_modules', 'forked-systray')
+        if (fs.existsSync(tempPath))
+            binaryFolder = tempPath
+    }
+    if (!binaryFolder) {
+        if (verbose)
+            console.log('PimpMyStremio - Could not find systray module path, skipping')
+        return
+    }
     const binaryLoc = path.join(systrayPath, binaryName)
-    if (!fs.existsSync(binaryLoc)) // if file doesn't exist
+    if (!fs.existsSync(binaryLoc)) {
+        if (verbose)
+            console.log('PimpMyStremio - Could not find systray binary path, skipping')
         return false
+    }
     const binaryStats = fs.statSync(binaryLoc)
-    if (((binaryStats || {}).size || 0) < 1000000) // if less then 1 mb
+    if (((binaryStats || {}).size || 0) < 1000000) {
+        if (verbose)
+            console.log('PimpMyStremio - Invalid systray binary, skipping')
         return false
+    }
     return true
 }
 
