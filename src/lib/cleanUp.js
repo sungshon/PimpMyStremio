@@ -6,6 +6,43 @@ const _ = require('lodash')
 
 let server
 
+function repoFromStack(stack) {
+	let repoName
+
+	let matches = e.stack.match(/\/[a-z0-9-_]+\/pms\.bundle(\.verbose)?\.js/gmi)
+
+	if ((matches || []).length)
+		repoName = matches[0].split('/')[1]
+
+	if (!repoName) {
+		matches = e.stack.match(/\/PimpMyStremio\/addons\/[a-z0-9-_]+\//gmi)
+		if ((matches || []).length)
+			repoName = matches[0].split('/')[3]
+	}
+
+	return repoName
+}
+
+function errorLog(type, e) {
+	if (e instanceof Error) {
+		if (e.stack) {
+			const repoName = repoFromStack(e.stack)
+
+			if (repoName) {
+				const repoName = matches[0].split('/')[1]
+				console.log(repoName + ' - ' + type)
+				console.log(e.stack)
+				addons.stop(addons.getManifest(repoName), true).catch(e => {})
+			} else {
+				console.log(type + '...')
+				console.log(e.stack)
+				process.exit(0)
+			}
+		} else
+			console.error(e)
+	}	
+}
+
 module.exports = {
 	set: (serv) => {
 
@@ -25,35 +62,9 @@ module.exports = {
 			process.on(sig, () => { exitHandler(sig) })
 		})
 
-		process.on('uncaughtException', e => {
-			const matches = e.stack.match(/\/[a-z0-9-_]+\/pms\.bundle(\.verbose)?\.js/gmi)
-			if ((matches || []).length) {
-				const repoName = matches[0].split('/')[1]
-				console.log(repoName + ' - Uncaught Exception')
-				console.log(e.stack)
-				addons.stop(addons.getManifest(repoName), true).catch(e => {})
-			} else {
-				console.log('Uncaught Exception...')
-				console.log(e.stack)
-				process.exit(0)
-			}
-		})
+		process.on('uncaughtException', errorLog.bind('Uncaught Exception'))
 
- 		process.on('unhandledRejection', (e, p) => {
- 			if (e instanceof Error && e.stack) {
- 				const matches = e.stack.match(/\/[a-z0-9-_]+\/pms\.bundle(\.verbose)?\.js/gmi)
- 				if ((matches || []).length) {
-					const repoName = matches[0].split('/')[1]
-					console.log(repoName + ' - Unhandler Promise Rejection')
-				}
-				console.log(e.stack)
-				addons.stop(addons.getManifest(repoName), true).catch(e => {})
- 			} else {
-				console.log('Unhandled Promise Rejection...')
-				console.log(e.stack)
- 				process.exit(0)
- 			}
- 		})
+ 		process.on('unhandledRejection', errorLog.bind('Unhandler Promise Rejection'))
 	},
 	restart: () => {
 		if (server)
