@@ -45,7 +45,6 @@ function haveSystrayBinary() {
         binaryFolder = systrayPath
     else {
         let tempPath = path.join(__dirname, '..', 'node_modules', 'forked-systray')
-        console.log(tempPath)
         if (fs.existsSync(tempPath)) {
             binaryFolder = tempPath
         }
@@ -143,12 +142,6 @@ module.exports = {
             } else if (action.seq_id === 5) {
                 die()
             }
-        })
-
-        systray.on('ready', () => {
-            // this kills the updater process:
-            if (process.env['PMS_TOKEN'])
-                console.log(process.env['PMS_TOKEN'])
         })
     },
     kill: () => {
