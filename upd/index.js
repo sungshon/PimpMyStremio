@@ -20,12 +20,7 @@ function msg(str) {
 }
 
 function getBinDir() {
-	const rootDir = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + '/.local/share')
-
-	const configDir = path.join(rootDir, 'PimpMyStremio')
-
-	if (!fs.existsSync(configDir))
-		fs.mkdirSync(configDir)
+	const configDir = require('../src/lib/dirs/configDir')
 
 	const binDir = path.join(configDir, 'assets')
 
