@@ -57,7 +57,7 @@
     "ncp": "^2.0.0",
     "pkg": "^4.3.7"
   },
-  "bin": "index.js",
+  "bin": "packed.js",
   "pkg": {
     "assets": "web/*"
   }
