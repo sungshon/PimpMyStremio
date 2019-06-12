@@ -1,11 +1,15 @@
 const opn = require('open')
 const path = require('path')
+const fs = require('fs')
 const configDir = require('./dirs/configDir')()
 
 function openLinux(url) {
-	try {
-		require('child_process').spawn(path.join(configDir, 'assets', 'xdg-open'), [ url ], { stdio: 'ignore', detached: true })
-	} catch(e) {}
+	const xdgOpenPath = path.join(configDir, 'assets', 'xdg-open')
+	if (fs.existsSync(xdgOpenPath)) {
+		try {
+			require('child_process').spawn(xdgOpenPath, [ url ], { stdio: 'ignore', detached: true })
+		} catch(e) {}
+	}
 }
 
 module.exports = url => {
