@@ -385,7 +385,7 @@ const addonApi = {
 			function onStopped() {
 				userConfig.addons.installed.remove(data)
 				const name = parseRepo(data.repo).repo
-				rimraf(path.join(addonsDir, name))
+				rimraf(path.join(addonsDir, name), () => {})
 				console.log('Add-on removed: ' + data.repo)
 				resolve({ success: true })
 			}
