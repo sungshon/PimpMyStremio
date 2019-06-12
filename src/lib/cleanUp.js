@@ -26,7 +26,7 @@ module.exports = {
 		})
 
 		process.on('uncaughtException', e => {
-			const matches = e.stack.match(/\/[a-z0-9-_]+\/pms\.bundle\.js/gmi)
+			const matches = e.stack.match(/\/[a-z0-9-_]+\/pms\.bundle(\.verbose)?\.js/gmi)
 			if ((matches || []).length) {
 				const repoName = matches[0].split('/')[1]
 				console.log(repoName + ' - Uncaught Exception')
@@ -41,9 +41,11 @@ module.exports = {
 
  		process.on('unhandledRejection', (e, p) => {
  			if (e instanceof Error && e.stack) {
- 				const matches = e.stack.match(/\/[a-z0-9-_]+\/pms\.bundle\.js/gmi)
-				const repoName = matches[0].split('/')[1]
-				console.log(repoName + ' - Unhandler Promise Rejection')
+ 				const matches = e.stack.match(/\/[a-z0-9-_]+\/pms\.bundle(\.verbose)?\.js/gmi)
+ 				if ((matches || []).length) {
+					const repoName = matches[0].split('/')[1]
+					console.log(repoName + ' - Unhandler Promise Rejection')
+				}
 				console.log(e.stack)
 				addons.stop(addons.getManifest(repoName), true).catch(e => {})
  			} else {
