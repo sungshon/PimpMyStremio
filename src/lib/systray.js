@@ -3,7 +3,6 @@ const path = require('path')
 const configDir = require('./dirs/configDir')()
 const systrayPath = path.join(configDir, 'assets', 'forked-systray')
 
-const SysTray = require(fs.existsSync(systrayPath) ? systrayPath : 'forked-systray').default
 const open = require('./open')
 const proxy = require('./proxy')
 const addon = require('./addon')
@@ -38,10 +37,27 @@ function die() {
     process.emit('SIGINT')
 }
 
+function haveSystrayBinary() {
+    const isWin = process.platform === 'win32'
+    const binaryName = 'systrayhelper' + (isWin ? '.exe' : '')
+    const binaryLoc = path.join(systrayPath, binaryName)
+    if (!fs.existsSync(binaryLoc)) // if file doesn't exist
+        return false
+    const binaryStats = fs.statSync(binaryLoc)
+    if (((binaryStats || {}).size || 0) < 1000000) // if less then 1 mb
+        return false
+    return true
+}
+
 let systray = false
 
 module.exports = {
     init: () => {
+        
+        if (!haveSystrayBinary())
+            return
+
+        const SysTray = require(fs.existsSync(systrayPath) ? systrayPath : 'forked-systray').default
 
         const isRemote = proxy.getEndpoint().startsWith('https://')
 
