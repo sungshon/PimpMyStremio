@@ -9,7 +9,7 @@ module.exports = () => {
 	if (configDir)
 		return configDir
 
-	configDir = path.join(rootDir, 'PimpMyStremio')
+	configDir = path.join(rootDir, process.env['PMS_CONFIG_DIR_NAME'] || 'PimpMyStremio')
 
 	if (!fs.existsSync(configDir))
 		fs.mkdirSync(configDir)
