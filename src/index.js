@@ -42,12 +42,6 @@ async function runServer() {
 		res.end(JSON.stringify({ err: 'handler error' }))
 	}
 
-	console.log('exists 1')
-	console.log(require('fs').existsSync('src/web'))
-
-	console.log('exists 2')
-	console.log(require('fs').existsSync('web'))
-
 	router.use(express.static(webDir()))
 
 	router.get('/login-api', (req, res) => {
