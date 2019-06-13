@@ -15,7 +15,7 @@ const sideload = require('./lib/sideload')
 const login = require('./lib/login')
 const querystring = require('querystring')
 const path = require('path')
-const confDir = require('./lib/dirs/configDir')
+const webDir = require('./lib/dirs/webDir')
 const open = require('./lib/open')
 const systray = require('./lib/systray')
 
@@ -42,7 +42,13 @@ async function runServer() {
 		res.end(JSON.stringify({ err: 'handler error' }))
 	}
 
-	router.use(express.static(process.env['PMS_UPDATE'] ? path.join(confDir(), 'assets', 'web') : 'web'))
+	console.log('exists 1')
+	console.log(require('fs').existsSync('src/web'))
+
+	console.log('exists 2')
+	console.log(require('fs').existsSync('web'))
+
+	router.use(express.static(webDir()))
 
 	router.get('/login-api', (req, res) => {
 		const query = req.query || {}
