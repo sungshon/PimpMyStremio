@@ -56,32 +56,18 @@
 		"repo": "danamag/stremio-twisted-local"
 	},
 	{
-		"name": "IPTV Web Player - Catalogs",
+		"name": "IPTV Web Player",
 		"logo": "http://www.mdcgate.com/apps/upload/images/tvos_iptv/IPTV-tvOS-icon.jpg",
-		"description": "Creates catalogs based on IPTV Web Portals. Connects to the Web Portal used by many IPTV Providers (Nitro, Beast, Twisted and many more)",
+		"description": "Creates catalogs or channels based on IPTV Web Portals. Connects to the Web Portal used by many IPTV Providers (Nitro, Beast, Twisted and many more)",
 		"types": ["IPTV"],
-		"repo": "danamag/stremio-iptv-webplayer-cats-local"
+		"repo": "danamag/stremio-iptv-webplayer-local"
 	},
 	{
-		"name": "IPTV Web Player - Channels",
-		"logo": "http://www.mdcgate.com/apps/upload/images/tvos_iptv/IPTV-tvOS-icon.jpg",
-		"description": "Creates channels based on IPTV Web Portals. Connects to the Web Portal used by many IPTV Providers (Nitro, Beast, Twisted and many more)",
-		"types": ["IPTV"],
-		"repo": "danamag/stremio-iptv-webplayer-chans-local"
-	},
-	{
-		"name": "M3U Playlists - Catalogs",
+		"name": "M3U Playlists",
 		"logo": "https://enjoy.zendesk.com/hc/article_attachments/360004422752/2149-m3u-image.jpg",
-		"description": "Creates catalogs based on M3U Playlists. Add M3U playlists to Stremio by URL, supports a maximum of 5 playlists and custom names",
+		"description": "Creates catalogs or channels based on M3U Playlists. Add M3U playlists to Stremio by URL, supports a maximum of 5 playlists and custom names",
 		"types": ["IPTV"],
-		"repo": "danamag/stremio-m3u-catalogs-local"
-	},
-	{
-		"name": "M3U Playlists - Channels",
-		"logo": "https://enjoy.zendesk.com/hc/article_attachments/360004422752/2149-m3u-image.jpg",
-		"description": "Creates channels based on M3U Playlists. Add M3U playlists to Stremio by URL, supports a maximum of 5 playlists and custom names",
-		"types": ["IPTV"],
-		"repo": "danamag/stremio-m3u-channels-local"
+		"repo": "danamag/stremio-m3u-local"
 	},
 	{
 		"name": "MP3 Clan",
