@@ -80,7 +80,7 @@ phantom.load(options, clientArguments, phantomOptions, (instance, page) => {
 ```
 
 In this example code:
-- `options` - refers to an object of internal options, supports `agent` (string) for user agent, `headers` for an object of custom headers, `noRedirect` (boolean) to block the page from redirecting and `clearMemory` (boolean) to not use cached data when loading the page
+- `options` - refers to an object of internal options, supports `agent` (string) for user agent, `headers` for an object of custom headers, `noRedirect` (boolean) to block the page from redirecting, `clearMemory` (boolean) to not use cached data when loading the page and `polyfill` (boolean, default is `false`) to inject core.js (thorough ES polyfill) in the page
 - `clientArguments` is an array of strings that includes the client arguments to pass to the phantomjs binary (as used in [phantom](https://www.npmjs.com/package/phantom)), default is: `["--ignore-ssl-errors=true", "--web-security=false", "--ssl-protocol=tlsv1", "--load-images=false", "--disk-cache=true"]`
 - `phantomOptions` is an object of options as used in [phantom](https://www.npmjs.com/package/phantom), default is: `{ logLevel: 'warn' }`
 
