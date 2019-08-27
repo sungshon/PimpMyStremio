@@ -145,7 +145,12 @@ const proxify = {
 										const nUrl = line.match(/URI="([^"]+)/)
 										let oldUrl
 										if ((nUrl || []).length > 1) oldUrl = nUrl[1]
-										newPlaylist.push(oldUrl ? line.replace(oldUrl, proxify.addProxy(oldUrl, newOpts)) : line)
+										let newUrl = oldUrl
+										if (newUrl.startsWith('/'))
+											newUrl = proxies[host].protocol + '//' + proxies[host].host + newUrl
+										else if (!newUrl.startsWith('http'))
+											newUrl = proxies[host].protocol + '//' + proxies[host].host + '/' + newUrl
+										newPlaylist.push(oldUrl ? line.replace(oldUrl, proxify.addProxy(newUrl, newOpts)) : line)
 									} else
 										newPlaylist.push(line)
 								})
