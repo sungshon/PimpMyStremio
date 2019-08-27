@@ -63,16 +63,15 @@ module.exports = {
 //				console.log('Page Timed Out')
 //			})
 
-			function end() {
+			function end(myPage) {
 				onceCb = true
-				cb(instance, page)
+				cb(instance, myPage || page)
 			}
 
 			if (!opts.polyfill)
 				end()
-			else {
+			else
 				injectCoreJs(instance, page, end)
-			}
 
 		}).catch(err => {
 	      console.log('PhantomJS - Caught Error')
@@ -177,5 +176,5 @@ function injectCoreJs(instance, page, cb) {
 		myPage[key] = (a,b) => { return page[key](a,b) }
 	})
 
-	cb()
+	cb(myPage)
 }
