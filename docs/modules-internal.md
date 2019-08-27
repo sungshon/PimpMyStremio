@@ -7,7 +7,7 @@ A list of modules that are also allowed to be required in local add-ons, but are
 Gets movie / series metadata from Cinemeta based on IMDB ID and type (`movie` or `series`)
 
 ```javascript
-const cinemeta = require('cinemeta')
+const cinemeta = require('internal').cinemeta
 
 cinemeta.get({ imdb: 'tt0944947', type: 'series' }).then(resp => {
   // resp is Game of Thrones metadata
