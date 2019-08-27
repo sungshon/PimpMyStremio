@@ -24,8 +24,15 @@ function vmEval(str) {
 }
 
 const vmApi = {
-	allowed: ['url', 'path', 'ent', 'm3u8-reader', 'needle', 'named-queue', 'video-name-parser', 'bin/youtube-dl', 'crypto-js', 'parse-torrent', 'xml-js', 'name-to-imdb', 'async', 'lodash', 'google', 'cheerio', 'jsdom', 'xml2js', 'cache-manager', 'bottleneck', 'magnet-uri', 'torrent-name-parser', 'request'],
-	excluded: ['stremio-addon-sdk', 'internal', 'phantom', 'eval'],
+	allowed: [
+		'url', 'path', 'ent', 'm3u8-reader', 'needle', 'named-queue', 'video-name-parser',
+		'bin/youtube-dl', 'crypto-js', 'parse-torrent', 'xml-js', 'name-to-imdb', 'async',
+		'lodash', 'google', 'cheerio', 'jsdom', 'xml2js', 'cache-manager', 'bottleneck',
+		'magnet-uri', 'torrent-name-parser', 'request', 'cheerio-without-node-native',
+		'cross-fetch', 'cloudscraper', 'axios', 'remote-file-size', 'base-64', 'compare-versions',
+		'js-events-listener', 'qs', 'string_decoder'
+	],
+	excluded: ['stremio-addon-sdk', 'internal', 'phantom', 'eval', 'dom-storage'],
 	allModules: () => {
 		return vmApi.excluded.concat(vmApi.allowed.map(el => { return el.replace('bin/', '') }))
 	},
@@ -62,6 +69,8 @@ const vmApi = {
 		modules['stremio-addon-sdk'] = require('./addonSdk')
 
 		modules['eval'] = vmEval
+
+		modules['dom-storage'] = require('./domStorageShim')(opts.persist)
 
 		const ndVM = new NodeVM({
 			sandbox: {},
