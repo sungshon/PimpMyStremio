@@ -124,7 +124,7 @@ console.log(persist.getItem('myVar'))
 persist.setItem('myVar', 'hello world')
 ```
 
-Also supports `.clear()` for clearing the entirety of the data.
+Also supports `.removeItem()` to remove a key and `.clear()` for clearing the entirety of the data.
 
 ## Publishing an add-on
 
