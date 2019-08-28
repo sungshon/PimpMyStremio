@@ -418,7 +418,7 @@ function updateView(cb, loading) {
 				} else {
 					let typeStr = ''
 					addons[key].forEach(addon => { typeStr += addonToRow(jsonData, addon, loading) })
-					$('#' + key).html(typeStr)
+					$('#' + tag).html(typeStr)
 				}
 			}
 
