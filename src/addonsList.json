@@ -1,5 +1,12 @@
 [
 	{
+		"name": "Awesome Everything",
+		"logo": "https://cdn.imgbin.com/25/9/11/imgbin-everything-is-awesome-logo-the-lego-movie-brand-everything-is-awesome-47XMADTLwVjGFND7W1uErJr5a.jpg",
+		"description": "Tons of free movies and TV episode streams! This add-on may take up to 8 seconds to answer with streams.",
+		"types": ["Movies", "Series"],
+		"repo": "PurposeUnknown42/awesome-everything"
+	},
+	{
 		"name": "Jackett",
 		"logo": "https://static1.squarespace.com/static/55c17e7ae4b08ccd27be814e/t/599b81c32994ca8ff6c1cd37/1508813048508/Jackett-logo-2.jpg",
 		"description": "Stremio Add-on to get torrent results from Jackett",
