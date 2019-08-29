@@ -255,7 +255,7 @@ function settings(repo, repoTitle, isRunning) {
 				str += '<form class="settingsForm" action="#">'
 				for (let key in defaultConfig) {
 					if (['string', 'number'].indexOf(defaultConfig[key].type) > -1) {
-						const val = addonConfig[key] == 0 || !!addonConfig[key] ? ' value="' + (addonConfig[key] + '').split('"').join('\\"') + '"' : ''
+						const val = addonConfig[key] === 0 || !!addonConfig[key] ? ' value="' + (addonConfig[key] + '').split('"').join('\\"') + '"' : ''
 						const isNumber = defaultConfig[key].type == 'number' ? ' pattern="-?[0-9]*(\\.[0-9]+)?"' : ''
 						const isRequired = defaultConfig[key].required ? ' required' : ''
 						str += '' +
