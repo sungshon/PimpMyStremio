@@ -3,8 +3,8 @@ const addon = require('./addon')
 const fs = require('fs')
 const path = require('path')
 
-const isDirectory = source => fs.lstatSync(source).isDirectory()
-const getDirectories = source => fs.readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
+const isDirectoryOrSymLink = source => fs.lstatSync(source).isDirectory() || fs.lstatSync(source).isSymbolicLink()
+const getDirectories = source => fs.readdirSync(source).map(name => path.join(source, name)).filter(isDirectoryOrSymLink)
 
 function validAddons() {
 	return new Promise((resolve, reject) => {
