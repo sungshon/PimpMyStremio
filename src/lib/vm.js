@@ -27,10 +27,10 @@ const vmApi = {
 	allowed: [
 		'url', 'path', 'ent', 'm3u8-reader', 'needle', 'named-queue', 'video-name-parser',
 		'bin/youtube-dl', 'crypto-js', 'parse-torrent', 'xml-js', 'name-to-imdb', 'async',
-		'lodash', 'google', 'cheerio', 'jsdom', 'xml2js', 'cache-manager', 'bottleneck',
+		'lodash', 'google-it', 'cheerio', 'jsdom', 'xml2js', 'cache-manager', 'bottleneck',
 		'magnet-uri', 'torrent-name-parser', 'request', 'cheerio-without-node-native',
 		'cross-fetch', 'cloudscraper', 'axios', 'remote-file-size', 'base-64', 'compare-versions',
-		'js-events-listener', 'qs', 'string_decoder', 'google-it'
+		'js-events-listener', 'qs', 'string_decoder'
 	],
 	excluded: ['stremio-addon-sdk', 'internal', 'phantom', 'eval', 'dom-storage'],
 	allModules: () => {
