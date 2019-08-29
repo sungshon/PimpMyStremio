@@ -1,5 +1,12 @@
 [
 	{
+		"name": "RARBG Torrents UHD 4K",
+		"logo": "https://i.imgur.com/a7RsF1g.png",
+		"description": "Watch movies & series from RARBG in UHD/4K",
+		"types": ["Movies", "Series"],
+		"repo": "Sleeyax/stremio-local-rarbg-torrents-4k"
+	},
+	{
 		"name": "Awesome Everything",
 		"logo": "https://cdn.imgbin.com/25/9/11/imgbin-everything-is-awesome-logo-the-lego-movie-brand-everything-is-awesome-47XMADTLwVjGFND7W1uErJr5a.jpg",
 		"description": "Tons of free movies and TV episode streams! This add-on may take up to 8 seconds to answer with streams.",
