@@ -26,7 +26,6 @@
     "express": "^4.16.4",
     "forked-systray": "sungshon/forked-systray",
     "get-port": "^4.0.0",
-    "google": "^2.1.0",
     "google-it": "^1.2.1",
     "http-proxy": "^1.14.0",
     "js-events-listener": "^1.0.0",
