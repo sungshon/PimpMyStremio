@@ -20,7 +20,7 @@ function msg(str) {
 }
 
 function getBinDir() {
-	const configDir = require('../src/lib/dirs/configDir')
+	const configDir = require('../src/lib/dirs/configDir')()
 
 	const binDir = path.join(configDir, 'assets')
 
