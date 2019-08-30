@@ -35,6 +35,13 @@
 		"repo": "TheBeastLT/stremio-cdn-videos"
 	},
 	{
+		"name": "Anime from AnimeFever",
+		"logo": "https://www.googleapis.com/download/storage/v1/b/graphicker/o/img%2Fworks%2F5%2F4961%2F875b56ea41f99c9535aa59cf5f346fd8.png?generation=1482729411428000&alt=media",
+		"description": "Anime from AnimeFever",
+		"types": ["Anime"],
+		"repo": "henryhomes/stremio-animefever"
+	},
+	{
 		"name": "Open Directories - Music",
 		"logo": "https://secure.webtoolhub.com/static/resources/logos/set1/bc185e1e.jpg",
 		"description": "Stremio Add-on to get music streaming results from Open Directories",
