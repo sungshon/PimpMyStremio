@@ -42,6 +42,13 @@
 		"repo": "henryhomes/stremio-animefever"
 	},
 	{
+		"name": "Anime from AnimePahe",
+		"logo": "https://marcelinethinks.files.wordpress.com/2015/11/anime-logo-square.png",
+		"description": "Anime from AnimeFever",
+		"types": ["Anime"],
+		"repo": "henryhomes/stremio-animepahe-local"
+	},
+	{
 		"name": "Open Directories - Music",
 		"logo": "https://secure.webtoolhub.com/static/resources/logos/set1/bc185e1e.jpg",
 		"description": "Stremio Add-on to get music streaming results from Open Directories",
