@@ -33,7 +33,7 @@
     "jsdom": "^14.0.0",
     "localtunnel": "^1.9.1",
     "lodash": "^4.17.11",
-    "m3u8-reader": "^1.1.0",
+    "m3u8-reader": "sungshon/m3u8-reader",
     "name-to-imdb": "^2.3.1",
     "named-queue": "^2.2.1",
     "nanoid": "^2.0.1",
