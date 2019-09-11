@@ -63,6 +63,34 @@
 		"repo": "danamag/stremio-123tv-local"
 	},
 	{
+		"name": "Fluxus IPTV",
+		"logo": "https://3.bp.blogspot.com/-H29TnFg5qi8/XJRl9LkCOPI/AAAAAAAAERM/NMz9wJR8iksFemvDu1kGWb9soX41HopxgCLcBGAs/s1600/NewFTV-IPTV-C.png",
+		"description": "Thousands of free IPTV channels from Fluxus. Includes: Main IPTV, CCTV and Faith channels.",
+		"types": ["IPTV"],
+		"repo": "brainbug73/stremio-fluxus-iptv"
+	},
+	{
+		"name": "LodgeTV",
+		"logo": "https://4.bp.blogspot.com/-Eg90Vh8Redo/W1jD5cl7sVI/AAAAAAAADjQ/b0uHeL1gjkkwKvqjhS-X0LpLqzVgPqaaACLcBGAs/s1600/LodgeTV_Playlist.png",
+		"description": "Thousands of free IPTV channels from LodgeTV. Includes: English, Spanish and Arabic channels.",
+		"types": ["IPTV"],
+		"repo": "brainbug73/stremio-lodgetv"
+	},
+	{
+		"name": "Stratus Television",
+		"logo": "https://4.bp.blogspot.com/-oQNkqrqPQ98/W1jECk8g7YI/AAAAAAAADjU/FxPmjwup0QI6_2ni2icom0WpHSpx2gt2gCLcBGAs/s1600/Stratus_TV_Playlist.png",
+		"description": "Thousands of free IPTV channels from Stratus TV. Includes: USA, Canada, UK, Ireland, Spain, Latino, Mexico, Argentina, Chile, Colombia, Brazil, Portugal, Arab, India and Pakistan channels.",
+		"types": ["IPTV"],
+		"repo": "brainbug73/stremio-stratustv"
+	},
+	{
+		"name": "Worldwide Free IPTV",
+		"logo": "https://1.bp.blogspot.com/-rpY21C2cVVc/XBDa1uQ3cHI/AAAAAAAAAQU/K55jh053eHQNhj75HokXh9WJfmDchcHVwCLcBGAs/s1600/FREE%2BWORLD%2BBIG%2BMIX%2B2000%252B%2BLIVE%2BHD%2BIPTV%2BPLAYLIST%2BM3U%2BLINKSKODIUPDATE.jpg",
+		"description": "6000+ free IPTV channels from all over the world.",
+		"types": ["IPTV"],
+		"repo": "brainbug73/stremio-worldwide-iptv"
+	},
+	{
 		"name": "Nitro IPTV",
 		"logo": "https://mydingtv.com/wp-content/uploads/2019/02/Nitrous-TV.jpg",
 		"description": "IPTV Service - Requires Subscription",
@@ -124,6 +152,13 @@
 		"description": "Tracks from Mixcloud",
 		"types": ["Music"],
 		"repo": "JerryTheMole/stremio-mixcloud-local"
+	},
+	{
+		"name": "Fluxus Radios",
+		"logo": "https://3.bp.blogspot.com/-FpstPKST3TY/XJRmE7BmF9I/AAAAAAAAERY/ijxe44PpW44-poO8lJtn6DDosT8NTdF9ACLcBGAs/s1600/NewFTV-Radio-C.png",
+		"description": "More than 1000 free radio channels from Fluxus.",
+		"types": ["Music"],
+		"repo": "brainbug73/stremio-fluxus-radios"
 	},
 	{
 		"name": "Crunchyroll",
@@ -196,11 +231,25 @@
 		"repo": "JerryTheMole/stremio-spankwire-local"
 	},
 	{
+		"name": "Fluxus Lust",
+		"logo": "https://3.bp.blogspot.com/-iEXS5Rp0LUM/WZ4plyRMU6I/AAAAAAAAA5Q/c4exNnCRyAsZ3JNDCIv6PCDAs3NzDDy1gCLcBGAs/s320/FluxusLustH.png",
+		"description": "IPTV & VOD streams for Porn from Fluxus Lust. This content is intended for a mature audience.",
+		"types": ["Porn"],
+		"repo": "brainbug73/stremio-fluxus-lust"
+	},
+	{
 		"name": "Zooqle+",
 		"logo": "https://www.bittorrentvpn.com/wp-content/uploads/2017/11/zooqle-torrents.png",
 		"description": "Watch movies and series indexed by Zooqle from RARBG, KAT, YTS, MegaTorrents and other torrent trackers",
 		"types": ["Movies", "Series"],
 		"repo": "booblyboo/stremio-zooqle-local"
+	},
+	{
+		"name": "Fluxus Cinema",
+		"logo": "https://3.bp.blogspot.com/-H29TnFg5qi8/XJRl9LkCOPI/AAAAAAAAERM/NMz9wJR8iksFemvDu1kGWb9soX41HopxgCLcBGAs/s1600/NewFTV-IPTV-C.png",
+		"description": "Movies from Fluxus Cinema. Includes: English, German, French, Italian, Spanish, Portuguese, Japanese and Arabic movies.",
+		"types": ["Movies"],
+		"repo": "brainbug73/stremio-fluxus-cinema"
 	},
 	{
 		"name": "IMDB Tag",
