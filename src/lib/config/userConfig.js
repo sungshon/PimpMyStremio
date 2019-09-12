@@ -32,10 +32,15 @@ const defaultConfig = {
 			default: 7777
 		},
 		password: {
-			title: 'Password',
+			title: 'Server Password',
 			type: 'string',
 			default: ''
-		}
+		},
+		addonsListUrl: {
+			title: 'Remote Add-ons List URL',
+			type: 'string',
+			default: 'https://raw.githubusercontent.com/sungshon/PimpMyStremio/master/src/addonsList.json'
+		},
 	}
 }
 
