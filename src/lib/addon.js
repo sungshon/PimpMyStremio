@@ -20,7 +20,7 @@ const noChildren = process.env['NO_CHILDREN']
 const isChild = !!process.env['CHILD']
 const isParent = noChildren || !isChild
 
-const allAddons = require('../addonsList')
+const allAddons = require('./addonsList')()
 
 const userConfig = isParent ? require('./config/userConfig') : {}
 const addonConfig = require('./config/addonConfig')
