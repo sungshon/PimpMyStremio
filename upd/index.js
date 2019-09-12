@@ -144,17 +144,26 @@ function installEngine(binDir, githubData) {
 	})
 }
 
+const clArgs = process.argv || []
+
 const opts = {
-	atStartup: (process.argv || []).some(el => !!(el == '--startup')),
-	noChildren: (process.argv || []).some(el => !!(el == '--no-children')),
-	isVerbose: (process.argv || []).some(el => !!(el == '--verbose')),
-	linuxTray: (process.argv || []).some(el => !!(el == '--linux-tray')),
+	atStartup: clArgs.some(el => !!(el == '--startup')),
+	noChildren: clArgs.some(el => !!(el == '--no-children')),
+	isVerbose: clArgs.some(el => !!(el == '--verbose')),
+	linuxTray: clArgs.some(el => !!(el == '--linux-tray')),
 }
 
 if (opts.linuxTray) // users can choose to force system tray, if they installed the deps manually
 	opts.isVerbose = false
 else if (isLinux) // on linux we default to verbose, as system tray it requires dependencies
 	opts.isVerbose = true
+
+clArgs.some(el => {
+	if (el.startsWith('--sideload=')) {
+		opts.sideloadDir = el.replace('--sideload=', '')
+		return true
+	}
+})
 
 function startEngine(binDir) {
 
@@ -175,6 +184,9 @@ function startEngine(binDir) {
 
 	if (opts.isVerbose)
 		env['PMS_VERBOSE'] = '1'
+	
+	if (opts.sideloadDir)
+		env['PMS_SIDELOAD'] = opts.sideloadDir
 
 	const procOpts = { cwd: binDir, env }
 
