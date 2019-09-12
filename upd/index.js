@@ -27,9 +27,76 @@ function getBinDir() {
 	return binDir
 }
 
+function getAddonsListPath() {
+	const configDir = require('../src/lib/dirs/configDir')()
+
+	const addonsListPath = path.join(configDir, 'addonsList.json')
+
+	return addonsListPath	
+}
+
+function getUserData() {
+	return require('../src/lib/config/userConfig').readClean().userDefined
+}
+
+function versionToInt(str) {
+	return parseInt(str.replace('v', '').split('.').join(''))
+}
+
+function updateAddonsList() {
+	return new Promise((resolve, reject) => {
+		// default url:
+		let listUrl = 'https://raw.githubusercontent.com/sungshon/PimpMyStremio/master/src/addonsList.json'
+
+		const userData = getUserData()
+
+		if ((userData || {}).addonsListUrl) {
+			// test user defined url for sanity
+			const isUrl = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
+			if (isUrl.test(userData.addonsListUrl)) {
+				msg('User defined add-ons list URL is valid, updating add-ons list')
+				listUrl = userData.addonsListUrl
+			} else
+				msg('User defined add-ons list URL is invalid, using default URL')
+		}
+
+		needle.get(listUrl, (err, resp, body) => {
+			try {
+				body = JSON.parse(body)
+			} catch(e) {}
+			if (body && Array.isArray(body) && body.length) {
+				let version = getVersion(binDir)
+				version = version ? versionToInt(version) : 1
+
+				const addons = body.filter(addon => {
+					// filter out add-ons that are not currently supported by this version
+					return !!(!addon.requires || versionToInt(addon.requires) <= version)
+				})
+
+				if (addons.length) {
+					try {
+						fs.writeFileSync(getAddonsListPath(), JSON.stringify(addons))
+						msg('Successfully updated add-ons list from remote source')
+					} catch(e) {
+						msg('Warning: Could not write data from remote add-ons list to disk')
+					}
+				} else {
+					msg('Warning: Remote add-ons list seems empty')
+				}
+
+			} else {
+				msg('Warning: Invalid response from the remote add-ons list')
+			}
+			resolve()
+		})
+	})
+}
+
 function getVersion(binDir) {
 	const versionFile = path.join(binDir, '..', 'version')
-	return !fs.existsSync(versionFile) ? false : fs.readFileSync(versionFile)
+	let version = !fs.existsSync(versionFile) ? false : fs.readFileSync(versionFile)
+	version = version && Buffer.isBuffer(version) ? version.toString() : false
+	return version
 }
 
 function saveVersion(binDir, version) {
@@ -165,7 +232,9 @@ clArgs.some(el => {
 	}
 })
 
-function startEngine(binDir) {
+async function startEngine(binDir) {
+
+	await updateAddonsList()
 
 	api.close()
 
