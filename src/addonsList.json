@@ -71,7 +71,7 @@
 	},
 	{
 		"name": "LodgeTV",
-		"logo": "https://4.bp.blogspot.com/-Eg90Vh8Redo/W1jD5cl7sVI/AAAAAAAADjQ/b0uHeL1gjkkwKvqjhS-X0LpLqzVgPqaaACLcBGAs/s1600/LodgeTV_Playlist.png",
+		"logo": "https://3.bp.blogspot.com/-6Ql8J95fTKU/WrFQlFcpq0I/AAAAAAAAC5Q/sLHDj_89CMILmosQ1k1SyX_viu9d1L2VgCLcBGAs/s320/LodgeTV_Logo-Square.png",
 		"description": "Thousands of free IPTV channels from LodgeTV. Includes: English, Spanish and Arabic channels.",
 		"types": ["IPTV"],
 		"repo": "brainbug73/stremio-lodgetv"
