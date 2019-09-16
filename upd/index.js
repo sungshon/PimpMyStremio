@@ -19,8 +19,10 @@ function msg(str) {
 		api.msg(str)
 }
 
+const getConfigDir = require('../src/lib/dirs/configDir')
+
 function getBinDir() {
-	const configDir = require('../src/lib/dirs/configDir')()
+	const configDir = getConfigDir()
 
 	const binDir = path.join(configDir, 'assets')
 
@@ -28,15 +30,17 @@ function getBinDir() {
 }
 
 function getAddonsListPath() {
-	const configDir = require('../src/lib/dirs/configDir')()
+	const configDir = getConfigDir()
 
 	const addonsListPath = path.join(configDir, 'addonsList.json')
 
 	return addonsListPath	
 }
 
+const userConfig = require('../src/lib/config/userConfig')
+
 function getUserData() {
-	return require('../src/lib/config/userConfig').readClean().userDefined
+	return userConfig.readClean().userDefined
 }
 
 function versionToInt(str) {
@@ -153,6 +157,8 @@ function zipBall() {
 	})
 }
 
+const extract = require('extract-zip')
+
 function installEngine(binDir, githubData) {
 	return new Promise((resolve, reject) => {
 		const dest = binDir
@@ -169,8 +175,6 @@ function installEngine(binDir, githubData) {
 				fs.writeFileSync(tmpFile, zipFile.body)
 
 				msg('Finished downloading new version')
-
-				var extract = require('extract-zip')
 
 				msg('Unpacking new version')
 				extract(tmpFile, { dir: path.join(binDir, '..') }, function (err) {
