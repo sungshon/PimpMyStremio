@@ -14,8 +14,7 @@
     "rimraf": "^2.6.3",
     "extract-zip": "^1.6.7",
     "get-port": "^5.0.0",
-    "open": "^6.1.0",
-    "nanoid": "^2.0.1"
+    "open": "^6.1.0"
   },
   "bin": "packed.js",
   "devDependencies": {
