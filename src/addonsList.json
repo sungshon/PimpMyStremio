@@ -1,7 +1,7 @@
 [
 	{
 		"name": "RARBG Torrents UHD 4K",
-		"logo": "https://i.imgur.com/a7RsF1g.png",
+		"logo": "https://pms-images.now.sh/rarbg_4k.png",
 		"description": "Watch movies & series from RARBG in UHD/4K",
 		"types": ["Movies", "Series"],
 		"repo": "Sleeyax/stremio-local-rarbg-torrents-4k"
