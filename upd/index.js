@@ -19,24 +19,31 @@ function msg(str) {
 		api.msg(str)
 }
 
+const configDir = require('../src/lib/dirs/configDir')()
+
 function getBinDir() {
-	const configDir = require('../src/lib/dirs/configDir')()
-
-	const binDir = path.join(configDir, 'assets')
-
-	return binDir
+	return path.join(configDir, 'assets')
 }
 
 function getAddonsListPath() {
-	const configDir = require('../src/lib/dirs/configDir')()
-
-	const addonsListPath = path.join(configDir, 'addonsList.json')
-
-	return addonsListPath	
+	return path.join(configDir, 'addonsList.json')	
 }
 
-function getUserData() {
-	return require('../src/lib/config/userConfig').readClean().userDefined
+function getRemoteAddonsUrl() {
+	const configFilePath = path.join(configDir, 'PimpMyStremio-userConfig.json')
+	if (fs.existsSync(configFilePath)) {
+		let config
+
+		try {
+			config = JSON.parse(fs.readFileSync(configFilePath).toString())
+		} catch(e) {
+			// ignore read file issues
+			return false
+		}
+
+		return ((config || {}).userDefined || {}).addonsListUrl
+	} else
+		return false
 }
 
 function versionToInt(str) {
@@ -48,14 +55,14 @@ function updateAddonsList() {
 		// default url:
 		let listUrl = 'https://raw.githubusercontent.com/sungshon/PimpMyStremio/master/src/addonsList.json'
 
-		const userData = getUserData()
+		const addonsListUrl = getRemoteAddonsUrl()
 
-		if ((userData || {}).addonsListUrl) {
+		if (addonsListUrl) {
 			// test user defined url for sanity
 			const isUrl = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
-			if (isUrl.test(userData.addonsListUrl)) {
+			if (isUrl.test(addonsListUrl)) {
 				msg('User defined add-ons list URL is valid, updating add-ons list')
-				listUrl = userData.addonsListUrl
+				listUrl = addonsListUrl
 			} else
 				msg('User defined add-ons list URL is invalid, using default URL')
 		}
