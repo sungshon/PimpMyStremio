@@ -41,7 +41,7 @@ function getRemoteAddonsUrl() {
 			return false
 		}
 
-		return ((config || {}).userDefined || {}).addonsListUrl
+		return (((config || {}).userDefined || {}).addonsListUrl || {}).value
 	} else
 		return false
 }
