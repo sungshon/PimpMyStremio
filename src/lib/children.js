@@ -3,6 +3,8 @@ const fork = require('child_process').fork
 const proxy = require('./proxy')
 const events = require('./events')
 
+const isWin = process.platform === 'win32'
+
 let childName = process.env['CHILD']
 
 if (childName) {
@@ -83,10 +85,13 @@ module.exports = {
 			env.CHILD = addonName
 
 			const options = {
-				detached: true,
+				detached: !isWin,
 				stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ],
 				env
 			}
+
+			if (isWin)
+				options.windowsHide = true
 
 			const child = children[addonName] = fork(__filename, parameters, options)
 
