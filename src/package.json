@@ -1,6 +1,6 @@
 {
   "name": "pimpmystremio",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Stremio local add-ons package manager",
   "main": "index.js",
   "scripts": {
