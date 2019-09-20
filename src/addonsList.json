@@ -119,6 +119,13 @@
 		"repo": "danamag/stremio-m3u-local"
 	},
 	{
+		"name": "Emby Client",
+		"logo": "https://emby.media/community/public/style_images/master/meta_image1.png",
+		"description": "Emby client to view your Emby Connect media servers in Stremio.",
+		"types": ["Media Server Clients"],
+		"repo": "TowerTonic/stremio-emby-client"
+	},
+	{
 		"name": "MP3 Clan",
 		"logo": "https://www.macupdate.com/images/icons256/52415.png",
 		"description": "Search and play music from MP3 Clan / MP3 Guild websites",
