@@ -30,7 +30,7 @@ const vmApi = {
 		'lodash', 'google-it', 'cheerio', 'jsdom', 'xml2js', 'cache-manager', 'bottleneck',
 		'magnet-uri', 'torrent-name-parser', 'request', 'cheerio-without-node-native',
 		'cross-fetch', 'cloudscraper', 'axios', 'remote-file-size', 'base-64', 'compare-versions',
-		'js-events-listener', 'qs', 'string_decoder', 'm3u8-parsed'
+		'js-events-listener', 'qs', 'string_decoder', 'm3u8-parsed', 'discord-rpc'
 	],
 	excluded: ['stremio-addon-sdk', 'internal', 'phantom', 'eval', 'dom-storage'],
 	allModules: () => {
