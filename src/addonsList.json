@@ -245,6 +245,13 @@
 		"repo": "Sleeyax/stremio-local-rarbg-torrents-4k"
 	},
 	{
+		"name": "Discord Rich Presence",
+		"logo": "https://i.imgur.com/HGIkQgD.png",
+		"description": "Show the movie or series you're watching in Discord",
+		"types": ["Movies", "Series"],
+		"repo": "Sleeyax/stremio-discord"
+	},
+	{
 		"name": "Fluxus Cinema",
 		"logo": "https://3.bp.blogspot.com/-H29TnFg5qi8/XJRl9LkCOPI/AAAAAAAAERM/NMz9wJR8iksFemvDu1kGWb9soX41HopxgCLcBGAs/s1600/NewFTV-IPTV-C.png",
 		"description": "Movies from Fluxus Cinema. Includes: English, German, French, Italian, Spanish, Portuguese, Japanese and Arabic movies.",
