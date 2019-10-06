@@ -249,7 +249,8 @@
 		"logo": "https://i.imgur.com/HGIkQgD.png",
 		"description": "Show the movie or series you're watching in Discord",
 		"types": ["Movies", "Series"],
-		"repo": "Sleeyax/stremio-discord"
+		"repo": "Sleeyax/stremio-discord",
+		"requires": "1.1.9"
 	},
 	{
 		"name": "Fluxus Cinema",
