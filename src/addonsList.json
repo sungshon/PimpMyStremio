@@ -119,6 +119,13 @@
 		"repo": "danamag/stremio-m3u-local"
 	},
 	{
+		"name": "Plex Client",
+		"logo": "https://assets.pcmag.com/media/images/517012-plex-logo.png?width=333&height=245",
+		"description": "Plex client to view your Plex media servers in Stremio.",
+		"types": ["Media Server Clients"],
+		"repo": "OwnGod/stremio-plex-client"
+	},
+	{
 		"name": "Emby Client",
 		"logo": "https://emby.media/community/public/style_images/master/meta_image1.png",
 		"description": "Emby client to view your Emby Connect media servers in Stremio.",
