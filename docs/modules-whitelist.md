@@ -35,3 +35,4 @@ This is not the complete list of allowed modules, make sure to also read [intern
 - [js-events-listener](http://npmjs.com/package/js-events-listener)
 - [qs](http://npmjs.com/package/qs)
 - [string_decoder](http://npmjs.com/package/string_decoder)
+- [discord-rpc](http://npmjs.com/package/discord-rpc)
