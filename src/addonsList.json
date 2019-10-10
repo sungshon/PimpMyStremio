@@ -22,7 +22,7 @@
 	},
 	{
 		"name": "CDN Videos",
-		"logo": "https://cdn-videos.ga/static/images/logo.png",
+		"logo": "https://pms-images.now.sh/cdn-videos.png",
 		"description": "Search for movies, series and anime from various CDN providers",
 		"types": ["Movies", "Series", "Anime"],
 		"repo": "TheBeastLT/stremio-cdn-videos"
@@ -260,7 +260,7 @@
 	},
 	{
 		"name": "Discord Rich Presence",
-		"logo": "https://i.imgur.com/HGIkQgD.png",
+		"logo": "https://pms-images.now.sh/discord.png",
 		"description": "Show the movie or series you're watching in Discord. This add-on requires you to have the Discord desktop app installed and running.",
 		"types": ["Movies", "Series"],
 		"repo": "Sleeyax/stremio-discord",
