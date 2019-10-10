@@ -261,7 +261,7 @@
 	{
 		"name": "Discord Rich Presence",
 		"logo": "https://i.imgur.com/HGIkQgD.png",
-		"description": "Show the movie or series you're watching in Discord",
+		"description": "Show the movie or series you're watching in Discord. This add-on requires you to have the Discord desktop app installed and running.",
 		"types": ["Movies", "Series"],
 		"repo": "Sleeyax/stremio-discord",
 		"requires": "1.1.9"
