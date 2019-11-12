@@ -4,7 +4,7 @@ Local add-on manager for Stremio.
 
 Download the version for your operating system from [the releases page](https://github.com/sungshon/PimpMyStremio/releases).
 
-Run it, wait for it to update and enjoy a whole new catalog of add-ons that are not available in Stremio's catalog.
+Run it, wait for it to update, and enjoy a whole new catalog of add-ons that are not available in Stremio's catalog.
 
 Can't figure out how to use PimpMyStremio? Read [our user guide](./docs/user-guide.md).
 
