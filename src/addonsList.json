@@ -252,13 +252,6 @@
 		"repo": "booblyboo/stremio-zooqle-local"
 	},
 	{
-		"name": "RARBG Torrents UHD 4K",
-		"logo": "https://pms-images.now.sh/rarbg_4k.png",
-		"description": "Watch movies & series from RARBG in UHD/4K",
-		"types": ["Movies", "Series"],
-		"repo": "Sleeyax/stremio-local-rarbg-torrents-4k"
-	},
-	{
 		"name": "Discord Rich Presence",
 		"logo": "https://pms-images.now.sh/discord.png",
 		"description": "Show the movie or series you're watching in Discord. This add-on requires you to have the Discord desktop app installed and running.",
