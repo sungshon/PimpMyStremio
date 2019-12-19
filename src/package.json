@@ -15,7 +15,7 @@
     "base-64": "^0.1.0",
     "cheerio": "^0.22.0",
     "cheerio-without-node-native": "^0.20.2",
-    "cloudscraper": "^1.4.1",
+    "cloudscraper": "^4.5.0",
     "compare-versions": "^3.1.0",
     "cors": "^2.8.4",
     "cross-fetch": "^2.1.0",
