@@ -76,7 +76,7 @@ const proxify = {
 
 	createProxyServer: router => {
 
-		const proxy = httpProxy.createProxyServer()
+		const proxy = httpProxy.createProxyServer({ secure: false, followRedirects: true })
 
 		proxy.on('error', e => {
 			if (e) {
