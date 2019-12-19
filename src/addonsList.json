@@ -49,6 +49,13 @@
 		"repo": "BoredLama/stremio-open-music-local"
 	},
 	{
+		"name": "USA IPTV",
+		"logo": "https://ustvgo.now.sh/addon-logo.png",
+		"description": "Free IPTV from USATV",
+		"types": ["IPTV"],
+		"repo": "machaboo/some-silly-repo"
+	},
+	{
 		"name": "123TV",
 		"logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3i1zBYl9KWtrGK9sOM_4L3AO7QCJ5ooz1vxWxx9wMzVpFJhowEw",
 		"description": "Free IPTV from 123TV",
