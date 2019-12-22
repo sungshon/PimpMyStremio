@@ -139,9 +139,12 @@ const proxify = {
 								let newOpts = JSON.parse(JSON.stringify(opts))
 								delete newOpts.playlist
 								body.split(/\r?\n/).forEach(line => {
-									if (line.startsWith('http://') || line.startsWith('https://'))
-										newPlaylist.push(proxify.addProxy(line, newOpts))
-									else if (line.match(/URI="([^"]+)/)) {
+									if (line.startsWith('http://') || line.startsWith('https://')) {
+										if (newOpts.noFollowSegment)
+											newPlaylist.push(proxify.addProxy(line, newOpts))
+										else
+											newPlaylist.push(line)
+									} else if (line.match(/URI="([^"]+)/)) {
 										const nUrl = line.match(/URI="([^"]+)/)
 										let oldUrl
 										if ((nUrl || []).length > 1) oldUrl = nUrl[1]
