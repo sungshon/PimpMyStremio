@@ -1,0 +1,31 @@
+@import "../styles.css";
+
+body {
+    background-color: #181818;
+}
+
+.content,
+.mdl-data-table,
+.mdl-expansion__summary:focus,
+dialog {
+    background-color: #202020;
+}
+
+.mdl-data-table tr:hover {
+    background-color: #323131 !important;
+}
+
+.mdl-expansion__summary::after {
+    color: grey;
+}
+
+.mdl-button--raised {
+    background-color: rgb(27, 27, 27);
+}
+
+body,
+.copy-box,
+.mdl-button--raised,
+dialog {
+    color: white;
+}
