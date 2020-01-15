@@ -2,7 +2,7 @@
 const pkg = require('./lib/pkg')
 const express = require('express')
 const getPort = require('get-port')
-const tunnel = require('./lib/tunnels/serveo')
+//const tunnel = require('./lib/tunnels/serveo')
 const autoLaunch = require('./lib/autoLaunch')
 const addon = require('./lib/addon')
 const uConfig = require('./lib/config/userConfig')
@@ -120,13 +120,16 @@ async function runServer() {
 
 		console.log('PimpMyStremio server running at: ' + url)
 
-		if (userConfig.remote)
-			tunnel(serverPort, { subdomain: userConfig.subdomain }) 
-		else {
+// previously used reverse proxies, they caused many issues
+// leaving this here in case of future solutions to SSL requirement
+
+//		if (userConfig.remote)
+//			tunnel(serverPort, { subdomain: userConfig.subdomain }) 
+//		else {
 			if (!isStartup)
 				open('http://127.0.0.1:' + serverPort)
 			systray.init()
-		}
+//		}
 
 	})
 }
