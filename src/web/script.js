@@ -179,7 +179,7 @@ function closeSearch() {
 	})
 	$('.content').fadeIn()
 	$('.footer').show()
-	$('.searchButton').addClass('mdl-button--colored')	
+	$('.searchButton').addClass('mdl-button--colored')
 }
 
 function searchToggle() {
@@ -192,7 +192,7 @@ function searchToggle() {
 		})
 		$('.searchButton').removeClass('mdl-button--colored')
 	} else {
-		closeSearch()	
+		closeSearch()
 	}
 }
 
@@ -403,7 +403,7 @@ function updateView(cb, loading) {
 					str += '' +
 						'<details class="mdl-expansion">' +
 							'<summary class="mdl-expansion__summary">' +
-								'<span class="mdl-expansion__header">' + 
+								'<span class="mdl-expansion__header">' +
 									key +
 								'</span>' +
 							'</summary>' +
@@ -434,6 +434,7 @@ function updateView(cb, loading) {
 let dialog
 
 $(document).ready(() => {
+    insertTheme();
 	tryLoginLocal(localStorage.password, (err, success) => {
 		dialog = document.querySelector('dialog')
 		dialogPolyfill.registerDialog(dialog)
