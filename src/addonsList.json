@@ -15,7 +15,7 @@
 	},
 	{
 		"name": "Open Directories - Videos",
-		"logo": "https://logopond.com/logos/3290f64e7448ab9cf04239a070a8cc47.png",
+		"logo": "https://pms-images.now.sh/open-directories-videos.png",
 		"description": "Stremio Add-on to get streaming results from Open Directories",
 		"types": ["Movies", "Series"],
 		"repo": "BoredLama/stremio-open-directories-local"
@@ -36,7 +36,7 @@
 	},
 	{
 		"name": "Anime from AnimeFever",
-		"logo": "https://www.googleapis.com/download/storage/v1/b/graphicker/o/img%2Fworks%2F5%2F4961%2F875b56ea41f99c9535aa59cf5f346fd8.png?generation=1482729411428000&alt=media",
+		"logo": "https://pms-images.now.sh/anime-fever.jpg",
 		"description": "Anime from AnimeFever",
 		"types": ["Anime"],
 		"repo": "henryhomes/stremio-animefever"
