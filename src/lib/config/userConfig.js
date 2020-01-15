@@ -16,15 +16,10 @@ const defaultConfig = {
 			type: 'boolean',
 			default: false
 		},
-		remote: {
-			title: 'Access remotely',
+		darkMode: {
+			title: 'Dark mode',
 			type: 'boolean',
 			default: false
-		},
-		subdomain: {
-			title: 'Remote access subdomain',
-			type: 'string',
-			default: nanoid()
 		},
 		serverPort: {
 			title: 'Server port',
@@ -50,8 +45,10 @@ const configDb = {
 	compress: data => {
 		const obj = {}
 		const userDefined = {}
-		for (let key in data.userDefined)
-			userDefined[key] = data.userDefined[key].value || data.userDefined[key].default
+
+		for (let key in defaultConfig.userDefined)
+			userDefined[key] = (data.userDefined[key] || {}).value || defaultConfig.userDefined[key].default
+
 		return {
 			installedAddons: data.installedAddons,
 			runningAddons: data.runningAddons,
