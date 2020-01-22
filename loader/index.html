@@ -43,13 +43,13 @@
 					    url: 'http://127.0.0.1:' + port + '/loading-api',
 					    type: 'GET',
 					    success: data => { 
-                  if (data.msg)
-  					        $('#msg').html('<span>' + data + '</span>')
-                  else if (data.redirect) {
-    					    	clearInterval(timer)
-    					    	$('.loader').hide()
-                    window.location.replace(data.redirect)
-                  }
+						if (data.msg)
+							$('#msg').html(data)
+						else if (data.redirect) {
+//    						    	clearInterval(timer)
+//    						    	$('.loader').hide()
+//							window.location.replace(data.redirect)
+						}
 					    },
 					    error: data => {
 					      $('#msg').html('Error while starting PimpMyStremio')
