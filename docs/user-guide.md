@@ -1,7 +1,6 @@
 # PimpMyStremio User Guide
 
 - [Quickstart Guide](#quickstart-guide)
-- [Access Remotely](#access-remotely)
 - [Running on Android](#running-on-android)
 
 
@@ -30,21 +29,6 @@ More streams will work in the Stremio App, so this is the recommended choice, bu
 Simply press "Load in Stremio App" (the recommended choice, requires [Stremio](https://www.stremio.com/) installed), and this will load all your PimpMyStremio add-ons in Stremio.
 
 You should be aware that PimpMyStremio add-ons only work while PimpMyStremio is running, it is for this reason why it is recommended to set PimpMyStremio to run on start-up, you can do so by pressing the [settings button](https://pms-images.now.sh/settings-button.png) (located to the top right of the PimpMyStremio page) and enabling the "Run on start-up" setting.
-
-
-### Access Remotely
-
-By default, PimpMyStremio runs on LAN. If you wish to make PimpMyStremio (and it's add-ons) work through the Internet, to, for example, use it on your phone (with the Stremio Android app) when your away from your home, with your PC acting as a host. Then this is possible and I will continue by explaining how.
-
-First press the [settings button](https://pms-images.now.sh/settings-button.png) (located to the top right of the PimpMyStremio page), now set a password for your server. This is very important to do as you'll make the server available online.
-
-Now enable "Access remotely" and press "Save and Restart".
-
-Your PimpMyStremio app will restart, but this time it will load in ur browser with a remote URL, instead of a local one.
-
-Now there are 2 ways to continue, the simplest way is to press the [external button](https://pms-images.now.sh/external-button.png) (located to the top right of the PimpMyStremio page), and then press "Load With QR Code", then scan that QR code with ur phone and enjoy your add-ons remotely!
-
-The second way is to copy PimpMyStremio's URL from the browser, send it to your phone, and open it in the phone's browser, to use PimpMyStremio from there.
 
 
 ### Running on Android
