@@ -47,7 +47,7 @@
 							$('#msg').html(data.msg)
 						else if (data.redirect) {
     						    	clearInterval(timer)
-    						    	$('.loader').hide()
+							$('#msg').('Redirecting ...')
 							window.location.replace(data.redirect)
 						}
 					    },
