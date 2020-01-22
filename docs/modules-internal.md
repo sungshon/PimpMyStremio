@@ -56,7 +56,8 @@ Supported proxy options:
     "encodeUtf8": true, // default: false, encodes the subtitle to UTF8
     "encoding": "ISO-8859-7" // default: false, set currect encoding manually, if this is not set it will be guessed
   },
-  "playlist": true // default: false, if segments of hls are from a separate domain then the playlist, this proxifies the segment URLs too
+  "playlist": true, // default: false, if segments of hls are from a separate domain then the playlist, this proxifies the segment URLs too, it also proxifies any hls key url too where applicable
+  "noFollowSegment": false // default: false, when setting the playlist property to true the default behavior is to proxify all segments also, but there is a case where you might want to proxify only the hls key url, setting this property to true allows that
 }
 ```
 

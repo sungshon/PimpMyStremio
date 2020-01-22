@@ -141,9 +141,9 @@ const proxify = {
 								body.split(/\r?\n/).forEach(line => {
 									if (line.startsWith('http://') || line.startsWith('https://')) {
 										if (newOpts.noFollowSegment)
-											newPlaylist.push(proxify.addProxy(line, newOpts))
-										else
 											newPlaylist.push(line)
+										else
+											newPlaylist.push(proxify.addProxy(line, newOpts))
 									} else if (line.match(/URI="([^"]+)/)) {
 										const nUrl = line.match(/URI="([^"]+)/)
 										let oldUrl
