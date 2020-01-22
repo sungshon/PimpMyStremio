@@ -238,6 +238,7 @@ const opts = {
 	noChildren: clArgs.some(el => !!(el == '--no-children')),
 	isVerbose: clArgs.some(el => !!(el == '--verbose')),
 	linuxTray: clArgs.some(el => !!(el == '--linux-tray')),
+	shouldUninstall: clArgs.some(el => !!(el == '--uninstall')),
 }
 
 if (opts.linuxTray) // users can choose to force system tray, if they installed the deps manually
@@ -324,28 +325,49 @@ function afterInstall() {
 	}
 }
 
-const api = require('./api')
-
 const downloadProgress = require('./downloadProgress')
 
 const unzipProgress = require('./unzipProgress')
 
-msg('Checking for updates')
+let api
 
-zipBall().then(githubData => {
+if (!opts.shouldUninstall) {
 
-	const version = getVersion(binDir)
+	api = require('./api')
 
-	if (!version || version != githubData.tag) {
-		api.start()
-		msg('New version found')
-		installEngine(binDir, githubData).then(afterInstall).catch(afterInstall)
-	} else {
-		msg('Already have latest version')
-		startEngine(binDir)
-	}
+	msg('Checking for updates')
 
-}).catch(err => {
-	console.error(err)
-	afterInstall()
-})
+	zipBall().then(githubData => {
+
+		const version = getVersion(binDir)
+
+		if (!version || version != githubData.tag) {
+			api.start()
+			msg('New version found')
+			installEngine(binDir, githubData).then(afterInstall).catch(afterInstall)
+		} else {
+			msg('Already have latest version')
+			startEngine(binDir)
+		}
+
+	}).catch(err => {
+		console.error(err)
+		afterInstall()
+	})
+
+} else {
+
+	// uninstall PimpMyStremio
+
+	msg('Uninstalling PimpMyStremio')
+
+	rimraf(configDir, { maxBusyTries: 100 }, err => {
+		if (err) {
+			console.error(err)
+			process.exit()
+			return
+		}
+		msg('Successfully uninstalled PimpMyStremio')
+		process.exit()
+	})
+}
