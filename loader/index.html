@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="./styles.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<center>
+			<img id="logo" src="https://github.com/sungshon/PimpMyStremio/raw/master/src/web/logo.png">
+		</center>
+		<div class="loader">
+			<div class="loader-inner">
+				<div class="loader-line-wrap">
+					<div class="loader-line"></div>
+				</div>
+				<div class="loader-line-wrap">
+					<div class="loader-line"></div>
+				</div>
+				<div class="loader-line-wrap">
+					<div class="loader-line"></div>
+				</div>
+				<div class="loader-line-wrap">
+					<div class="loader-line"></div>
+				</div>
+				<div class="loader-line-wrap">
+					<div class="loader-line"></div>
+				</div>
+			</div>
+		</div>
+		<center>
+			<div id="msg">
+				Loading ...
+			</div>
+		</center>
+		<script>
+			const urlParams = new URLSearchParams(window.location.search)
+			const port = urlParams.get('port')
+			// if port is missing we'll just leave the default
+			// loading screen
+			if (port) {
+				const timer = setInterval(() => {
+					$.ajax({
+					    url: 'http://127.0.0.1:' + port + '/loading-api',
+					    type: 'GET',
+					    success: data => { 
+                  if (data.msg)
+  					        $('#msg').html(data)
+                  else if (data.redirect) {
+    					    	clearInterval(timer)
+    					    	$('.loader').hide()
+                    window.location.replace(data.redirect)
+                  }
+					    },
+					    error: data => {
+					      $('#msg').html('Error while starting PimpMyStremio')
+					    	clearInterval(timer)
+					    	console.log(data)
+					    }
+					});
+				}, 3000)
+			}
+		</script>
+	</body>
+</html>
