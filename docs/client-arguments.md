@@ -7,3 +7,5 @@
 `--no-children` - by default this app runs each add-on in a separate process, this adds security but also increases add-on load time significantly, use this setting to make add-ons run in the same process as the app
 
 `--sideload=` - set custom add-on sideload directory instead of the default one (example usage: `--sideload="D:\PMS Sideload"` or `--sideload="/Users/sungshon/pms-sideload"`)
+
+`--uninstall` - uninstalls PimpMyStremio and removes all user defined data
