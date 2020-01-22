@@ -40,7 +40,7 @@
 			if (port) {
 				const timer = setInterval(() => {
 					$.ajax({
-					    url: 'http://127.0.0.1:' + port + '/',
+					    url: 'http://127.0.0.1:' + port + '/loading-api',
 					    type: 'GET',
 					    success: data => { 
                   if (data.msg)
