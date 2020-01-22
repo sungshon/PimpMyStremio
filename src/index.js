@@ -23,26 +23,59 @@ const isStartup = process.env['PMS_STARTUP']
 
 autoLaunch('PimpMyStremio', userConfig.autoLaunch)
 
+const router = express()
+
+const respond = (res, data) => {
+  if ((data || {}).cacheMaxAge)
+    res.setHeader('Cache-Control', 'max-age=' + data.cacheMaxAge)
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Headers', '*')
+  res.setHeader('Content-Type', 'application/json')
+  res.send(data)
+}
+
+const fail = res => {
+	res.writeHead(500)
+	res.end(JSON.stringify({ err: 'handler error' }))
+}
+
+let loadMsg = 'Loading ...'
+let loadFinished = false
+
+router.get('/loading-api', (req, res) => {
+	respond(res, loadFinished ? { redirect: proxy.getEndpoint() } : { msg: loadMsg })
+})
+
+router.use(express.static(process.env['PMS_UPDATE'] ? path.join(confDir(), 'assets', 'web') : 'web'))
+
 let serverPort
+let server
+
+async function init() {
+
+	serverPort = await getPort({ port: userConfig.serverPort })
+
+	server = router.listen(serverPort, () => {
+
+		let url = 'https://sungshon.github.io/PimpMyStremio/loader/'
+
+		url += '?port=' + serverPort
+
+		open(url)
+
+		addon.init(runningAddons, () => {
+			sideload.loadAll(runServer)
+		}, cleanUp.restart, (task, started, total) => {
+			loadMsg = 'Starting addon: ' + started + ' / ' + total + '<div style="height: 15px"></div>"' + task.name + '"'
+		})
+
+	})
+
+}
+
+init()
 
 async function runServer() {
-	const router = express()
-
-	const respond = (res, data) => {
-	  if ((data || {}).cacheMaxAge)
-	  	res.setHeader('Cache-Control', 'max-age=' + data.cacheMaxAge)
-	  res.setHeader('Access-Control-Allow-Origin', '*')
-	  res.setHeader('Access-Control-Allow-Headers', '*')
-	  res.setHeader('Content-Type', 'application/json')
-	  res.send(data)
-	}
-
-	const fail = res => {
-		res.writeHead(500)
-		res.end(JSON.stringify({ err: 'handler error' }))
-	}
-
-	router.use(express.static(process.env['PMS_UPDATE'] ? path.join(confDir(), 'assets', 'web') : 'web'))
 
 	router.get('/login-api', (req, res) => {
 		const query = req.query || {}
@@ -106,34 +139,27 @@ async function runServer() {
 
 	router.get('/:addonName/:resource/:type/:id/:extra?.json', getRouter)
 
-	serverPort = await getPort({ port: userConfig.serverPort })
-
 	proxy.createProxyServer(router)
 
-	const server = router.listen(serverPort, () => {
+	cleanUp.set(server)
 
-		cleanUp.set(server)
+	const url = 'http://127.0.0.1:' + serverPort
 
-		const url = 'http://127.0.0.1:' + serverPort
+	proxy.setEndpoint(url)
 
-		proxy.setEndpoint(url)
-
-		console.log('PimpMyStremio server running at: ' + url)
+	console.log('PimpMyStremio server running at: ' + url)
 
 // previously used reverse proxies, they caused many issues
 // leaving this here in case of future solutions to SSL requirement
 
-//		if (userConfig.remote)
-//			tunnel(serverPort, { subdomain: userConfig.subdomain }) 
-//		else {
-			if (!isStartup)
-				open('http://127.0.0.1:' + serverPort)
-			systray.init()
-//		}
+//	if (userConfig.remote)
+//		tunnel(serverPort, { subdomain: userConfig.subdomain }) 
+//	else {
+//		if (!isStartup)
+//			open('http://127.0.0.1:' + serverPort)
+		systray.init()
+//	}
 
-	})
+	loadFinished = true
+
 }
-
-addon.init(runningAddons, () => {
-	sideload.loadAll(runServer)
-}, cleanUp.restart)
