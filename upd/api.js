@@ -20,7 +20,7 @@ module.exports = {
 			  res.end()
 			})
 			server.listen(port, 'localhost', err => {
-			  let url = 'https://sungshon.github.io/PimpMyStremio/index.html'
+			  let url = 'https://sungshon.github.io/PimpMyStremio/'
 			  url += '?port=' + port
 			  if (!atStartup)
 				opn(url, { wait: true }).catch((e) => {
