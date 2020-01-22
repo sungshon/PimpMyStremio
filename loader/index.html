@@ -44,11 +44,11 @@
 					    type: 'GET',
 					    success: data => { 
 						if (data.msg)
-							$('#msg').html(data)
+							$('#msg').html(data.msg)
 						else if (data.redirect) {
-//    						    	clearInterval(timer)
-//    						    	$('.loader').hide()
-//							window.location.replace(data.redirect)
+    						    	clearInterval(timer)
+    						    	$('.loader').hide()
+							window.location.replace(data.redirect)
 						}
 					    },
 					    error: data => {
