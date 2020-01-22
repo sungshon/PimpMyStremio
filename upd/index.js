@@ -193,7 +193,8 @@ function installEngine(binDir, githubData) {
 				let extracted = 0
 
 				extract(tmpFile, {
-					dir: path.join(binDir, '..')
+					dir: path.join(binDir, '..'),
+					onEntry: unzipProgress()
 				}, function (err) {
 					fs.unlinkSync(tmpFile)
 					if (err) {
@@ -326,6 +327,8 @@ function afterInstall() {
 const api = require('./api')
 
 const downloadProgress = require('./downloadProgress')
+
+const unzipProgress = require('./unzipProgress')
 
 msg('Checking for updates')
 
