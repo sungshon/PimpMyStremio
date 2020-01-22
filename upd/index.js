@@ -164,26 +164,40 @@ function installEngine(binDir, githubData) {
 	return new Promise((resolve, reject) => {
 		const dest = binDir
 
-		function installAddon() {
+		function installUpdate() {
 			msg('Downloading new version')
-			needle('get', githubData.zipBall, { follow_max: 5 })
-			.then(zipFile => {
-				const tmpFile = path.join(os.tmpdir(), 'PimpMyStremio.zip')
 
-				if (fs.existsSync(tmpFile))
-					fs.unlinkSync(tmpFile)
+			const tmpFile = path.join(os.tmpdir(), 'PimpMyStremio.zip')
 
-				fs.writeFileSync(tmpFile, zipFile.body)
+			if (fs.existsSync(tmpFile))
+				fs.unlinkSync(tmpFile)
+
+			const file = fs.createWriteStream(tmpFile);
+
+			const req = needle.get(githubData.zipBall, { follow_max: 5 })
+
+			req.pipe(file).on('finish', err => {
+				if (err) {
+					msg('Download error: ' + (err.message || 'Unknown error'))
+					console.error(err)
+					reject()
+					return
+				}
 
 				msg('Finished downloading new version')
 
 				var extract = require('extract-zip')
 
 				msg('Unpacking new version')
-				extract(tmpFile, { dir: path.join(binDir, '..') }, function (err) {
+
+				let extracted = 0
+
+				extract(tmpFile, {
+					dir: path.join(binDir, '..')
+				}, function (err) {
 					fs.unlinkSync(tmpFile)
 					if (err) {
-						msg('Unzip error 2')
+						msg('Unzip error: ' + (err.message || 'Unknown error'))
 						console.error(err)
 						reject()
 						return
@@ -195,11 +209,9 @@ function installEngine(binDir, githubData) {
 					resolve()
 				})
 			})
-			.catch(err => {
-				msg('Unzip error 1')
-				console.error(err)
-				reject()
-			})
+
+			downloadProgress(req)
+
 		}
 
 		function cleanDir(dest, cb) {
@@ -214,7 +226,7 @@ function installEngine(binDir, githubData) {
 			})
 		}
 
-		cleanDir(dest, installAddon)
+		cleanDir(dest, installUpdate)
 	})
 }
 
@@ -312,6 +324,8 @@ function afterInstall() {
 }
 
 const api = require('./api')
+
+const downloadProgress = require('./downloadProgress')
 
 msg('Checking for updates')
 

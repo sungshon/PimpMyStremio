@@ -40,6 +40,9 @@ module.exports = {
 	msg: str => {
 		msg = str
 	},
+	getMsg: () => {
+		return msg
+	},
 	close: () => {
 		if (server)
 			server.close()
