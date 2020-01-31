@@ -399,26 +399,35 @@ const addonApi = {
 		return Promise.resolve({ installedAddons, runningAddons, allAddons: allAddons.concat(sideloadedAddons) })
 	},
 	restart: false,
-	init: (installed, callback, rest) => {
+	init: (installed, callback, rest, startingAddon) => {
 
 		if (rest)
 			addonApi.restart = rest
 
 		if (installed && installed.length) {
+
+			let started = 0
+
 			const runAddon = (task, cb) => {
 				function promiseCb(isError, err) {
 					if (isError) console.error(err)
 					cb()
 				}
 				addonApi.run(task).then(promiseCb.bind(this, null)).catch(promiseCb.bind(this, true))
+				if (startingAddon)
+					startingAddon(task, started, installed.length)
 			}
+
 			const runQueue = async.queue((task, cb) => {
 				function queueCb(isError, err) {
 					if (isError) console.error(err)
 					runAddon(task, cb)
 				}
 				if (task.sideloaded) { queueCb(); return }
-				addonApi.update(task).then(queueCb.bind(this, null)).catch(queueCb.bind(this, true))
+				addonApi.update(task).then(() => {
+					started++
+					queueCb()
+				}).catch(queueCb.bind(this, true))
 			})
 
 			runQueue.drain = callback
