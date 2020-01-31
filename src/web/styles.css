@@ -4,6 +4,12 @@ body {
 }
 #header {
 	margin-top: 40px;
+  text-align: left;
+}
+#headerSide {
+  display: inline-block;
+  float: right;
+  margin-top: 31px;
 }
 .spacer {
   height: 50px;
@@ -46,7 +52,8 @@ body {
   margin-right: 18px;
 }
 #pageContent {
-	display: inline-block
+	display: inline-block;
+  width: 699px;
 }
 .backLink {
 	cursor: pointer;
@@ -244,4 +251,21 @@ button.ext {
 
 .mdl-select .mdl-textfield__label {
   top: 2px !important;
+}
+
+@media (min-width:320px) and (max-width:1025px) {
+  body {
+    zoom: 170%;
+  }
+  #pageContent {
+    width: 100%;
+  }
+  #header {
+    padding: 30px;
+  }
+  #headerSide {
+    display: inline-block;
+    float: right;
+    margin-top: 24px;
+  }
 }
