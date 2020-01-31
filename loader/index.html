@@ -37,12 +37,14 @@
 		<script>
 			const urlParams = new URLSearchParams(window.location.search)
 			const port = urlParams.get('port')
+			const host = urlParams.get('host') || '127.0.0.1'
+			const protocol = urlParams.get('protocol') || 'http'
 			// if port is missing we'll just leave the default
 			// loading screen
 			if (port) {
 				const timer = setInterval(() => {
 					$.ajax({
-					    url: 'http://127.0.0.1:' + port + '/loading-api',
+					    url: protocol + '://' + host + ':' + port + '/loading-api',
 					    type: 'GET',
 					    success: data => { 
 						if (data.msg)
