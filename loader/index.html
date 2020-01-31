@@ -31,7 +31,11 @@
 		</div>
 		<center>
 			<div id="msg">
-				Loading ...
+				<div id="first-line">
+					Loading ...
+				</div>
+				<div id="second-line">
+				</div>
 			</div>
 		</center>
 		<script>
@@ -42,23 +46,28 @@
 			// if port is missing we'll just leave the default
 			// loading screen
 			if (port) {
+				function updateMessage(msg) {
+					const lines = (msg || '').split('///')
+					$('#first-line').text(lines[0] || '')
+					$('#second-line').text(lines[1] || '')
+				}
 				const timer = setInterval(() => {
 					$.ajax({
 					    url: protocol + '://' + host + ':' + port + '/loading-api',
 					    type: 'GET',
 					    success: data => { 
-						if (data.msg)
-							$('#msg').html(data.msg)
-						else if (data.redirect) {
+						if (data.msg) {
+							updateMessage(data.msg)
+						} else if (data.redirect) {
     						    	clearInterval(timer)
-							$('#msg').html('Redirecting ...')
+							updateMessage('Redirecting ...')
 							window.location.replace(data.redirect)
 						}
 					    },
-					    error: data => {
-					      $('#msg').html('Error while starting PimpMyStremio')
+					    error: err => {
+						updateMessage('Error while starting PimpMyStremio')
 					    	clearInterval(timer)
-					    	console.log(data)
+					    	console.log(err)
 					    }
 					});
 				}, 3000)
