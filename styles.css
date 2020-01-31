@@ -13,6 +13,9 @@ body {
     font-size: 20px;
     color: #03A333;
 }
+#first-line {
+    margin-bottom: 15px;
+}
 .loader {
     background: #fff;
     overflow: hidden;
