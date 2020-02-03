@@ -16,6 +16,7 @@ const defaultConfig = {
 			type: 'boolean',
 			default: false
 		},
+
 		darkMode: {
 			title: 'Dark mode',
 			type: 'boolean',
@@ -35,6 +36,12 @@ const defaultConfig = {
 			title: 'Remote Add-ons List URL',
 			type: 'string',
 			default: 'https://raw.githubusercontent.com/sungshon/PimpMyStremio/master/src/addonsList.json'
+		},
+		externalUse: {
+			title: "Remote Access",
+			type: "select",
+			options: ["No (local)", "LAN", "External"],
+			default: "No (local)"
 		},
 	}
 }
