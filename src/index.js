@@ -95,8 +95,8 @@ async function init() {
 		getIp((err, ip) => {
 			if (ip) {
 				console.log('Domain IP: ' + ip)
-				const getCertificate = require('./lib/https')
-				getCertificate(ip).then(cert => {
+				const getCert = require('./lib/https')
+				getCert(ip).then(cert => {
 					if (cert && cert.key && cert.cert) {
 						serverProtocol = 'https'
 						serverHost = cert.domain
