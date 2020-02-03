@@ -2,7 +2,6 @@
 const pkg = require('./lib/pkg')
 const express = require('express')
 const getPort = require('get-port')
-//const tunnel = require('./lib/tunnels/serveo')
 const autoLaunch = require('./lib/autoLaunch')
 const addon = require('./lib/addon')
 const uConfig = require('./lib/config/userConfig')
@@ -48,20 +47,23 @@ router.get('/loading-api', (req, res) => {
 
 router.use(express.static(process.env['PMS_UPDATE'] ? path.join(confDir(), 'assets', 'web') : 'web'))
 
-let serverPort
 let server
+let serverHost
+let serverPort
+let serverProtocol
 
 async function init() {
 
 	serverPort = await getPort({ port: userConfig.serverPort })
 
-	server = router.listen(serverPort, () => {
+	function listenHandler() {
 
 		let url = 'https://sungshon.github.io/PimpMyStremio/loader/'
 
-		url += '?port=' + serverPort
+		url += '?port=' + serverPort + '&protocol=' + serverProtocol + '&host=' + encodeURIComponent(serverHost)
 
-		open(url)
+		if (!isStartup)
+			open(url)
 
 		addon.init(runningAddons, () => {
 			sideload.loadAll(runServer)
@@ -69,7 +71,57 @@ async function init() {
 			loadMsg = 'Starting addon: ' + started + ' / ' + total + '<div style="height: 15px"></div>"' + task.name + '"'
 		})
 
-	})
+	}
+
+	function useLocalIp() {
+		serverProtocol = 'http'
+		serverHost = '127.0.0.1'
+		server = router.listen(serverPort, listenHandler)
+	}
+
+	console.log('Remote access choice: ' + userConfig.externalUse)
+
+	if (userConfig.externalUse == 'No (local)')
+		useLocalIp()
+	else {
+		function getIp(cb) {
+			if (userConfig.externalUse == 'LAN')
+				cb(null, require('my-local-ip')())
+			else if (userConfig.externalUse == 'External') {
+				console.log('Retrieving external IP ...')
+				require('externalip')(cb)
+			}
+		}
+		getIp((err, ip) => {
+			if (ip) {
+				console.log('Domain IP: ' + ip)
+				const getCertificate = require('./lib/https')
+				getCertificate(ip).then(cert => {
+					if (cert && cert.key && cert.cert) {
+						serverProtocol = 'https'
+						serverHost = cert.domain
+						console.log('Domain: ' + cert.domain)
+						const https = require('https')
+						server = https.createServer({
+							key: cert.key,
+							cert: cert.cert
+						}, router).listen(serverPort, listenHandler)
+					} else {
+						console.error(Error('Could not get cert'))
+						useLocalIp()
+					}
+				}).catch(err => {
+					if (err)
+						console.error(err)
+					useLocalIp()
+				})
+			} else {
+				if (err)
+					console.error(err)
+				useLocalIp()
+			}
+		})
+	}
 
 }
 
@@ -143,22 +195,13 @@ async function runServer() {
 
 	cleanUp.set(server)
 
-	const url = 'http://127.0.0.1:' + serverPort
+	const url = serverProtocol + '://' + serverHost + ':' + serverPort
 
 	proxy.setEndpoint(url)
 
 	console.log('PimpMyStremio server running at: ' + url)
 
-// previously used reverse proxies, they caused many issues
-// leaving this here in case of future solutions to SSL requirement
-
-//	if (userConfig.remote)
-//		tunnel(serverPort, { subdomain: userConfig.subdomain }) 
-//	else {
-//		if (!isStartup)
-//			open('http://127.0.0.1:' + serverPort)
-		systray.init()
-//	}
+	systray.init()
 
 	loadFinished = true
 
