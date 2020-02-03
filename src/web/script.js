@@ -1,5 +1,4 @@
 
-
 function repoName(repo) {
 	return repo == '_pimpmystremio' ? repo : repo.split('/')[1].split('#')[0]
 }
@@ -74,6 +73,21 @@ function onImgLoad(selector, callback) {
     })
 }
 
+function warningPortForward() {
+	dialog.close()
+	let str = '' +
+		'<h4>WARNING</h4><div style="text-align:left">Enabling external (internet) use of PimpMyStremio requires the user to set a static IP to this device and setup port forwarding in the router.<br><br>The port that PimpMyStremio\'s server uses MUST be allowed to communicate externally from this device\'s IP address.<br><br>If this is not done, then PimpMyStremio will fail to load in the browser and you will be locked out.<br><br><b>This message will only show once, if you still wish to make PimpMyStremio available externally, then open the settings and select the option again.</b></div>' +
+		'<div style="height: 35px"></div>' +
+		'<div class="settingsFooter"><button class="mdl-button mdl-js-button mdl-button--raised ext" onClick="closeDialog()">' +
+			'I understand' +
+		'</button></div>'
+	$('.mdl-dialog').html(str)
+	componentHandler.upgradeAllRegistered()
+	setTimeout(() => {
+		dialog.showModal()
+	})
+}
+
 function loadQr(path) {
 	dialog.close()
 	let str = '' +
@@ -123,6 +137,18 @@ function closeDialog() {
 
 function saveSettings(shouldRun, shouldRestart) {
 	const obj = objectifyForm($('.settingsForm').serializeArray())
+	if (shouldRun && shouldRestart) {
+		// these are the main settings
+		if (obj['externalUse'] == 'External') {
+			if (!localStorage.getItem('warnedPortForward')) {
+				// warn users regarding port forwarding
+				localStorage.setItem('warnedPortForward', 'true')
+				warningPortForward()
+				return
+			}
+		}
+	}
+
 	request('defaultConfig', repoName(obj.repo), '', defaultConfig => {
 		for (let key in defaultConfig) {
 			if (defaultConfig[key].type == 'number')
