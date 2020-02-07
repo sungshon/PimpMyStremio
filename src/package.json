@@ -64,7 +64,9 @@
     "torrent-name-parser": "^0.6.5",
     "request": "^2.88.0",
     "m3u8-parsed": "^1.2.0",
-    "zombie": "^6.1.4"
+    "zombie": "^6.1.4",
+    "externalip": "^1.0.2",
+    "my-local-ip": "^1.0.0"
   },
   "devDependencies": {
     "ncp": "^2.0.0",
