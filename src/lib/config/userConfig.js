@@ -48,6 +48,19 @@ const defaultConfig = {
 
 let password = ''
 
+// fixes settings if new properties were added / removed
+function fixSettings(config) {
+	for (let key in defaultConfig.userDefined)
+		if (typeof config.userDefined[key] === 'undefined')
+			config.userDefined[key] = defaultConfig.userDefined[key]
+
+	for (let key in config.userDefined)
+		if (typeof defaultConfig.userDefined[key] === 'undefined')
+			delete config.userDefined[key]
+
+	return config
+}
+
 const configDb = {
 	compress: data => {
 		const obj = {}
@@ -83,6 +96,8 @@ const configDb = {
 				return defaultConfig
 			}
 
+			config = fixSettings(config)
+
 			return config
 		} else
 			return defaultConfig
@@ -103,6 +118,8 @@ const configDb = {
 				// ignore read file issues
 				return configDb.compress(defaultConfig)
 			}
+
+			config = fixSettings(config)
 
 			const compressed = configDb.compress(config)
 			if (!password && compressed.userDefined.password)
