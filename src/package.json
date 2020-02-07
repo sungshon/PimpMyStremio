@@ -63,7 +63,8 @@
     "magnet-uri": "^5.2.1",
     "torrent-name-parser": "^0.6.5",
     "request": "^2.88.0",
-    "m3u8-parsed": "^1.2.0"
+    "m3u8-parsed": "^1.2.0",
+    "zombie": "^6.1.4"
   },
   "devDependencies": {
     "ncp": "^2.0.0",
