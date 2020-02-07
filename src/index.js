@@ -68,7 +68,7 @@ async function init() {
 		addon.init(runningAddons, () => {
 			sideload.loadAll(runServer)
 		}, cleanUp.restart, (task, started, total) => {
-			loadMsg = 'Starting addon: ' + started + ' / ' + total + '<div style="height: 15px"></div>"' + task.name + '"'
+			loadMsg = 'Starting addon: ' + started + ' / ' + total + '///"' + task.name + '"'
 		})
 
 	}
