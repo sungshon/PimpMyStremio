@@ -473,6 +473,7 @@ $(document).ready(() => {
 
 			// allow to close modal by clicking outside it
 			dialog.addEventListener('click', function (event) {
+				if (!event.clientY || !event.clientX) return
 				const rect = dialog.getBoundingClientRect();
 				const isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width)
 				if (!isInDialog)
