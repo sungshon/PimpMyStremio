@@ -8,4 +8,6 @@
 
 `--sideload=` - set custom add-on sideload directory instead of the default one (example usage: `--sideload="D:\PMS Sideload"` or `--sideload="/Users/sungshon/pms-sideload"`)
 
+`--lan-ip=` - set custom LAN IP to overwrite the auto-detected value, useful if "Remote Access" is set to "LAN" and the user has more then one network adapter (example usage: `--lan-ip="192.168.0.10"`)
+
 `--uninstall` - uninstalls PimpMyStremio and removes all user defined data
