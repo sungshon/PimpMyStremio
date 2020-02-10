@@ -85,9 +85,12 @@ async function init() {
 		useLocalIp()
 	else {
 		function getIp(cb) {
-			if (userConfig.externalUse == 'LAN')
-				cb(null, require('my-local-ip')())
-			else if (userConfig.externalUse == 'External') {
+			if (userConfig.externalUse == 'LAN') {
+				if (process.env['PMS_LAN_IP'])
+					cb(null, process.env['PMS_LAN_IP'])
+				else
+					cb(null, require('my-local-ip')())
+			} else if (userConfig.externalUse == 'External') {
 				console.log('Retrieving external IP ...')
 				require('externalip')(cb)
 			}
