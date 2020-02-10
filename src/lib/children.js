@@ -93,7 +93,7 @@ module.exports = {
 			if (isWin)
 				options.windowsHide = true
 
-			const child = children[addonName] = fork(__filename, parameters, options)
+			const child = fork(__filename, parameters, options)
 
 			child.stdout.pipe(process.stdout)
 			child.stderr.pipe(process.stderr)
@@ -136,6 +136,7 @@ module.exports = {
 					child.removeListener('message', awaitStatus)
 					if (obj.status == 'running') {
 						child.send({ endpoint: proxy.getEndpoint() })
+						children[addonName] = child
 						resolve({ manifest: obj.manifest, router })
 					} else
 						reject(new Error(obj.error || ('Could not run add-on: ' + addonName)))
