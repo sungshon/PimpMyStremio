@@ -253,6 +253,13 @@ clArgs.some(el => {
 	}
 })
 
+clArgs.some(el => {
+	if (el.startsWith('--lan-ip=')) {
+		opts.lanIp = el.replace('--lan-ip=', '').replace(/[^0-9.]/g, '')
+		return true
+	}
+})
+
 async function startEngine(binDir) {
 
 	await updateAddonsList()
@@ -277,6 +284,9 @@ async function startEngine(binDir) {
 	
 	if (opts.sideloadDir)
 		env['PMS_SIDELOAD'] = opts.sideloadDir
+	
+	if (opts.lanIp)
+		env['PMS_LAN_IP'] = opts.lanIp
 
 	const procOpts = { cwd: binDir, env }
 
