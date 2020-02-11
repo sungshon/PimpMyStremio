@@ -33,3 +33,7 @@ dialog {
 .mdl-textfield__label {
     color: rgba(255,255,255,.26);
 }
+
+.footer a {
+	color: #94471B;
+}
