@@ -29,3 +29,7 @@ body,
 dialog {
     color: white;
 }
+
+.mdl-textfield__label {
+    color: rgba(255,255,255,.26);
+}
