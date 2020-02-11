@@ -16,11 +16,11 @@ const defaultConfig = {
 			type: 'boolean',
 			default: false
 		},
-
-		darkMode: {
-			title: 'Dark mode',
-			type: 'boolean',
-			default: false
+		theme: {
+			title: 'Theme',
+			type: 'select',
+			options: ["Light", "Dark", "Rusty", "Sky", "Light Orange", "Light Blue", "Light Green", "Dark Purple", "Dark Blue", "Dark Green"],
+			default: "Light"
 		},
 		serverPort: {
 			title: 'Server port',
@@ -57,6 +57,11 @@ function fixSettings(config) {
 	for (let key in config.userDefined)
 		if (typeof defaultConfig.userDefined[key] === 'undefined')
 			delete config.userDefined[key]
+
+	for (let key in config.userDefined)
+		if (config.userDefined[key].options
+			&& JSON.stringify(config.userDefined[key].options) != JSON.stringify(defaultConfig.userDefined[key].options))
+			config.userDefined[key].options = defaultConfig.userDefined[key].options
 
 	return config
 }
