@@ -8,6 +8,8 @@ const configDir = require('./dirs/configDir')()
 const addonsDir = require('./dirs/addonsDir')()
 const sideloadDir = require('./dirs/sideloadDir')()
 
+const isMobile = require('./isMobile').isMobile
+
 const internal = {
 	cinemeta: require('./cinemeta'),
 	proxy: require('./proxy')
@@ -54,8 +56,15 @@ const vmApi = {
 		vmApi.allowed.forEach(module => {
 			if (module.startsWith('bin/')) {
 				const modName = module.replace('bin/','')
-				const modPath = path.join(configDir, 'assets', modName)
-				modules[modName] = require(fs.existsSync(modPath) ? modPath : modName)
+				let modPath
+				if (!isMobile) {
+					modPath = path.join(configDir, 'assets', modName)
+					modPath = fs.existsSync(modPath) ? modPath : modName
+				} else {
+					// mobile devices don't support binaries, we'll use shims instead
+					modPath = './shims/' + modName
+				}
+				modules[modName] = require(modPath)
 			} else
 				modules[module] = require(module)
 		})
@@ -64,7 +73,8 @@ const vmApi = {
 
 		modules.internal.persist = opts.persist
 
-		modules['phantom'] = require('./phantom')
+		// mobile devices don't support binaries, we'll use shims instead
+		modules['phantom'] = !isMobile ? require('./phantom') : require('./shims/phantom')
 
 		modules['stremio-addon-sdk'] = require('./addonSdk')
 
