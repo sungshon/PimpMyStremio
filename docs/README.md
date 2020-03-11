@@ -12,9 +12,11 @@ Key features: auto-updates itself, auto-updates add-ons, wide range of whitelist
 
 ## Difference between SDK and PimpMyStremio add-ons
 
-PimpMyStremio add-ons all need to have an `index.js` file as the entry point, are written in Node.js and `index.js` must export the `stremio-addon-sdk` router.
+PimpMyStremio add-ons all need to have an entry point, by default `./index.js` is used, you can set a different entry point by setting the `entry` property for your addon in `addonsList.json`.
 
-`index.js` example:
+All addons are written in Node.js and the entry point must export the `stremio-addon-sdk` router.
+
+Example:
 
 ```javascript
 const { addonBuilder, getRouter } = require('stremio-addon-sdk')
@@ -129,6 +131,8 @@ Also supports `.removeItem()` to remove a key and `.clear()` for clearing the en
 ## Publishing an add-on
 
 To publish your add-on, make a PR to this repository adding it to the [addonsList.json](https://github.com/sungshon/PimpMyStremio/blob/master/src/addonsList.json) file.
+
+Note that the default entry point for an addon is `./index.js`, you can set a different entry point by setting the `entry` property to a relative path for your addon in `addonsList.json`.
 
 ## Updating an add-on
 
