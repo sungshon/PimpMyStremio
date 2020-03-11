@@ -94,7 +94,7 @@ const vmApi = {
 
 		if (opts.data.sideloaded) {
 			bundleJs = path.join(addonDir, opts.name, 'pms.bundle.verbose.js')
-			const bundled = await bundle(opts.name, path.join(addonDir, opts.name, 'index.js'), path.join(addonDir, opts.name), vmApi.allModules(), true)
+			const bundled = await bundle(opts.name, opts.data.entry, path.join(addonDir, opts.name), vmApi.allModules(), true)
 			if (!(bundled || {}).success) {
 				console.log(name + 'Error: Could not bundle sandboxed add-on with webpack')
 				return false

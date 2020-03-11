@@ -1,8 +1,10 @@
 const webpack = require('webpack')
+const path = require('path')
 
 require('source-map-support').install({ environment: 'node', hookRequire: true, handleUncaughtExceptions: true })
 
 module.exports = (name, entry, dest, excluded, isVerbose) => {
+	entry = path.resolve(dest, entry || './index.js')
 	return new Promise((resolve, reject) => {
 		const opts = {
 		  entry,
