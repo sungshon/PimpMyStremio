@@ -111,10 +111,10 @@ function external(title, path) {
 		str += '<div class="load-title">' + title + '</div>'
 	}
 	str += '' +
-		'<a target="_blank" href="' + getUrl(true) + path + '" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadApp()">' +
+		'<a target="_blank" href="' + getUrl(true) + path + '" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext">' +
 			'Load in Stremio App' +
 		'</button></a>' +
-		'<a target="_blank" href="http://app.strem.io/shell-v4.4/#/?addonOpen=' + encodeURIComponent(getUrl() + path) + '" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext" onClick="loadWeb()">' +
+		'<a target="_blank" href="http://app.strem.io/shell-v4.4/#/?addonOpen=' + encodeURIComponent(getUrl() + path) + '" class="settingsMainButton"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ext">' +
 			'Load in Stremio Web' +
 		'</button></a>'
 	if (!isLocal())
