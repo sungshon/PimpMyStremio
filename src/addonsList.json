@@ -300,5 +300,40 @@
 		"description": "Add-on to create a catalog from a IMDB watchlist url.",
 		"types": ["Catalog"],
 		"repo": "booblyboo/stremio-imdb-watchlist-local"
+	},
+	{
+		"name": "YTS",
+		"logo": "https://i2.wp.com/fosslovers.com/wp-content/uploads/2019/01/YTS-logo.png",
+		"description": "Movies and torrent results from YTS.",
+		"types": ["Movies","Series"],
+		"repo": "jlvcm/stremio-yts"
+	},
+  	{
+		"name": "Trakt Top",
+		"logo": "https://trakt.tv/assets/logos/header@2x-09f929ba67b0964596b359f497884cd9.png.webp",
+		"description": "trakt catalog list by most watched/collected",
+		"types": ["Catalog"],
+		"repo": "jlvcm/stremio-traktlist"
+	},
+	{
+		"name": "IPTVorg",
+		"logo": "https://i.ibb.co/FgRqP6w/10a8e00f-0fce-447b-9e2d-b552f921ff66-200x200.png",
+		"description": "Collection of 8000+ publicly available IPTV channels from all over the world.",
+		"types": ["IPTV"],
+		"repo": "jlvcm/stremio-ptiptv"
+	},
+	{
+		"name": "Mr Piracy",
+		"logo": "https://s33.postimg.cc/5nno5wc7j/face2017.png",
+		"description": "Mr Piracy list and streams",
+		"types": ["Movies","Series"],
+		"repo": "jlvcm/stremio-mrpiracy"
+	},
+	{
+		"name": "IMDB ID search",
+		"logo": "https://m.media-amazon.com/images/G/01/IMDb/BG_square._CB1509067564_SY230_SX307_AL_.png",
+		"description": "search movies by IMDB ID",
+		"types": ["Catalog"],
+		"repo": "jlvcm/stremio-imdb-id"
 	}
 ]
