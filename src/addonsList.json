@@ -305,7 +305,7 @@
 		"name": "YTS",
 		"logo": "https://i2.wp.com/fosslovers.com/wp-content/uploads/2019/01/YTS-logo.png",
 		"description": "Movies and torrent results from YTS.",
-		"types": ["Movies","Series"],
+		"types": ["Movies"],
 		"repo": "jlvcm/stremio-yts"
 	},
   	{
