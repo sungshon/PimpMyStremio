@@ -181,7 +181,7 @@ function packageApp() {
 
 	console.log('Start - Packaging App to Executable')
 
-	exec(['package.json', '--target', 'host', '--output', '../assets/engine' + ext()]).then(() => {
+	exec(['package.json', '--target', 'host,alpine', '--output', '../assets/engine' + ext()]).then(() => {
 
 		console.log('Finished!')
 
