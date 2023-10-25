@@ -19,7 +19,7 @@
     "compare-versions": "^3.1.0",
     "cors": "^2.8.4",
     "cross-fetch": "^2.1.0",
-    "crypto-js": "3.1.9-1",
+    "crypto-js": "4.2.0",
     "death": "^1.1.0",
     "discord-rpc": "^3.1.0",
     "encoding": "^0.1.12",
